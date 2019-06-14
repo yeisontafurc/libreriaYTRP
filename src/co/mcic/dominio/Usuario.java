@@ -81,7 +81,16 @@ public class Usuario implements Serializable {
 		credenciales.setParameter("pwd", this.getClave());
 		List<Usuario> usuario = credenciales.getResultList();
 		em.close();
-		return usuario.size() == 1;
+		if(null != usuario){
+			if (usuario.size() == 1){
+				this.setPersona(usuario.get(0).getPersona());
+				this.setRol(usuario.get(0).getRol());
+				return usuario.size() == 1;
+			}
+		}
+		return false;
+		
+		
 	}
    
 }
