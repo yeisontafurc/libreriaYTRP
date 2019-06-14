@@ -77,7 +77,6 @@ public class ConsultarProductoId {
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(526, 392, 89, 23);
-		frmConsultarProductoId.getContentPane().add(btnVolver);
-		
+		frmConsultarProductoId.getContentPane().add(btnVolver);		
 	}
 }
