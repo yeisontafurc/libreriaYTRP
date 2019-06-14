@@ -1,14 +1,24 @@
 package co.mcic.dominio;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.TypedQuery;
+
 import co.mcic.dominio.Rol;
+import co.mcic.util.Persistencia;
 
 @Entity
+@NamedQueries({
+@NamedQuery(name="login", query="select u from Usuario u where u.nombreUsuario =:nombre and u.clave =:pwd")
+})
 public class Usuario implements Serializable {
 	
 
@@ -62,6 +72,16 @@ public class Usuario implements Serializable {
 
 	public void setRol(Rol rol) {
 		this.rolUsuario = rol;
+	}
+	
+	public boolean validarCredenciales(){
+		EntityManager em = Persistencia.getEntityManager();
+		TypedQuery<Usuario> credenciales = em.createNamedQuery("login", Usuario.class);
+		credenciales.setParameter("nombre", this.getNombreUsuario());
+		credenciales.setParameter("pwd", this.getClave());
+		List<Usuario> usuario = credenciales.getResultList();
+		em.close();
+		return usuario.size() == 1;
 	}
    
 }

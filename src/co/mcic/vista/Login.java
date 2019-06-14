@@ -6,12 +6,17 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import co.mcic.ctrl.ControlLogin;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 public class Login extends JFrame {
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private JButton btnNewButton;
+	
 	public Login() {
 		getContentPane().setLayout(null);
 		
@@ -37,8 +42,43 @@ public class Login extends JFrame {
 		passwordField.setBounds(206, 158, 126, 20);
 		getContentPane().add(passwordField);
 		
-		JButton btnNewButton = new JButton("Ingresar");
+		btnNewButton = new JButton("Ingresar");
 		btnNewButton.setBounds(173, 215, 89, 23);
 		getContentPane().add(btnNewButton);
+	}
+	
+	
+	
+	
+	public JTextField getTextField() {
+		return textField;
+	}
+
+
+
+
+	public void setTextField(JTextField textField) {
+		this.textField = textField;
+	}
+
+
+
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+
+
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
+
+
+
+	public void setControlador(ControlLogin controlLogin) {
+		btnNewButton.addActionListener(controlLogin);
 	}
 }

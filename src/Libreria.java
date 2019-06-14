@@ -1,5 +1,4 @@
 import co.mcic.ctrl.ControlLogin;
-import co.mcic.dominio.Usuario;
 import co.mcic.vista.Login;
 
 public class Libreria {
@@ -9,7 +8,7 @@ public class Libreria {
 		Login login = new Login();
 		ControlLogin controlLogin = new ControlLogin(login);
 		controlLogin.mostrarLogin();
-
+		login.setControlador(controlLogin);
 	}
 
 }
