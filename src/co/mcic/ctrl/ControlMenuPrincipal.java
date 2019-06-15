@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.mcic.vista.MenuPrincipal;
+import co.mcic.vista.MenuVentaAlquiler;
 
 public class ControlMenuPrincipal implements ActionListener{
 
@@ -28,6 +29,10 @@ public class ControlMenuPrincipal implements ActionListener{
 			break;
 		case "VENTA Y ALQUILER":
 			System.out.println("Venta y alquiler");
+			MenuVentaAlquiler mva = new MenuVentaAlquiler();
+			ControlVentaAlquiler ventaAlquiler = new ControlVentaAlquiler(mva);
+			ventaAlquiler.mostrarVentaAlquiler();
+			menuPrincipal.setVisible(false);
 			break;
 		case "CLIENTES":
 			System.out.println("Clientes");
