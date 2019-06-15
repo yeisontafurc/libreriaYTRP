@@ -38,3 +38,93 @@ ALTER TABLE TRANSACCION ADD CONSTRAINT FK_TRANSACCION_TIPOAFILIACION_IDTIPOAFILI
 ALTER TABLE USUARIO ADD CONSTRAINT FK_USUARIO_PERSONA_IDPERSONA FOREIGN KEY (PERSONA_IDPERSONA) REFERENCES PERSONA (IDPERSONA)
 ALTER TABLE USUARIO ADD CONSTRAINT FK_USUARIO_ROL_USUARIO FOREIGN KEY (ROL_USUARIO) REFERENCES rol (IDROL)
 ALTER TABLE libreria.usuario convert to character set utf8mb4 collate utf8mb4_bin;
+
+
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (1,"LIBRO PROFESIONAL Y ESPECIALIZADO" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (2,"LIBRO TEXTO ESCOLAR" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (3,"LIBRO INFANTIL" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (4,"LIBRO LITERATURA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (5,"LIBRO INTERÉS GENERAL" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (6,"LIBRO MUSICA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (7,"LIBRO SOFTWARE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (8,"LIBRO DRAMA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (9,"LIBRO INDEPENDIENTE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (10,"LIBRO ACCIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (11,"LIBRO ANIMACIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (12,"LIBRO TERROR" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (13,"LIBRO FANTASÍA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (14,"CD MUSICA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (15,"AUDIOLIBRO" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (16,"PELÍCULA EN DVD INFANTIL" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (17,"PELÍCULA EN DVD MUSICA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (18,"PELÍCULA EN DVD SOFTWARE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (19,"PELÍCULA EN DVD DRAMA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (20,"PELÍCULA EN DVD INDEPENDIENTE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (21,"PELÍCULA EN DVD ACCIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (22,"PELÍCULA EN DVD ANIMACIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (23,"PELÍCULA EN DVD TERROR" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (24,"VIDEO INFANTIL" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (25,"VIDEO LITERATURA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (26,"VIDEO INTERÉS GENERAL" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (27,"VIDEO MUSICA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (28,"VIDEO SOFTWARE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (29,"VIDEO DRAMA" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (30,"VIDEO INDEPENDIENTE" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (31,"VIDEO ACCIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (32,"VIDEO ANIMACIÓN" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (33,"VIDEO TERROR" );							
+INSERT INTO `libreria`.`categoria`(`IDCATEGORIA`,`NOMBRE`) VALUES (34,"VIDEO FANTASÍA" );						
+
+	
+INSERT INTO `libreria`.`listaestadodisponibilidad` (`IDESTADODISPONIBILIDAD`, `NOMBRE`) VALUES (1,"Disponible");			
+INSERT INTO `libreria`.`listaestadodisponibilidad` (`IDESTADODISPONIBILIDAD`, `NOMBRE`) VALUES (2,"Vendido");			
+INSERT INTO `libreria`.`listaestadodisponibilidad` (`IDESTADODISPONIBILIDAD`, `NOMBRE`) VALUES (3,"Alquilado");			
+
+INSERT INTO `libreria`.`listaestadopersona` (`IDESTADOPERSONA`,`NOMBRE`) VALUES (1,"Registrado");			
+INSERT INTO `libreria`.`listaestadopersona` (`IDESTADOPERSONA`,`NOMBRE`) VALUES (2,"Afiliado");			
+INSERT INTO `libreria`.`listaestadopersona` (`IDESTADOPERSONA`,`NOMBRE`) VALUES (3,"De Baja");			
+
+INSERT INTO `libreria`.`listaestadoproducto`(`IDESTADOPRODUCTO`,`NOMBRE`) VALUES (1,"Bueno");
+INSERT INTO `libreria`.`listaestadoproducto`(`IDESTADOPRODUCTO`,`NOMBRE`) VALUES (2,"Regular");
+INSERT INTO `libreria`.`listaestadoproducto`(`IDESTADOPRODUCTO`,`NOMBRE`) VALUES (3,"Ligero deterioro");
+INSERT INTO `libreria`.`listaestadoproducto`(`IDESTADOPRODUCTO`,`NOMBRE`) VALUES (4,"Muy deteriorado");
+
+INSERT INTO `libreria`.`rol`(`IDROL`,`NOMBRE`) VALUES (1, 'VENDEDOR');
+INSERT INTO `libreria`.`rol`(`IDROL`,`NOMBRE`) VALUES (2, 'ADMINISTRADOR');
+
+INSERT INTO `libreria`.`listapermiso` (`IDPERMISO`,`NOMBRE`,`ROLPERMISO_IDROL`) VALUES (1,"PRODUCTOS",1);
+INSERT INTO `libreria`.`listapermiso` (`IDPERMISO`,`NOMBRE`,`ROLPERMISO_IDROL`) VALUES (2,"CLIENTES",1);
+INSERT INTO `libreria`.`listapermiso` (`IDPERMISO`,`NOMBRE`,`ROLPERMISO_IDROL`) VALUES (3,"VENTA Y ALQUILER",1);
+INSERT INTO `libreria`.`listapermiso` (`IDPERMISO`,`NOMBRE`,`ROLPERMISO_IDROL`) VALUES (4,"REGISTRAR PRODUCTO",2);
+
+INSERT INTO `libreria`.`listatipoafiliacion` (`IDTIPOAFILIACION`,`MESES`,`NOMBRE`,`PORCENTAJE`,`VALOR`) VALUES (1,6,"SEMESTRAL",15,20000);
+INSERT INTO `libreria`.`listatipoafiliacion` (`IDTIPOAFILIACION`,`MESES`,`NOMBRE`,`PORCENTAJE`,`VALOR`) VALUES (2,12,"ANUAL",30,30000);
+
+INSERT INTO `libreria`.`listatipodocumento`(`IDTIPODOCUMENTO`,`NOMBRE`) VALUES (1,"Tarjeta de Identidad");
+INSERT INTO `libreria`.`listatipodocumento`(`IDTIPODOCUMENTO`,`NOMBRE`) VALUES (2,"Cédula de Ciudadanía");
+INSERT INTO `libreria`.`listatipodocumento`(`IDTIPODOCUMENTO`,`NOMBRE`) VALUES (3,"Cédula de Extranjería");
+INSERT INTO `libreria`.`listatipodocumento`(`IDTIPODOCUMENTO`,`NOMBRE`) VALUES (4,"Pasaporte");
+
+INSERT INTO `libreria`.`listatipopago` (`IDTIPOPAGO`,`NOMBRE`) VALUES (1,"Efectivo");
+INSERT INTO `libreria`.`listatipopago` (`IDTIPOPAGO`,`NOMBRE`) VALUES (2,"Tarjeta de Crédito");
+
+INSERT INTO `libreria`.`listatipopersona`(`IDTIPOPERSONA`,`NOMBRE`) VALUES (1,"Interno");
+INSERT INTO `libreria`.`listatipopersona`(`IDTIPOPERSONA`,`NOMBRE`) VALUES (2,"Externo");
+
+INSERT INTO `libreria`.`listatipotransaccion`(`IDTIPOTX`,`NOMBRE`) VALUES (1,"Venta");
+INSERT INTO `libreria`.`listatipotransaccion`(`IDTIPOTX`,`NOMBRE`) VALUES (2,"Alquiler");
+INSERT INTO `libreria`.`listatipotransaccion`(`IDTIPOTX`,`NOMBRE`) VALUES (3,"Afiliación");
+
+
+#Datos de prueba
+#Perosna no afiliada (vendedor)
+INSERT INTO `libreria`.`persona`(`IDPERSONA`,`APELLIDOS`,`CELULAR`,`DIRECCION`,`DOCUMENTO`,`NOMBRES`,`TELEFONO`,`IDTIPOPERSONA`,`AFILIACION_IDAFILIACION`,`ESTADOPERSONA_IDESTADOPERSONA`,`TIPODOCUMENTO_IDTIPODOCUMENTO`) VALUES (1,"TAFUR",3000000000,"Cra 1 con Calle 2",78951426,"Yeison",7845126,1,null,1,1);
+INSERT INTO `libreria`.`usuario` (`IDUSUARIO`, `CLAVE`, `NOMBREUSUARIO`, `PERSONA_IDPERSONA`, `ROL_USUARIO`) VALUES ('1', 'civil123$', 'pacopedro', '1', '1');
+#Perosna no afiliada (cliente)
+INSERT INTO `libreria`.`persona`(`IDPERSONA`,`APELLIDOS`,`CELULAR`,`DIRECCION`,`DOCUMENTO`,`NOMBRES`,`TELEFONO`,`IDTIPOPERSONA`,`AFILIACION_IDAFILIACION`,`ESTADOPERSONA_IDESTADOPERSONA`,`TIPODOCUMENTO_IDTIPODOCUMENTO`) VALUES (2,"CANTE",3000000000,"Cra 1 con Calle 2",78951427,"Efrain",7845126,2,null,1,1);
+#Persona afiliada (cliente)
+INSERT INTO `libreria`.`afiliacion` (`IDAFILIACION`, `FECHAFIN`, `FECHAINICIO`, `TIPOAFILIACION_IDTIPOAFILIACION`) VALUES (1, '2020-06-14', '2019-06-14', 2);
+INSERT INTO `libreria`.`persona`(`IDPERSONA`,`APELLIDOS`,`CELULAR`,`DIRECCION`,`DOCUMENTO`,`NOMBRES`,`TELEFONO`,`IDTIPOPERSONA`,`AFILIACION_IDAFILIACION`,`ESTADOPERSONA_IDESTADOPERSONA`,`TIPODOCUMENTO_IDTIPODOCUMENTO`) VALUES (3,"DE LA MAR",3000000000,"Cra 1 con Calle 2",78951428,"Paco Pedro",7845126,2,1,1,1);
+
+
+
