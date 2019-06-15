@@ -8,15 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import co.mcic.ctrl.ControlEditarProducto;
-import co.mcic.dominio.Producto;
 
-import javax.swing.JComboBox;
+import co.mcic.ctrl.ControlEditarProducto;
 
 
 public class EditarProducto extends JFrame{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private  JTextField txfIdentificador;
 	private  JTextField txfValorAlquiler;
 	private  JTextField txfValorVenta;

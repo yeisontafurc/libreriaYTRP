@@ -1,14 +1,12 @@
 package co.mcic.vista;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import co.mcic.ctrl.ControlEditarProducto;
+import co.mcic.ctrl.ControlMenuProducto;
 
 public class MenuProducto extends JFrame{
 
@@ -38,28 +36,75 @@ public class MenuProducto extends JFrame{
 		
 		btnConsultarProducto = new JButton("<html><p>Consultar</p><p>Producto</p></html>");
 		btnConsultarProducto.setBounds(167, 116, 138, 77);
+		btnConsultarProducto.setActionCommand("CONSULTAR");
 		getContentPane().add(btnConsultarProducto);
 		
 		btnRegistrarProducto = new JButton("<html><p>Registrar</p><p>Producto</p></html>");
 		btnRegistrarProducto.setBounds(396, 116, 138, 77);
+		btnRegistrarProducto.setActionCommand("REGISTRAR");
 		getContentPane().add(btnRegistrarProducto);
 		
 		btnEditarProducto = new JButton("<html><p>Editar</p><p>Producto</p></html>");
-		btnEditarProducto.addActionListener(new ActionListener() {
+		/*btnEditarProducto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarProducto editarProducto = new EditarProducto();
+				
+				
+				/*EditarProducto editarProducto = new EditarProducto();
 				ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
 				controlEditarProducto.mostrarEditarProducto();
 				editarProducto.setEditarControlador(controlEditarProducto);
+				*/
 				
-			}
-		});		
+			/*}
+		});	*/	
 		btnEditarProducto.setBounds(167, 232, 138, 77);
+		btnEditarProducto.setActionCommand("EDITAR");
 		getContentPane().add(btnEditarProducto);
 		
 		btnVolver = new JButton("Volver");
 		btnVolver.setBounds(526, 392, 89, 23);
+		btnVolver.setActionCommand("VOLVER");
 		getContentPane().add(btnVolver);		
+	}
+
+	public JButton getBtnConsultarProducto() {
+		return btnConsultarProducto;
+	}
+
+	public void setBtnConsultarProducto(JButton btnConsultarProducto) {
+		this.btnConsultarProducto = btnConsultarProducto;
+	}
+
+	public JButton getBtnRegistrarProducto() {
+		return btnRegistrarProducto;
+	}
+
+	public void setBtnRegistrarProducto(JButton btnRegistrarProducto) {
+		this.btnRegistrarProducto = btnRegistrarProducto;
+	}
+
+	public JButton getBtnEditarProducto() {
+		return btnEditarProducto;
+	}
+
+	public void setBtnEditarProducto(JButton btnEditarProducto) {
+		this.btnEditarProducto = btnEditarProducto;
+	}
+
+	public JButton getBtnVolver() {
+		return btnVolver;
+	}
+
+	public void setBtnVolver(JButton btnVolver) {
+		this.btnVolver = btnVolver;
+	}
+	
+	public void setControl(ControlMenuProducto controlMenuProducto) {
+		this.btnConsultarProducto.addActionListener(controlMenuProducto);
+		this.btnRegistrarProducto.addActionListener(controlMenuProducto);
+		this.btnEditarProducto.addActionListener(controlMenuProducto);
+		this.btnVolver.addActionListener(controlMenuProducto);
+		
 	}
 	
 }

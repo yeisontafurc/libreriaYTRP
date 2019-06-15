@@ -11,36 +11,33 @@ import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
 import co.mcic.vista.EditarProducto;
 
+public class ControlEditarProducto implements ActionListener {
 
-public class ControlEditarProducto implements ActionListener{
-	
 	private Producto producto;
-	private String identificador;	
-	private String nombre;	
-	private Float valorAlquilerDia;	
-	private Float valorVenta;	
-	private Categoria categoria;	
+	private String identificador;
+	private String nombre;
+	private Float valorAlquilerDia;
+	private Float valorVenta;
+	private Categoria categoria;
 	private ListaEstadoProducto estadoProducto;
 	private EditarProducto editarProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
-	
-	public ControlEditarProducto(EditarProducto editarProducto){
+
+	public ControlEditarProducto(EditarProducto editarProducto) {
 		this.setEditarProducto(editarProducto);
 		this.producto = new Producto();
 	}
-	
-	
-	public void mostrarEditarProducto(){
-		
+
+	public void mostrarEditarProducto() {
+
 		this.producto.setEstadoDisponibilidad(producto.getEstadoDisponibilidad());
-		
-		if(this.editarProducto != null){
-			editarProducto.setSize(new Dimension(800,600));
+
+		if (this.editarProducto != null) {
+			editarProducto.setSize(new Dimension(800, 600));
 			editarProducto.setVisible(true);
 			editarProducto.setTitle("Libreria");
 		}
 	}
-	
 
 	public String getIdentificador() {
 		return identificador;
@@ -102,21 +99,21 @@ public class ControlEditarProducto implements ActionListener{
 		return editarProducto;
 	}
 
-
 	public void setEditarProducto(EditarProducto editarProducto) {
 		this.editarProducto = editarProducto;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		/*System.out.println("Login!" + login.getTextField().getText() + " pwd: " + login.getPasswordField().getText());
-		this.usuario.setNombreUsuario(login.getTextField().getText());
-		this.usuario.setClave(login.getPasswordField().getText());
-		boolean usuarioValido = this.usuario.validarCredenciales();*/
-		
-		
-		
+		/*
+		 * System.out.println("Login!" + login.getTextField().getText() +
+		 * " pwd: " + login.getPasswordField().getText());
+		 * this.usuario.setNombreUsuario(login.getTextField().getText());
+		 * this.usuario.setClave(login.getPasswordField().getText()); boolean
+		 * usuarioValido = this.usuario.validarCredenciales();
+		 */
+
 		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
 		this.producto.setCategoria(this.getCategoria());
 		this.producto.setEstadoProducto(this.getEstadoProducto());
@@ -124,20 +121,15 @@ public class ControlEditarProducto implements ActionListener{
 		this.producto.setNombre(this.getNombre());
 		this.producto.setValorAlquilerDia(this.getValorAlquilerDia());
 		this.producto.setValorVenta(this.getValorVenta());
-		
+
 		this.producto = this.producto.consultarProductoId(this.producto.getIdentificador());
-		this.producto.setNombre("Infinity War");		
-		
-		List<Producto> productos = this.producto.listaProductosNombreId("12","");
-		System.out.println("Producto: "+productos.size());
+		this.producto.setNombre("Infinity War");
+
+		List<Producto> productos = this.producto.listaProductosNombreId("12", "");
+		System.out.println("Producto: " + productos.size());
 		for (Producto producto : productos) {
-			System.out.println("Productos: "+producto.getNombre());	
+			System.out.println("Productos: " + producto.getNombre());
 		}
-		
-		
-		
-		
-		
 	}
 
 }
