@@ -79,7 +79,7 @@ public class Login extends JFrame {
 
 
 
-	public void setControlador(ControlLogin controlLogin) {
+	public void setControl(ControlLogin controlLogin) {
 		btnNewButton.addActionListener(controlLogin);
 	}
 }

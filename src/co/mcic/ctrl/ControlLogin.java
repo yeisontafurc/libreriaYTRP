@@ -47,7 +47,6 @@ public class ControlLogin implements ActionListener {
 		if (usuarioValido) {
 
 			MenuPrincipal mp = new MenuPrincipal();
-
 			List<ListaPermiso> listaPermisos = this.usuario.getRol().getPermisos();
 
 			if (null != listaPermisos) {
@@ -58,13 +57,14 @@ public class ControlLogin implements ActionListener {
 					if(permiso.getNombre().equals("CLIENTES")){
 						mp.getBtnClientes().setVisible(true);
 					}
-					if(permiso.getNombre().equals("VENTAS Y ALQUILER")){
+					if(permiso.getNombre().equals("VENTA Y ALQUILER")){
 						mp.getBtnVentasYAlquiler().setVisible(true);
 					}
 					
 				}
-				mp.setSize(new Dimension(702,486));
-				mp.setVisible(true);
+				ControlMenuPrincipal controlMenuPrincipal = new ControlMenuPrincipal(mp);
+				mp.setControl(controlMenuPrincipal);
+				controlMenuPrincipal.mostrarMenuPrincipal();
 				login.setVisible(false);
 			}
 

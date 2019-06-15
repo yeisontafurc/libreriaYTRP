@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import co.mcic.ctrl.ControlMenuPrincipal;
+
 import java.awt.Font;
 
 public class MenuPrincipal extends JFrame {
@@ -16,21 +18,25 @@ public class MenuPrincipal extends JFrame {
 
 		this.btnProductos = new JButton("PRODUCTOS");
 		this.btnProductos.setVisible(false);
+		this.btnProductos.setActionCommand("PRODUCTOS");
 		this.btnProductos.setBounds(106, 131, 154, 80);
 		getContentPane().add(btnProductos);
 
-		this.btnVentasYAlquiler = new JButton("VENTAS Y ALQUILER");
+		this.btnVentasYAlquiler = new JButton("VENTA Y ALQUILER");
 		this.btnVentasYAlquiler.setVisible(false);
+		this.btnVentasYAlquiler.setActionCommand("VENTA Y ALQUILER");
 		this.btnVentasYAlquiler.setBounds(106, 222, 152, 80);
 		getContentPane().add(btnVentasYAlquiler);
 
 		this.btnClientes = new JButton("CLIENTES");
 		this.btnClientes.setVisible(false);
+		this.btnClientes.setActionCommand("CLIENTES");
 		this.btnClientes.setBounds(296, 131, 154, 80);
 		getContentPane().add(btnClientes);
 
 		btnSalir = new JButton("Salir");
 		btnSalir.setBounds(361, 301, 89, 23);
+		this.btnSalir.setActionCommand("SALIR");
 		getContentPane().add(btnSalir);
 
 		JLabel lblMenuPrincipal = new JLabel("MENU PRINCIPAL", SwingConstants.CENTER);
@@ -70,6 +76,14 @@ public class MenuPrincipal extends JFrame {
 
 	public void setBtnSalir(JButton btnSalir) {
 		this.btnSalir = btnSalir;
+	}
+
+	public void setControl(ControlMenuPrincipal controlMenuPrincipal) {
+		this.btnProductos.addActionListener(controlMenuPrincipal);
+		this.btnVentasYAlquiler.addActionListener(controlMenuPrincipal);
+		this.btnClientes.addActionListener(controlMenuPrincipal);
+		this.btnSalir.addActionListener(controlMenuPrincipal);
+		
 	}
 
 }
