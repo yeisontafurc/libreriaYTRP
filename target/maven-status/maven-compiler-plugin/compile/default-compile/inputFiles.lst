@@ -1,4 +1,5 @@
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\ListaPermiso.java
+C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\vista\MenuPrincipal.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\TarjetaVisa.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Rol.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Persona.java
@@ -9,6 +10,7 @@ C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\do
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\ListaTipoTransaccion.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Usuario.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\util\Persistencia.java
+C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\ctrl\ControlVentaAlquiler.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\ListaTipoPago.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\ListaEstadoDisponibilidad.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\TarjetaCredito.java
@@ -16,9 +18,11 @@ C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\do
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Transaccion.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\vista\MenuProducto.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Factura.java
+C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\vista\MenuVentaAlquiler.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\ctrl\ControlLogin.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\Afiliacion.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\Libreria.java
+C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\ctrl\ControlMenuPrincipal.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\ListaEstadoPersona.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\vista\Login.java
 C:\Users\g521696\workspace\LibreriaYTRP\LibreriaYTRP\libreriaYTRP\src\co\mcic\dominio\TarjetaMastercard.java
