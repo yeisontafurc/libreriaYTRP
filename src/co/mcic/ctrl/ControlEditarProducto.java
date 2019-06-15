@@ -16,6 +16,7 @@ import co.mcic.vista.MenuProducto;
 
 public class ControlEditarProducto implements ActionListener {
 
+	private int reintentos = 1;
 	private Producto producto;
 	private String identificador;
 	private String nombre;
@@ -40,6 +41,14 @@ public class ControlEditarProducto implements ActionListener {
 			editarProducto.setVisible(true);
 			editarProducto.setTitle("Libreria");
 		}
+	}
+
+	public int getReintentos() {
+		return reintentos;
+	}
+
+	public void setReintentos(int reintentos) {
+		this.reintentos = reintentos;
 	}
 
 	public String getIdentificador() {
@@ -115,13 +124,29 @@ public class ControlEditarProducto implements ActionListener {
 			editarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
+			// Primero se debe validar los requeridos
+			if (ValidarRequeridos()) {
 
-			int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
-					JOptionPane.YES_NO_OPTION);
-			if (resp == 0) {
-				JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
-				ejecutarMenuProductos();
-				editarProducto.setVisible(false);				
+				if (ValidarFormatos()) {
+
+					// validar los formatos
+
+					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
+							JOptionPane.YES_NO_OPTION);
+					if (resp == 0) {
+						// guradar
+
+						JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
+						ejecutarMenuProductos();
+						editarProducto.setVisible(false);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
+					ValidarReintentos();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Todos los campos son requeridos");
+				ValidarReintentos();
 			}
 			break;
 		default:
@@ -150,12 +175,29 @@ public class ControlEditarProducto implements ActionListener {
 			System.out.println("Productos: " + producto.getNombre());
 		}
 	}
-	
-	public void ejecutarMenuProductos(){		
+
+	public void ejecutarMenuProductos() {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
 		menuProducto.setControl(controlMenuProducto);
-		controlMenuProducto.mostrarMenuProducto();		
+		controlMenuProducto.mostrarMenuProducto();
+	}
+
+	public boolean ValidarRequeridos() {
+		return false;
+	}
+
+	public boolean ValidarFormatos() {
+		return true;
+	}
+
+	public void ValidarReintentos() {
+		if (this.reintentos > 3) {
+			ejecutarMenuProductos();
+			editarProducto.setVisible(false);
+		}else{
+			this.reintentos++;
+		}
 	}
 
 }
