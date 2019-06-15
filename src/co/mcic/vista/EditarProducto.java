@@ -22,8 +22,7 @@ public class EditarProducto extends JFrame{
 	private  JTextField txfValorVenta;
 	private  JTextField txfNombre;
 	private  JButton btnGuardar;
-	private  JButton btnVolver;
-	private  JComboBox cBoxEstadoDisponibilidad; 
+	private  JButton btnVolver;	 
 	
 
 	/**
@@ -47,8 +46,7 @@ public class EditarProducto extends JFrame{
 		getContentPane().add(txfIdentificador);
 		txfIdentificador.setColumns(10);
 		
-		btnGuardar.setBounds(368, 313, 89, 23);
-		getContentPane().add(btnGuardar);
+		
 		
 		btnVolver = new JButton("Volver");
 		btnVolver.setBounds(250, 313, 89, 23);
@@ -93,11 +91,15 @@ public class EditarProducto extends JFrame{
 		lblDisponibilidad.setBounds(70, 249, 81, 14);
 		getContentPane().add(lblDisponibilidad);		
 		
-		cBoxEstadoDisponibilidad = new JComboBox();
+		/*cBoxEstadoDisponibilidad = new JComboBox();
 		cBoxEstadoDisponibilidad.setBounds(447, 209, 197, 20);		
-		getContentPane().add(cBoxEstadoDisponibilidad);
+		getContentPane().add(cBoxEstadoDisponibilidad);*/
 		
 		btnGuardar = new JButton("Guardar");
+		btnGuardar.setBounds(368, 313, 89, 23);
+		getContentPane().add(btnGuardar);
+		
+		
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}

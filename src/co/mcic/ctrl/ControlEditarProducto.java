@@ -3,6 +3,7 @@ package co.mcic.ctrl;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
@@ -109,6 +110,33 @@ public class ControlEditarProducto implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		/*System.out.println("Login!" + login.getTextField().getText() + " pwd: " + login.getPasswordField().getText());
+		this.usuario.setNombreUsuario(login.getTextField().getText());
+		this.usuario.setClave(login.getPasswordField().getText());
+		boolean usuarioValido = this.usuario.validarCredenciales();*/
+		
+		
+		
+		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
+		this.producto.setCategoria(this.getCategoria());
+		this.producto.setEstadoProducto(this.getEstadoProducto());
+		this.producto.setIdentificador("123");
+		this.producto.setNombre(this.getNombre());
+		this.producto.setValorAlquilerDia(this.getValorAlquilerDia());
+		this.producto.setValorVenta(this.getValorVenta());
+		
+		this.producto = this.producto.consultarProductoId(this.producto.getIdentificador());
+		this.producto.setNombre("Infinity War");		
+		
+		List<Producto> productos = this.producto.listaProductosNombreId("12","");
+		System.out.println("Producto: "+productos.size());
+		for (Producto producto : productos) {
+			System.out.println("Productos: "+producto.getNombre());	
+		}
+		
+		
+		
+		
 		
 	}
 
