@@ -17,24 +17,22 @@ import co.mcic.vista.MenuProducto;
 public class ControlEditarProducto implements ActionListener {
 
 	private int reintentos = 1;
-	private Producto producto;
-	private String identificador;
-	private String nombre;
-	private Float valorAlquilerDia;
-	private Float valorVenta;
+	private Producto producto;	
 	private Categoria categoria;
 	private ListaEstadoProducto estadoProducto;
 	private EditarProducto editarProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
-	public ControlEditarProducto(EditarProducto editarProducto) {
-		this.setEditarProducto(editarProducto);
-		this.producto = new Producto();
+	public ControlEditarProducto(Producto producto) {		
+		this.editarProducto = new EditarProducto();
+		this.producto = producto;		
+		this.getEditarProducto().getTxfIdentificador().setText(this.producto.getIdentificador());
+		this.getEditarProducto().getTxfNombre().setText(this.producto.getNombre());
+		this.getEditarProducto().getTxfValorAlquiler().setText(this.producto.getValorAlquilerDia().toString());
+		this.getEditarProducto().getTxfValorVenta().setText(this.producto.getValorVenta().toString());
 	}
 
-	public void mostrarEditarProducto() {
-
-		this.producto.setEstadoDisponibilidad(producto.getEstadoDisponibilidad());
+	public void mostrarEditarProducto() {	
 
 		if (this.editarProducto != null) {
 			editarProducto.setSize(new Dimension(800, 600));
@@ -51,38 +49,7 @@ public class ControlEditarProducto implements ActionListener {
 		this.reintentos = reintentos;
 	}
 
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public Float getValorAlquilerDia() {
-		return valorAlquilerDia;
-	}
-
-	public void setValorAlquilerDia(Float valorAlquilerDia) {
-		this.valorAlquilerDia = valorAlquilerDia;
-	}
-
-	public Float getValorVenta() {
-		return valorVenta;
-	}
-
-	public void setValorVenta(Float valorVenta) {
-		this.valorVenta = valorVenta;
-	}
-
+		
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -162,9 +129,6 @@ public class ControlEditarProducto implements ActionListener {
 		this.producto.setCategoria(this.getCategoria());
 		this.producto.setEstadoProducto(this.getEstadoProducto());
 		this.producto.setIdentificador("123");
-		this.producto.setNombre(this.getNombre());
-		this.producto.setValorAlquilerDia(this.getValorAlquilerDia());
-		this.producto.setValorVenta(this.getValorVenta());
 
 		this.producto = this.producto.consultarProductoId(this.producto.getIdentificador());
 		this.producto.setNombre("Infinity War");

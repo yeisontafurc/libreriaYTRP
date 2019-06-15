@@ -25,7 +25,7 @@ public class ControlMenuProducto implements ActionListener {
 			ControlConsultarProductoId controlConsultarProductoId = new ControlConsultarProductoId(consultarProductoId);
 			controlConsultarProductoId.mostrarConsultarProductoId();
 			consultarProductoId.setControl(controlConsultarProductoId);
-			this.menuProducto.setVisible(false);
+			controlConsultarProductoId.mostrarConsultarProductoId();
 			break;
 		default:
 			System.out.println("El msj en realidad fue:" + e.getActionCommand());

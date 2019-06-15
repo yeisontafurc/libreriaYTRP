@@ -38,6 +38,7 @@ public class EditarProducto extends JFrame{
 		getContentPane().add(lblIdentificador);
 		
 		txfIdentificador = new JTextField();
+		txfIdentificador.setEditable(false);
 		txfIdentificador.setBounds(153, 132, 197, 20);
 		getContentPane().add(txfIdentificador);
 		txfIdentificador.setColumns(10);
@@ -132,6 +133,7 @@ public class EditarProducto extends JFrame{
 	}
 		
 	public void setControl(ControlEditarProducto controlEditarProducto) {
+		
 		this.btnVolver.addActionListener(controlEditarProducto);
 		this.btnGuardar.addActionListener(controlEditarProducto);
 	}

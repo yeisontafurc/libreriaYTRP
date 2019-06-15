@@ -1,8 +1,6 @@
 package co.mcic.vista;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,12 +12,10 @@ import co.mcic.ctrl.ControlConsultarProductoId;
 public class ConsultarProductoId extends JFrame {
 	
 	private JButton btnVolver,btnBuscar;
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;	
-	private JTextField textField;
+	private JTextField txtIdentificador;
+	
+	
 	
 
 	/**
@@ -42,10 +38,10 @@ public class ConsultarProductoId extends JFrame {
 		lblIdentificador.setBounds(120, 217, 125, 14);
 		getContentPane().add(lblIdentificador);
 		
-		textField = new JTextField();
-		textField.setBounds(270, 214, 253, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtIdentificador = new JTextField();
+		txtIdentificador.setBounds(270, 214, 253, 20);
+		getContentPane().add(txtIdentificador);
+		txtIdentificador.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setActionCommand("BUSCAR");
@@ -63,4 +59,17 @@ public class ConsultarProductoId extends JFrame {
 		btnBuscar.addActionListener(consultarProductoId);
 		btnVolver.addActionListener(consultarProductoId);
 	}
+
+
+	public JTextField getTxtIdentificador() {
+		return txtIdentificador;
+	}
+
+
+	public void setTxtIdentificador(JTextField txtIdentificador) {
+		this.txtIdentificador = txtIdentificador;
+	}
+	
+	
+	
 }
