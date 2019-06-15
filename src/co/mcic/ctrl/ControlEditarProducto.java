@@ -5,39 +5,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.security.auth.PrivateCredentialPermission;
 import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
+import co.mcic.vista.ConsultarProductoId;
 import co.mcic.vista.EditarProducto;
 import co.mcic.vista.MenuProducto;
 
 public class ControlEditarProducto implements ActionListener {
 
 	private int reintentos = 1;
-	private Producto producto;	
+	private Producto producto;
 	private Categoria categoria;
 	private ListaEstadoProducto estadoProducto;
 	private EditarProducto editarProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
-	public ControlEditarProducto(Producto producto) {		
-		this.editarProducto = new EditarProducto();
-		this.producto = producto;		
-		this.getEditarProducto().getTxfIdentificador().setText(this.producto.getIdentificador());
-		this.getEditarProducto().getTxfNombre().setText(this.producto.getNombre());
-		this.getEditarProducto().getTxfValorAlquiler().setText(this.producto.getValorAlquilerDia().toString());
-		this.getEditarProducto().getTxfValorVenta().setText(this.producto.getValorVenta().toString());
+	public ControlEditarProducto(EditarProducto editarProducto) {
+		this.setEditarProducto(editarProducto);
 	}
 
-	public void mostrarEditarProducto() {	
-
+	public void mostrarEditarProducto(Producto producto) {
+		this.producto = producto;
 		if (this.editarProducto != null) {
+			editarProducto.getTxfIdentificador().setText(this.producto.getIdentificador());
+			editarProducto.getTxfNombre().setText(this.producto.getNombre());
+			editarProducto.getTxfValorAlquiler().setText(this.producto.getValorAlquilerDia().toString());
+			editarProducto.getTxfValorVenta().setText(this.producto.getValorVenta().toString());
+			editarProducto.setTitle("Libreria");
 			editarProducto.setSize(new Dimension(800, 600));
 			editarProducto.setVisible(true);
-			editarProducto.setTitle("Libreria");
 		}
 	}
 
@@ -49,7 +50,6 @@ public class ControlEditarProducto implements ActionListener {
 		this.reintentos = reintentos;
 	}
 
-		
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -92,20 +92,25 @@ public class ControlEditarProducto implements ActionListener {
 			break;
 		case "GUARDAR":
 			// Primero se debe validar los requeridos
+			cargarDatosProducto();
 			if (ValidarRequeridos()) {
 
+				// validar los formatos
 				if (ValidarFormatos()) {
-
-					// validar los formatos
 
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
 						// guradar
-
-						JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
-						ejecutarMenuProductos();
-						editarProducto.setVisible(false);
+						boolean res = this.producto.actualizarProducto(producto);
+						if (res) {
+							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
+							ejecutarMenuProductos();
+							editarProducto.setVisible(false);
+						} else {
+							JOptionPane.showMessageDialog(null, "Error al ejecutar la operación");
+							ValidarReintentos();
+						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
@@ -121,6 +126,14 @@ public class ControlEditarProducto implements ActionListener {
 			break;
 		}
 
+	}
+	
+	
+	public Producto cargarDatosProducto(){
+		this.producto.setNombre(this.editarProducto.getTxfNombre().getText());
+		this.producto.setValorAlquilerDia(Float.parseFloat(this.editarProducto.getTxfValorAlquiler().getText()));
+		this.producto.setValorVenta(Float.parseFloat(this.editarProducto.getTxfValorVenta().getText()));
+		return this.producto;
 	}
 
 	public void cosasConProducto() {
@@ -148,7 +161,7 @@ public class ControlEditarProducto implements ActionListener {
 	}
 
 	public boolean ValidarRequeridos() {
-		return false;
+		return true;
 	}
 
 	public boolean ValidarFormatos() {
@@ -159,7 +172,7 @@ public class ControlEditarProducto implements ActionListener {
 		if (this.reintentos > 3) {
 			ejecutarMenuProductos();
 			editarProducto.setVisible(false);
-		}else{
+		} else {
 			this.reintentos++;
 		}
 	}

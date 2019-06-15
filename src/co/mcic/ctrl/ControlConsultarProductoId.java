@@ -97,13 +97,13 @@ public class ControlConsultarProductoId implements ActionListener {
 
 	public void ejecutarEditarProducto(Producto producto) {
 		EditarProducto editarProducto = new EditarProducto();
-		ControlEditarProducto controlEditarProducto = new ControlEditarProducto(producto);
+		ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
 		editarProducto.setControl(controlEditarProducto);
-		controlEditarProducto.mostrarEditarProducto();		
+		controlEditarProducto.mostrarEditarProducto(producto);		
 	}
 
 	public boolean ValidarRequeridos() {
-		return false;
+		return true;
 	}
 
 	public boolean ValidarFormatos() {
