@@ -111,24 +111,28 @@ public class ControlEditarProducto implements ActionListener {
 
 		switch (e.getActionCommand()) {
 		case "VOLVER":
-			MenuProducto menuProducto = new MenuProducto();
-			ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
-			menuProducto.setControl(controlMenuProducto);
-			controlMenuProducto.mostrarMenuProducto();
+			ejecutarMenuProductos();
 			editarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
-			JOptionPane.showMessageDialog(null, "Operación realizada correctamente");			
+
+			int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
+					JOptionPane.YES_NO_OPTION);
+			if (resp == 0) {
+				JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
+				ejecutarMenuProductos();
+				editarProducto.setVisible(false);				
+			}
 			break;
 		default:
 			System.out.println("El msj en realidad fue:" + e.getActionCommand());
 			break;
 		}
-		
+
 	}
 
-	public void cosasConProducto(){
-		
+	public void cosasConProducto() {
+
 		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
 		this.producto.setCategoria(this.getCategoria());
 		this.producto.setEstadoProducto(this.getEstadoProducto());
@@ -147,4 +151,11 @@ public class ControlEditarProducto implements ActionListener {
 		}
 	}
 	
+	public void ejecutarMenuProductos(){		
+		MenuProducto menuProducto = new MenuProducto();
+		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
+		menuProducto.setControl(controlMenuProducto);
+		controlMenuProducto.mostrarMenuProducto();		
+	}
+
 }
