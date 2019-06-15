@@ -30,6 +30,9 @@ public class ControlEditarProducto implements ActionListener{
 	
 	
 	public void mostrarEditarProducto(){
+		
+		this.producto.setEstadoDisponibilidad(producto.getEstadoDisponibilidad());
+		
 		if(this.editarProducto != null){
 			editarProducto.setSize(new Dimension(800,600));
 			editarProducto.setVisible(true);
