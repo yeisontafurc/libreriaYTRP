@@ -44,19 +44,7 @@ public class MenuProducto extends JFrame{
 		btnRegistrarProducto.setActionCommand("REGISTRAR");
 		getContentPane().add(btnRegistrarProducto);
 		
-		btnEditarProducto = new JButton("<html><p>Editar</p><p>Producto</p></html>");
-		/*btnEditarProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				/*EditarProducto editarProducto = new EditarProducto();
-				ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
-				controlEditarProducto.mostrarEditarProducto();
-				editarProducto.setEditarControlador(controlEditarProducto);
-				*/
-				
-			/*}
-		});	*/	
+		btnEditarProducto = new JButton("<html><p>Editar</p><p>Producto</p></html>");			
 		btnEditarProducto.setBounds(167, 232, 138, 77);
 		btnEditarProducto.setActionCommand("EDITAR");
 		getContentPane().add(btnEditarProducto);

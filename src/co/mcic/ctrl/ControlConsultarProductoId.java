@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.mcic.vista.ConsultarProductoId;
+import co.mcic.vista.EditarProducto;
+import co.mcic.vista.MenuProducto;
 
 public class ControlConsultarProductoId implements ActionListener{
 	
@@ -24,9 +26,29 @@ public class ControlConsultarProductoId implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(e.getActionCommand());
+		switch (e.getActionCommand()) {
+		case "BUSCAR":
+			EditarProducto editarProducto = new EditarProducto();
+			ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
+			controlEditarProducto.mostrarEditarProducto();
+			editarProducto.setControl(controlEditarProducto);
+			consultarProductoId.setVisible(false);			
+			break;
+			
+		case "VOLVER":
+			MenuProducto menuProducto = new MenuProducto();
+			ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
+			menuProducto.setControl(controlMenuProducto);
+			controlMenuProducto.mostrarMenuProducto();			
+			consultarProductoId.setVisible(false);			
+			break;	
+		default:
+			System.out.println("El msj en realidad fue:" + e.getActionCommand());
+			break;
+		}
 	}
 	
 	public void mostrarConsultarProductoId() {

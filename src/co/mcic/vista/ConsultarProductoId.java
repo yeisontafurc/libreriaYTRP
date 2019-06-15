@@ -48,14 +48,12 @@ public class ConsultarProductoId extends JFrame {
 		textField.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnBuscar.setActionCommand("BUSCAR");
 		btnBuscar.setBounds(433, 279, 89, 23);
 		getContentPane().add(btnBuscar);
 		
 		btnVolver = new JButton("Volver");
+		btnVolver.setActionCommand("VOLVER");
 		btnVolver.setBounds(526, 392, 89, 23);
 		getContentPane().add(btnVolver);		
 	}
@@ -63,5 +61,6 @@ public class ConsultarProductoId extends JFrame {
 	
 	public void setControl(ControlConsultarProductoId consultarProductoId) {
 		btnBuscar.addActionListener(consultarProductoId);
+		btnVolver.addActionListener(consultarProductoId);
 	}
 }

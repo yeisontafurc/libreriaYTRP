@@ -5,11 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
 import co.mcic.vista.EditarProducto;
+import co.mcic.vista.MenuProducto;
 
 public class ControlEditarProducto implements ActionListener {
 
@@ -105,15 +108,27 @@ public class ControlEditarProducto implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		/*
-		 * System.out.println("Login!" + login.getTextField().getText() +
-		 * " pwd: " + login.getPasswordField().getText());
-		 * this.usuario.setNombreUsuario(login.getTextField().getText());
-		 * this.usuario.setClave(login.getPasswordField().getText()); boolean
-		 * usuarioValido = this.usuario.validarCredenciales();
-		 */
 
+		switch (e.getActionCommand()) {
+		case "VOLVER":
+			MenuProducto menuProducto = new MenuProducto();
+			ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
+			menuProducto.setControl(controlMenuProducto);
+			controlMenuProducto.mostrarMenuProducto();
+			editarProducto.setVisible(false);
+			break;
+		case "GUARDAR":
+			JOptionPane.showMessageDialog(null, "Operación realizada correctamente");			
+			break;
+		default:
+			System.out.println("El msj en realidad fue:" + e.getActionCommand());
+			break;
+		}
+		
+	}
+
+	public void cosasConProducto(){
+		
 		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
 		this.producto.setCategoria(this.getCategoria());
 		this.producto.setEstadoProducto(this.getEstadoProducto());
@@ -131,5 +146,5 @@ public class ControlEditarProducto implements ActionListener {
 			System.out.println("Productos: " + producto.getNombre());
 		}
 	}
-
+	
 }

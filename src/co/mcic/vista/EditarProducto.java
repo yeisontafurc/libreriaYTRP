@@ -1,8 +1,6 @@
 package co.mcic.vista;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,13 +9,9 @@ import javax.swing.JTextField;
 
 import co.mcic.ctrl.ControlEditarProducto;
 
-
+	
 public class EditarProducto extends JFrame{
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private  JTextField txfIdentificador;
 	private  JTextField txfValorAlquiler;
@@ -51,6 +45,7 @@ public class EditarProducto extends JFrame{
 		
 		
 		btnVolver = new JButton("Volver");
+		btnVolver.setActionCommand("VOLVER");
 		btnVolver.setBounds(250, 313, 89, 23);
 		getContentPane().add(btnVolver);
 		
@@ -98,14 +93,9 @@ public class EditarProducto extends JFrame{
 		getContentPane().add(cBoxEstadoDisponibilidad);*/
 		
 		btnGuardar = new JButton("Guardar");
+		btnGuardar.setActionCommand("GUARDAR");
 		btnGuardar.setBounds(368, 313, 89, 23);
-		getContentPane().add(btnGuardar);
-		
-		
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});		
+		getContentPane().add(btnGuardar);		
 		
 	}
 
@@ -141,11 +131,8 @@ public class EditarProducto extends JFrame{
 		this.txfNombre = txfNombre;
 	}
 		
-	public void setEditarControlador(ControlEditarProducto controlEditarProducto) {
-		btnGuardar.addActionListener(controlEditarProducto);
-	}
-	
-	public void setMenuProductoControlador(ControlEditarProducto controlEditarProducto) {
-		btnVolver.addActionListener(controlEditarProducto);
+	public void setControl(ControlEditarProducto controlEditarProducto) {
+		this.btnVolver.addActionListener(controlEditarProducto);
+		this.btnGuardar.addActionListener(controlEditarProducto);
 	}
 }
