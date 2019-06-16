@@ -23,7 +23,6 @@ public class ControlMenuPrincipal implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "PRODUCTOS":
 			System.out.println("productos");			
@@ -31,18 +30,23 @@ public class ControlMenuPrincipal implements ActionListener{
 			ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
 			menuProducto.setControl(controlMenuProducto);
 			controlMenuProducto.mostrarMenuProducto();
-			
 			menuPrincipal.setVisible(false);
 			break;
 		case "VENTA Y ALQUILER":
 			System.out.println("Venta y alquiler");
 			MenuVentaAlquiler mva = new MenuVentaAlquiler();
 			ControlVentaAlquiler ventaAlquiler = new ControlVentaAlquiler(mva);
+			mva.setControl(ventaAlquiler);
+			ventaAlquiler.setMenuPrincipal(this.menuPrincipal);
 			ventaAlquiler.mostrarVentaAlquiler();
 			menuPrincipal.setVisible(false);
 			break;
 		case "CLIENTES":
 			System.out.println("Clientes");
+			break;
+		case "SALIR":
+			menuPrincipal.setVisible(false);
+			menuPrincipal.dispose();
 			break;
 		default:
 			System.out.println("El msj en realidad fue:" + e.getActionCommand());
