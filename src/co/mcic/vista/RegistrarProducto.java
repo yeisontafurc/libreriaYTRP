@@ -9,9 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import co.mcic.ctrl.ControlEditarProducto;
+import co.mcic.ctrl.ControlRegistrarProducto;
 
 	
-public class EditarProducto extends JFrame{
+public class RegistrarProducto extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private  JTextField txfIdentificador;
@@ -28,11 +29,11 @@ public class EditarProducto extends JFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public EditarProducto() {
+	public RegistrarProducto() {
 		
 		getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("EDITAR PRODUCTO");
+		JLabel lblNewLabel = new JLabel("REGISTRAR PRODUCTO");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel.setBounds(98, 38, 269, 35);
 		getContentPane().add(lblNewLabel);
@@ -42,7 +43,6 @@ public class EditarProducto extends JFrame{
 		getContentPane().add(lblIdentificador);
 		
 		txfIdentificador = new JTextField();
-		txfIdentificador.setEditable(false);
 		txfIdentificador.setBounds(153, 132, 197, 20);
 		getContentPane().add(txfIdentificador);
 		txfIdentificador.setColumns(10);
@@ -171,8 +171,8 @@ public class EditarProducto extends JFrame{
 		this.cBoxEstado = cBoxEstado;
 	}
 
-	public void setControl(ControlEditarProducto controlEditarProducto) {		
-		this.btnVolver.addActionListener(controlEditarProducto);
-		this.btnGuardar.addActionListener(controlEditarProducto);
+	public void setControl(ControlRegistrarProducto controlRegistrarProducto) {		
+		this.btnVolver.addActionListener(controlRegistrarProducto);
+		this.btnGuardar.addActionListener(controlRegistrarProducto);
 	}
 }

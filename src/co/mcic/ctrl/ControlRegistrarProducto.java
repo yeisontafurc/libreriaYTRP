@@ -3,10 +3,8 @@ package co.mcic.ctrl;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.util.List;
 
-import javax.security.auth.PrivateCredentialPermission;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -14,40 +12,31 @@ import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
-import co.mcic.vista.ConsultarProductoId;
-import co.mcic.vista.EditarProducto;
 import co.mcic.vista.MenuProducto;
+import co.mcic.vista.RegistrarProducto;
 
-public class ControlEditarProducto implements ActionListener {
+public class ControlRegistrarProducto implements ActionListener {
 
 	private int reintentos = 1;
 	private Producto producto;
+	private RegistrarProducto registrarProducto;
 	private Categoria categoria;
-	private ListaEstadoProducto estadoProducto;
-	private EditarProducto editarProducto;
+	private ListaEstadoProducto estadoProducto;	
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
-	public ControlEditarProducto(EditarProducto editarProducto) {
-		this.setEditarProducto(editarProducto);
+	public ControlRegistrarProducto(RegistrarProducto registrarProducto) {
+		this.setRegistrarProducto(registrarProducto);
+	}
+	
+	public void mostrarRegistrarProducto() {
+		if(null != this.registrarProducto){
+		this.registrarProducto.setVisible(true);
+		this.registrarProducto.setSize(new Dimension(702, 486));
+		}
 	}
 
-	public void mostrarEditarProducto(Producto producto) {
-		this.producto = producto;
-		if (this.editarProducto != null) {
-			cargarListaEstadoDiponibilidad();
-			// ListaEstadoDisponibilidad listaEstadoDisponibilidad = new
-			// ListaEstadoDisponibilidad();
-
-			// editarProducto.getcBoxEstadoDisponibilidad().addItemListener((ItemListener)
-			// listaEstadoDisponibilidad.getlistaEstadoDisponibilidad().get(0));
-			editarProducto.getTxfIdentificador().setText(this.producto.getIdentificador());
-			editarProducto.getTxfNombre().setText(this.producto.getNombre());
-			editarProducto.getTxfValorAlquiler().setText(this.producto.getValorAlquilerDia().toString());
-			editarProducto.getTxfValorVenta().setText(this.producto.getValorVenta().toString());
-			editarProducto.setTitle("Libreria");
-			editarProducto.setSize(new Dimension(800, 600));
-			editarProducto.setVisible(true);
-		}
+	public void RegistarProducto(Producto producto) {
+		this.producto = producto;		
 	}
 
 	public int getReintentos() {
@@ -81,13 +70,14 @@ public class ControlEditarProducto implements ActionListener {
 	public void setEstadoDisponibilidad(ListaEstadoDisponibilidad estadoDisponibilidad) {
 		this.estadoDisponibilidad = estadoDisponibilidad;
 	}
+	
 
-	public EditarProducto getEditarProducto() {
-		return editarProducto;
+	public RegistrarProducto getRegistrarProducto() {
+		return registrarProducto;
 	}
 
-	public void setEditarProducto(EditarProducto editarProducto) {
-		this.editarProducto = editarProducto;
+	public void setRegistrarProducto(RegistrarProducto registrarProducto) {
+		this.registrarProducto = registrarProducto;
 	}
 
 	@Override
@@ -96,11 +86,10 @@ public class ControlEditarProducto implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "VOLVER":
 			ejecutarMenuProductos();
-			editarProducto.setVisible(false);
+			//editarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
-			// Primero se debe validar los requeridos
-			cargarDatosProducto();
+			// Primero se debe validar los requeridos			
 			if (ValidarRequeridos()) {
 
 				// validar los formatos
@@ -114,7 +103,7 @@ public class ControlEditarProducto implements ActionListener {
 						if (res) {
 							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
 							ejecutarMenuProductos();
-							editarProducto.setVisible(false);
+							//editarProducto.setVisible(false);
 						} else {
 							JOptionPane.showMessageDialog(null, "Error al ejecutar la operación");
 							ValidarReintentos();
@@ -136,31 +125,6 @@ public class ControlEditarProducto implements ActionListener {
 
 	}
 
-	public Producto cargarDatosProducto() {
-
-		this.producto.setNombre(this.editarProducto.getTxfNombre().getText());
-		this.producto.setValorAlquilerDia(Float.parseFloat(this.editarProducto.getTxfValorAlquiler().getText()));
-		this.producto.setValorVenta(Float.parseFloat(this.editarProducto.getTxfValorVenta().getText()));
-		return this.producto;
-	}
-
-	public void cosasConProducto() {
-
-		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
-		this.producto.setCategoria(this.getCategoria());
-		this.producto.setEstadoProducto(this.getEstadoProducto());
-		this.producto.setIdentificador("123");
-
-		this.producto = this.producto.consultarProductoId(this.producto.getIdentificador());
-		this.producto.setNombre("Infinity War");
-
-		List<Producto> productos = this.producto.listaProductosNombreId("12", "");
-		System.out.println("Producto: " + productos.size());
-		for (Producto producto : productos) {
-			System.out.println("Productos: " + producto.getNombre());
-		}
-	}
-
 	public void ejecutarMenuProductos() {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
@@ -179,7 +143,7 @@ public class ControlEditarProducto implements ActionListener {
 	public void ValidarReintentos() {
 		if (this.reintentos > 3) {
 			ejecutarMenuProductos();
-			editarProducto.setVisible(false);
+			//editarProducto.setVisible(false);
 		} else {
 			this.reintentos++;
 		}
@@ -195,7 +159,7 @@ public class ControlEditarProducto implements ActionListener {
 		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
 			estadoDisponiblidadCombo.addItem(estadoDisponibilidad.getNombre());
 		}
-		editarProducto.setcBoxEstadoDisponibilidad(estadoDisponiblidadCombo);		
+		//editarProducto.setcBoxEstadoDisponibilidad(estadoDisponiblidadCombo);		
 
 	}
 

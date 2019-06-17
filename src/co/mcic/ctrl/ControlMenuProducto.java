@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import co.mcic.vista.ConsultarProductoId;
 import co.mcic.vista.MenuProducto;
+import co.mcic.vista.RegistrarProducto;
 
 public class ControlMenuProducto implements ActionListener {
 
@@ -19,13 +20,18 @@ public class ControlMenuProducto implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println(e.getActionCommand());
-		switch (e.getActionCommand()) {
+		switch (e.getActionCommand()) {		
+		case "REGISTRAR":
+			ejecutarRegistrarProductos();
+			this.menuProducto.setVisible(false);
+			break;
 		case "EDITAR":
 			ConsultarProductoId consultarProductoId = new ConsultarProductoId();
 			ControlConsultarProductoId controlConsultarProductoId = new ControlConsultarProductoId(consultarProductoId);
 			controlConsultarProductoId.mostrarConsultarProductoId();
 			consultarProductoId.setControl(controlConsultarProductoId);
 			controlConsultarProductoId.mostrarConsultarProductoId();
+			this.menuProducto.setVisible(false);
 			break;
 		default:
 			System.out.println("El msj en realidad fue:" + e.getActionCommand());
@@ -37,6 +43,13 @@ public class ControlMenuProducto implements ActionListener {
 	public void mostrarMenuProducto() {
 		this.menuProducto.setVisible(true);
 		this.menuProducto.setSize(new Dimension(702, 486));
+	}
+	
+	public void ejecutarRegistrarProductos() {
+		RegistrarProducto registrarProducto = new RegistrarProducto();
+		ControlRegistrarProducto  controlRegistrarProducto = new ControlRegistrarProducto(registrarProducto);
+		registrarProducto.setControl(controlRegistrarProducto);
+		controlRegistrarProducto.mostrarRegistrarProducto();
 	}
 
 }
