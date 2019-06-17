@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import co.mcic.ctrl.ControlEditarProducto;
 import co.mcic.ctrl.ControlRegistrarProducto;
 
 	

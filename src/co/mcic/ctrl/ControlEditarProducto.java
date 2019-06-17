@@ -3,10 +3,8 @@ package co.mcic.ctrl;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.util.List;
 
-import javax.security.auth.PrivateCredentialPermission;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -14,7 +12,6 @@ import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
-import co.mcic.vista.ConsultarProductoId;
 import co.mcic.vista.EditarProducto;
 import co.mcic.vista.MenuProducto;
 
