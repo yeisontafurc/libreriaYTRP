@@ -3,6 +3,7 @@ package co.mcic.ctrl;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -10,9 +11,12 @@ import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
+import co.mcic.dominio.ListaEstadoPersona;
 import co.mcic.dominio.ListaEstadoProducto;
+import co.mcic.dominio.ListaTipoDocumento;
+import co.mcic.dominio.ListaTipoPersona;
 import co.mcic.dominio.Persona;
-import co.mcic.vista.MenuProducto;
+import co.mcic.vista.MenuCliente;
 import co.mcic.vista.RegistrarCliente;
 
 public class ControlRegistrarCliente implements ActionListener {
@@ -20,23 +24,22 @@ public class ControlRegistrarCliente implements ActionListener {
 	private int reintentos = 1;
 	private Persona persona;
 	private RegistrarCliente registrarCliente;
-	private Categoria categoria;
-	private ListaEstadoProducto estadoProducto;	
+	private Categoria categoria;	
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
 	public ControlRegistrarCliente(RegistrarCliente registrarCliente) {
 		this.setRegistrarCliente(registrarCliente);
 	}
-	
-	public void mostrarRegistrarProducto() {
-		if(null != this.registrarCliente){
-		this.registrarCliente.setVisible(true);
-		this.registrarCliente.setSize(new Dimension(702, 486));
+
+	public void mostrarRegistrarCliente() {
+		if (null != this.registrarCliente) {
+			this.registrarCliente.setVisible(true);
+			this.registrarCliente.setSize(new Dimension(702, 486));
 		}
 	}
 
 	public void RegistarCliente(RegistrarCliente registrarCliente) {
-		this.registrarCliente = registrarCliente;		
+		this.registrarCliente = registrarCliente;
 	}
 
 	public int getReintentos() {
@@ -55,14 +58,6 @@ public class ControlRegistrarCliente implements ActionListener {
 		this.categoria = categoria;
 	}
 
-	public ListaEstadoProducto getEstadoProducto() {
-		return estadoProducto;
-	}
-
-	public void setEstadoProducto(ListaEstadoProducto estadoProducto) {
-		this.estadoProducto = estadoProducto;
-	}
-
 	public ListaEstadoDisponibilidad getEstadoDisponibilidad() {
 		return estadoDisponibilidad;
 	}
@@ -70,9 +65,6 @@ public class ControlRegistrarCliente implements ActionListener {
 	public void setEstadoDisponibilidad(ListaEstadoDisponibilidad estadoDisponibilidad) {
 		this.estadoDisponibilidad = estadoDisponibilidad;
 	}
-	
-
-	
 
 	public RegistrarCliente getRegistrarCliente() {
 		return registrarCliente;
@@ -87,12 +79,12 @@ public class ControlRegistrarCliente implements ActionListener {
 
 		switch (e.getActionCommand()) {
 		case "VOLVER":
-			ejecutarMenuProductos();
+			ejecutarMenuClientes();
 			registrarCliente.setVisible(false);
 			break;
 		case "GUARDAR":
 			cargarDatosProducto();
-			// Primero se debe validar los requeridos			
+			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
 
 				// validar los formatos
@@ -101,21 +93,20 @@ public class ControlRegistrarCliente implements ActionListener {
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
-						// guradar
-						//boolean res = this.producto.crearProducto(producto);
-					//	if (res) {
+						boolean res = this.persona.crearCliente(persona);
+						if (res) {
 							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
-							ejecutarMenuProductos();
+							ejecutarMenuClientes();
 							registrarCliente.setVisible(false);
-				//		} else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Error al ejecutar la operación");
 							ValidarReintentos();
 						}
 					}
-				//} else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
 					ValidarReintentos();
-			//	}
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Todos los campos son requeridos");
 				ValidarReintentos();
@@ -128,11 +119,11 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	}
 
-	public void ejecutarMenuProductos() {
-		MenuProducto menuProducto = new MenuProducto();
-		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
-		menuProducto.setControl(controlMenuProducto);
-		controlMenuProducto.mostrarMenuProducto();
+	public void ejecutarMenuClientes() {
+		MenuCliente menuCliente = new MenuCliente();
+		ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+		menuCliente.setControl(controlMenuClientes);
+		controlMenuClientes.mostrarMenuCliente();
 	}
 
 	public boolean ValidarRequeridos() {
@@ -145,43 +136,54 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	public void ValidarReintentos() {
 		if (this.reintentos > 3) {
-			ejecutarMenuProductos();
+			ejecutarMenuClientes();
 			registrarCliente.setVisible(false);
 		} else {
 			this.reintentos++;
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Persona cargarDatosProducto() {
+
 		this.persona = new Persona();
-		/*this.producto.setIdentificador(this.registrarProducto.getTxfIdentificador().getText());
-		this.producto.setNombre(this.registrarProducto.getTxfNombre().getText());
-		this.producto.setValorAlquilerDia(Float.parseFloat(this.registrarProducto.getTxfValorAlquiler().getText()));
-		this.producto.setValorVenta(Float.parseFloat(this.registrarProducto.getTxfValorVenta().getText()));
-		///Arreglar todo esto 
-		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
-		ListaEstadoProducto listaEstadoProducto = new ListaEstadoProducto();
-		Categoria categoria = new Categoria();
-		
-		this.producto.setEstadoDisponibilidad(listaEstadoDisponibilidad.getlistaEstadoDisponibilidad().get(0));
-		this.producto.setEstadoProducto(listaEstadoProducto.getListaEstadoProducto().get(0));
-		this.producto.setCategoria(categoria.getlistaCategoria().get(0));*/
-		
+		this.persona.setApellidos(this.registrarCliente.getTxfApellidos().getText());
+		this.persona.setCelular(new BigInteger(this.registrarCliente.getTxfCelular().getText()));
+		this.persona.setDireccion(this.registrarCliente.getTxfDireccion().getText());
+		this.persona.setDocumento(new BigInteger(this.registrarCliente.getTxfIdentificacion().getText()));
+		this.persona.setNombres(this.registrarCliente.getTxfNombres().getText());
+		this.persona.setTelefono(new BigInteger(this.registrarCliente.getTxfTelefono().getText()));
+
+		// Todo
+
+		ListaTipoDocumento listaTipoDocumento = new ListaTipoDocumento();
+		ListaTipoPersona listaTipoPersona = new ListaTipoPersona();
+		ListaEstadoPersona listaEstadoPersona = new ListaEstadoPersona();
+
+		this.persona.setTipoDocumento(listaTipoDocumento.getListaTipoDocumento().get(0));
+		this.persona.setTipoPersona(listaTipoPersona.getListaTipoPersona().get(0));
+		this.persona.setEstadoPersona(listaEstadoPersona.getListaEstadoPersona().get(0));
+
 		return this.persona;
 	}
 
+	/**
+	 */
 	public void cargarListaEstadoDiponibilidad() {
 		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
-		
+
 		JComboBox<String> estadoDisponiblidadCombo = new JComboBox<String>();
-		
-		List<ListaEstadoDisponibilidad>   listasEstadoDisponibilidad = listaEstadoDisponibilidad.getlistaEstadoDisponibilidad();
-		
+
+		List<ListaEstadoDisponibilidad> listasEstadoDisponibilidad = listaEstadoDisponibilidad
+				.getlistaEstadoDisponibilidad();
+
 		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
 			estadoDisponiblidadCombo.addItem(estadoDisponibilidad.getNombre());
-		}	
+		}
 
 	}
 
 }
-

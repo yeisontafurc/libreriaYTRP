@@ -23,7 +23,7 @@ import co.mcic.util.Persistencia;
 		@NamedQuery(name = "PersonaALL", query = "select u from Persona u "),
 		@NamedQuery(name = "PersonaByNombre", query = "select u from Persona u where u.nombres =:nombres"),
 		@NamedQuery(name = "PersonaNombreId", query = "select u from Persona u where u.nombres =:nombres and u.documento =:documento"),
-		@NamedQuery(name = "PersonaMaxId", query = "select max(u.idPersona) from Persona u ") })
+		@NamedQuery(name = "PersonaMaxidPersona", query = "select max(u.idPersona) from Persona u ") })
 public class Persona implements Serializable {
 
 	@Id
@@ -152,7 +152,8 @@ public class Persona implements Serializable {
 
 		try {
 			em.getTransaction().begin();
-			persona.idPersona = getMaxId();
+			persona.idPersona = this.getMaxId();
+			System.out.println(persona.idPersona);
 			em.persist(persona);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
@@ -171,7 +172,7 @@ public class Persona implements Serializable {
 		EntityManager em = Persistencia.getEntityManager();
 		Integer id = null;
 		try {
-			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaMaxId", Persona.class);
+			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaMaxidPersona", Persona.class);
 			id = typeQuery.getFirstResult();
 
 		} catch (Exception ex) {
@@ -179,7 +180,7 @@ public class Persona implements Serializable {
 		} finally {
 			em.close();
 		}
-		return id;
+		return id+1;
 	}
 
 	/**

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="LibreriaYTRP">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>co.mcic.dominio.Afiliacion</class>
+		<class>co.mcic.dominio.Categoria</class>
+		<class>co.mcic.dominio.Factura</class>
+		<class>co.mcic.dominio.ListaEstadoDisponibilidad</class>
+		<class>co.mcic.dominio.ListaEstadoPersona</class>
+		<class>co.mcic.dominio.ListaEstadoProducto</class>
+		<class>co.mcic.dominio.ListaPermiso</class>
+		<class>co.mcic.dominio.ListaTipoAfiliacion</class>
+		<class>co.mcic.dominio.ListaTipoDocumento</class>
+		<class>co.mcic.dominio.ListaTipoPago</class>
+		<class>co.mcic.dominio.ListaTipoPersona</class>
+		<class>co.mcic.dominio.ListaTipoTransaccion</class>
+		<class>co.mcic.dominio.Pago</class>
+		<class>co.mcic.dominio.Persona</class>
+		<class>co.mcic.dominio.Producto</class>
+		<class>co.mcic.dominio.Rol</class>
+		<class>co.mcic.dominio.TarjetaCredito</class>
+		<class>co.mcic.dominio.TarjetaDinersClub</class>
+		<class>co.mcic.dominio.TarjetaMastercard</class>
+		<class>co.mcic.dominio.TarjetaVisa</class>
+		<class>co.mcic.dominio.Transaccion</class>
+		<class>co.mcic.dominio.Usuario</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+<!-- 			<property name="hibernate.show_sql" value="true" /> -->
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/libreria?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+			<property name="javax.persistence.jdbc.user" value="libreria" />
+			<property name="javax.persistence.jdbc.password" value="Secret9+" />
+		</properties>
+	</persistence-unit>
+</persistence>

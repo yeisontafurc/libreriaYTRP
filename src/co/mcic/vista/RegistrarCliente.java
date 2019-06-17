@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import co.mcic.ctrl.ControlRegistrarCliente;
 	
 public class RegistrarCliente extends JFrame{
 	
@@ -38,87 +40,87 @@ public class RegistrarCliente extends JFrame{
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblIdentificador = new JLabel("Identificador");
-		lblIdentificador.setBounds(398, 133, 93, 14);
+		lblIdentificador.setBounds(374, 133, 93, 14);
 		getContentPane().add(lblIdentificador);
 		
 		txfIdentificacion = new JTextField();
-		txfIdentificacion.setBounds(480, 130, 197, 20);
+		txfIdentificacion.setBounds(456, 130, 197, 20);
 		getContentPane().add(txfIdentificacion);
 		
 		
 		
 		JLabel lblNombre = new JLabel("Nombres");
-		lblNombre.setBounds(71, 174, 93, 14);
+		lblNombre.setBounds(31, 173, 93, 14);
 		getContentPane().add(lblNombre);
 		
 		
 		JLabel lblValorVenta = new JLabel("Apellidos");
-		lblValorVenta.setBounds(398, 173, 93, 14);
+		lblValorVenta.setBounds(374, 173, 93, 14);
 		getContentPane().add(lblValorVenta);		
 		
 		
 		JLabel lblCategora = new JLabel("Celular");
-		lblCategora.setBounds(70, 212, 93, 14);
+		lblCategora.setBounds(31, 211, 93, 14);
 		getContentPane().add(lblCategora);
 		
 		JLabel lblEstado = new JLabel("Tel\u00E9fono");
-		lblEstado.setBounds(397, 211, 93, 14);
+		lblEstado.setBounds(373, 211, 93, 14);
 		getContentPane().add(lblEstado);
 		
 		JLabel lblDisponibilidad = new JLabel("Disponibilidad");
-		lblDisponibilidad.setBounds(398, 243, 81, 14);
+		lblDisponibilidad.setBounds(374, 243, 81, 14);
 		getContentPane().add(lblDisponibilidad);		
 		
 		cBoxEstado = new JComboBox<String>();		
-		cBoxEstado.setBounds(170, 130, 197, 20);		
+		cBoxEstado.setBounds(158, 130, 197, 20);		
 		getContentPane().add(cBoxEstado);
 		
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setActionCommand("GUARDAR");
-		btnGuardar.setBounds(385, 338, 89, 23);
+		btnGuardar.setBounds(381, 306, 89, 23);
 		getContentPane().add(btnGuardar);
 		
 		btnVolver = new JButton("Volver");
 		btnVolver.setActionCommand("VOLVER");
-		btnVolver.setBounds(267, 338, 89, 23);
+		btnVolver.setBounds(263, 306, 89, 23);
 		getContentPane().add(btnVolver);
 		
 		
 		cBoxEstado = new JComboBox<String>();
-		cBoxEstado.setBounds(481, 240, 197, 20);
+		cBoxEstado.setBounds(457, 240, 197, 20);
 		getContentPane().add(cBoxEstado);
 		
 		JLabel lblTipoDeDocumento = new JLabel("Tipo de documento");
-		lblTipoDeDocumento.setBounds(71, 133, 93, 14);
+		lblTipoDeDocumento.setBounds(31, 133, 122, 14);
 		getContentPane().add(lblTipoDeDocumento);
 		
 		txfNombres = new JTextField();
-		txfNombres.setBounds(170, 171, 197, 20);
+		txfNombres.setBounds(158, 171, 197, 20);
 		getContentPane().add(txfNombres);
 		
 		
 		txfApellidos = new JTextField();
-		txfApellidos.setBounds(480, 171, 197, 20);
+		txfApellidos.setBounds(456, 171, 197, 20);
 		getContentPane().add(txfApellidos);
 		
 		
 		txfCelular = new JTextField();
-		txfCelular.setBounds(170, 209, 197, 20);
+		txfCelular.setBounds(158, 209, 197, 20);
 		getContentPane().add(txfCelular);
 		
 		
 		txfTelefono = new JTextField();
-		txfTelefono.setBounds(480, 209, 197, 20);
+		txfTelefono.setBounds(456, 209, 197, 20);
 		getContentPane().add(txfTelefono);
 		txfTelefono.setColumns(10);
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
-		lblDireccin.setBounds(71, 243, 93, 14);
+		lblDireccin.setBounds(31, 243, 93, 14);
 		getContentPane().add(lblDireccin);
 		
 		txfDireccion = new JTextField();
 		txfDireccion.setColumns(10);
-		txfDireccion.setBounds(171, 240, 197, 20);
+		txfDireccion.setBounds(159, 240, 197, 20);
 		getContentPane().add(txfDireccion);
 		
 	}
@@ -201,5 +203,10 @@ public class RegistrarCliente extends JFrame{
 
 	public void setcBoxTipoDocumento(JComboBox<String> cBoxTipoDocumento) {
 		this.cBoxTipoDocumento = cBoxTipoDocumento;
+	}
+	
+	public void setControl(ControlRegistrarCliente controlRegistrarCliente) {		
+		this.btnVolver.addActionListener(controlRegistrarCliente);
+		this.btnGuardar.addActionListener(controlRegistrarCliente);
 	}
 }

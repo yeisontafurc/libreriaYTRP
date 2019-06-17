@@ -35,22 +35,22 @@ public class MenuCliente extends JFrame{
 		lblNewLabel.setBounds(259, 43, 269, 35);
 		getContentPane().add(lblNewLabel);
 		
-		btnConsultarCliente = new JButton("<html><p>Consultar</p><p>Producto</p></html>");
+		btnConsultarCliente = new JButton("<html><p>Consultar</p><p>Cliente</p></html>");
 		btnConsultarCliente.setBounds(167, 116, 138, 77);
 		btnConsultarCliente.setActionCommand("CONSULTAR");
 		getContentPane().add(btnConsultarCliente);
 		
-		btnRegistrarCliente = new JButton("<html><p>Registrar</p><p>Producto</p></html>");
+		btnRegistrarCliente = new JButton("<html><p>Registrar</p><p>Cliente</p></html>");
 		btnRegistrarCliente.setBounds(396, 116, 138, 77);
 		btnRegistrarCliente.setActionCommand("REGISTRAR");
 		getContentPane().add(btnRegistrarCliente);
 		
-		btnAfiliarCliente = new JButton("<html><p>Editar</p><p>Producto</p></html>");			
+		btnAfiliarCliente = new JButton("<html><p>Afiliar</p><p>Cliente</p></html>");			
 		btnAfiliarCliente.setBounds(167, 232, 138, 77);
 		btnAfiliarCliente.setActionCommand("AFILIAR");
 		getContentPane().add(btnAfiliarCliente);
 		
-		btnEditarCliente = new JButton("<html><p>Editar</p><p>Producto</p></html>");			
+		btnEditarCliente = new JButton("<html><p>Editar</p><p>Cliente</p></html>");			
 		btnEditarCliente.setBounds(396, 232, 138, 77);
 		btnEditarCliente.setActionCommand("EDITAR");
 		getContentPane().add(btnEditarCliente);
@@ -104,9 +104,10 @@ public class MenuCliente extends JFrame{
 	}
 	
 	public void setControl(ControlMenuClientes controlMenuClientes) {
-		/*this.btnConsultarProducto.addActionListener(controlMenuProducto);
-		this.btnRegistrarProducto.addActionListener(controlMenuProducto);
-		this.btnEditarProducto.addActionListener(controlMenuProducto);*/
+		this.btnAfiliarCliente.addActionListener(controlMenuClientes);
+		this.btnConsultarCliente.addActionListener(controlMenuClientes);
+		this.btnRegistrarCliente.addActionListener(controlMenuClientes);
+		this.btnEditarCliente.addActionListener(controlMenuClientes);
 		this.btnVolver.addActionListener(controlMenuClientes);
 		
 	}
