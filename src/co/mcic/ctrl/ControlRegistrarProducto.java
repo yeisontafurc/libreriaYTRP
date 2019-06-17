@@ -86,9 +86,10 @@ public class ControlRegistrarProducto implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "VOLVER":
 			ejecutarMenuProductos();
-			//editarProducto.setVisible(false);
+			registrarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
+			cargarDatosProducto();
 			// Primero se debe validar los requeridos			
 			if (ValidarRequeridos()) {
 
@@ -99,11 +100,11 @@ public class ControlRegistrarProducto implements ActionListener {
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
 						// guradar
-						boolean res = this.producto.actualizarProducto(producto);
+						boolean res = this.producto.crearProducto(producto);
 						if (res) {
 							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
 							ejecutarMenuProductos();
-							//editarProducto.setVisible(false);
+							registrarProducto.setVisible(false);
 						} else {
 							JOptionPane.showMessageDialog(null, "Error al ejecutar la operación");
 							ValidarReintentos();
@@ -143,10 +144,28 @@ public class ControlRegistrarProducto implements ActionListener {
 	public void ValidarReintentos() {
 		if (this.reintentos > 3) {
 			ejecutarMenuProductos();
-			//editarProducto.setVisible(false);
+			registrarProducto.setVisible(false);
 		} else {
 			this.reintentos++;
 		}
+	}
+	
+	public Producto cargarDatosProducto() {
+		this.producto = new Producto();
+		this.producto.setIdentificador(this.registrarProducto.getTxfIdentificador().getText());
+		this.producto.setNombre(this.registrarProducto.getTxfNombre().getText());
+		this.producto.setValorAlquilerDia(Float.parseFloat(this.registrarProducto.getTxfValorAlquiler().getText()));
+		this.producto.setValorVenta(Float.parseFloat(this.registrarProducto.getTxfValorVenta().getText()));
+		///Arreglar todo esto 
+		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
+		ListaEstadoProducto listaEstadoProducto = new ListaEstadoProducto();
+		Categoria categoria = new Categoria();
+		
+		this.producto.setEstadoDisponibilidad(listaEstadoDisponibilidad.getlistaEstadoDisponibilidad().get(0));
+		this.producto.setEstadoProducto(listaEstadoProducto.getListaEstadoProducto().get(0));
+		this.producto.setCategoria(categoria.getlistaCategoria().get(0));
+		
+		return this.producto;
 	}
 
 	public void cargarListaEstadoDiponibilidad() {

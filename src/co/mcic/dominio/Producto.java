@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -20,8 +21,8 @@ import co.mcic.util.Persistencia;
 		@NamedQuery(name = "ProductoById", query = "select u from Producto u where u.identificador =:identificador"),
 		@NamedQuery(name = "ProductoALL", query = "select u from Producto u "),
 		@NamedQuery(name = "ProductoByNombre", query = "select u from Producto u where u.nombre =:nombre"),
-		@NamedQuery(name = "ProductoNombreId", query = "select u from Producto u where u.nombre =:nombre and u.identificador =:identificador")
-		})
+		@NamedQuery(name = "ProductoNombreId", query = "select u from Producto u where u.nombre =:nombre and u.identificador =:identificador"),
+		@NamedQuery(name = "ProductomaxId", query = "select max(u.idProducto) from Producto u ") })
 
 public class Producto implements Serializable {
 
@@ -205,6 +206,7 @@ public class Producto implements Serializable {
 
 		try {
 			em.getTransaction().begin();
+			producto.idProducto = getMaxId();
 			em.persist(producto);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
@@ -213,6 +215,26 @@ public class Producto implements Serializable {
 			em.close();
 		}
 		return true;
+	}
+
+	/**
+	 * 
+	 * @param producto
+	 * @return
+	 */
+	public Integer getMaxId() {
+		EntityManager em = Persistencia.getEntityManager();
+		Integer id = null;
+		try {
+			TypedQuery<Producto> typeQuery = em.createNamedQuery("ProductomaxId", Producto.class);
+			id = typeQuery.getFirstResult();
+
+		} catch (Exception ex) {
+
+		} finally {
+			em.close();
+		}
+		return id;
 	}
 
 	/**
@@ -231,11 +253,11 @@ public class Producto implements Serializable {
 				typeQuery.setParameter("nombre", nombre);
 				typeQuery.setParameter("identificador", identificador);
 				productos = typeQuery.getResultList();
-			}else if (null != nombre && !nombre.isEmpty()) {
+			} else if (null != nombre && !nombre.isEmpty()) {
 				productos = consultarProductoNombre(nombre);
-			}else if(null != identificador && !identificador.isEmpty()){				
-				productos.add(consultarProductoId(identificador));  				
-			}else{
+			} else if (null != identificador && !identificador.isEmpty()) {
+				productos.add(consultarProductoId(identificador));
+			} else {
 				productos = consultarTodos();
 			}
 
