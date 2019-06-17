@@ -1,7 +1,6 @@
 package co.mcic.vista;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -13,6 +12,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 public class Login extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JButton btnNewButton;
