@@ -15,33 +15,35 @@ import javax.persistence.TypedQuery;
 import co.mcic.util.Persistencia;
 
 @Entity
-@NamedQueries({	
-	@NamedQuery(name = "ListaEstadoDisponibilidadALL", query = "select u from ListaEstadoDisponibilidad u ")	
-	})
+@NamedQueries({
+		@NamedQuery(name = "ListaEstadoDisponibilidadALL", query = "select u from ListaEstadoDisponibilidad u "),
+		@NamedQuery(name = "ListaEstadoDisponibilidadByNombre", query = "select led from ListaEstadoDisponibilidad led where led.nombre =:nombre")		
+})
 public class ListaEstadoDisponibilidad implements Serializable {
 
-	   
 	@Id
 	private Integer idEstadoDisponibilidad;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String nombre;
 	private static final long serialVersionUID = 1L;
-	
-	public ListaEstadoDisponibilidad(Integer cod,String nombre) {
+
+	public ListaEstadoDisponibilidad(Integer cod, String nombre) {
 		this.idEstadoDisponibilidad = cod;
 		this.nombre = nombre;
-			}
+	}
 
 	public ListaEstadoDisponibilidad() {
 		super();
-	}   
+	}
+
 	public Integer getIdEstadoDisponibilidad() {
 		return this.idEstadoDisponibilidad;
 	}
 
 	public void setIdEstadoDisponibilidad(Integer idEstadoDisponibilidad) {
 		this.idEstadoDisponibilidad = idEstadoDisponibilidad;
-	}   
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -49,13 +51,14 @@ public class ListaEstadoDisponibilidad implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public List<ListaEstadoDisponibilidad> getlistaEstadoDisponibilidad() {
 
 		EntityManager em = Persistencia.getEntityManager();
 		List<ListaEstadoDisponibilidad> estadoDisponibilidad = new ArrayList<>();
 		try {
-			TypedQuery<ListaEstadoDisponibilidad> typeQuery = em.createNamedQuery("ListaEstadoDisponibilidadALL", ListaEstadoDisponibilidad.class);
+			TypedQuery<ListaEstadoDisponibilidad> typeQuery = em.createNamedQuery("ListaEstadoDisponibilidadALL",
+					ListaEstadoDisponibilidad.class);
 			estadoDisponibilidad = typeQuery.getResultList();
 
 		} catch (Exception ex) {
@@ -65,5 +68,20 @@ public class ListaEstadoDisponibilidad implements Serializable {
 		}
 		return estadoDisponibilidad;
 	}
-   
+
+	/**
+	 * 
+	 * @param nombre
+	 * @return
+	 */
+	public ListaEstadoDisponibilidad getListaEstadoDisponibilidadByNombre(String nombre) {
+		EntityManager em = Persistencia.getEntityManager();
+		ListaEstadoDisponibilidad listaEstadoDisponibilidad = null;
+		TypedQuery<ListaEstadoDisponibilidad> typeQuery = em.createNamedQuery("ListaEstadoDisponibilidadByNombre",
+				ListaEstadoDisponibilidad.class);
+		typeQuery.setParameter("nombre", nombre);
+		listaEstadoDisponibilidad = typeQuery.getSingleResult();
+		return listaEstadoDisponibilidad;
+	}
+
 }

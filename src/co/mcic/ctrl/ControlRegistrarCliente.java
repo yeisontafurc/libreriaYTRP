@@ -149,7 +149,7 @@ public class ControlRegistrarCliente implements ActionListener {
 	 */
 	public Persona cargarDatosProducto() {
 
-		this.persona = new Persona();
+		this.persona = new Persona();		
 		this.persona.setApellidos(this.registrarCliente.getTxfApellidos().getText());
 		this.persona.setCelular(new BigInteger(this.registrarCliente.getTxfCelular().getText()));
 		this.persona.setDireccion(this.registrarCliente.getTxfDireccion().getText());

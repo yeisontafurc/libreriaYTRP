@@ -36,9 +36,8 @@ public class ControlMenuClientes implements ActionListener {
 		case "AFILIAR":
 			
 			break;
-		case "EDITAR":
+		case "EDITAR":			
 			
-			this.menuCliente.setVisible(false);
 			break;
 		case "VOLVER":
 			mostrarMenuPrincipal();

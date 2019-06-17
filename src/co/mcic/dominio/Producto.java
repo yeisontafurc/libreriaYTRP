@@ -21,7 +21,7 @@ import co.mcic.util.Persistencia;
 		@NamedQuery(name = "ProductoALL", query = "select u from Producto u "),
 		@NamedQuery(name = "ProductoByNombre", query = "select u from Producto u where u.nombre =:nombre"),
 		@NamedQuery(name = "ProductoNombreId", query = "select u from Producto u where u.nombre =:nombre and u.identificador =:identificador"),
-		@NamedQuery(name = "ProductomaxId", query = "select max(u.idProducto) from Producto u ") })
+		@NamedQuery(name = "ProductomaxId", query = "select count(u.idProducto) from Producto u ") })
 
 public class Producto implements Serializable {
 
@@ -205,7 +205,7 @@ public class Producto implements Serializable {
 
 		try {
 			em.getTransaction().begin();
-			producto.idProducto = getMaxId()+1;
+			producto.idProducto = getMaxId();
 			em.persist(producto);
 			em.getTransaction().commit();
 		} catch (Exception ex) {
@@ -216,6 +216,7 @@ public class Producto implements Serializable {
 		return true;
 	}
 
+
 	/**
 	 * 
 	 * @param producto
@@ -223,17 +224,17 @@ public class Producto implements Serializable {
 	 */
 	public Integer getMaxId() {
 		EntityManager em = Persistencia.getEntityManager();
-		Integer id = null;
+		Long id = null;
 		try {
-			TypedQuery<Producto> typeQuery = em.createNamedQuery("ProductomaxId", Producto.class);
-			id = typeQuery.getFirstResult();
+			TypedQuery<Long> typeQuery = em.createNamedQuery("ProductomaxId", Long.class);			
+			id = typeQuery.getSingleResult();
 
 		} catch (Exception ex) {
 
 		} finally {
 			em.close();
 		}
-		return id;
+		return (int)(id+1) ;
 	}
 
 	/**

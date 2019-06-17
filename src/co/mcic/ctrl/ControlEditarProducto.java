@@ -28,15 +28,20 @@ public class ControlEditarProducto implements ActionListener {
 		this.setEditarProducto(editarProducto);
 	}
 
+	/**
+	 * 
+	 * @param producto
+	 */
 	public void mostrarEditarProducto(Producto producto) {
 		this.producto = producto;
 		if (this.editarProducto != null) {
 			cargarListaEstadoDiponibilidad();
-			// ListaEstadoDisponibilidad listaEstadoDisponibilidad = new
-			// ListaEstadoDisponibilidad();
+			cargarListaEstadoProducto();
+			cargarListaCategoria();
 
-			// editarProducto.getcBoxEstadoDisponibilidad().addItemListener((ItemListener)
-			// listaEstadoDisponibilidad.getlistaEstadoDisponibilidad().get(0));
+			editarProducto.getcBoxEstadoDisponibilidad()
+					.setSelectedItem(this.producto.getEstadoDisponibilidad().getNombre());
+
 			editarProducto.getTxfIdentificador().setText(this.producto.getIdentificador());
 			editarProducto.getTxfNombre().setText(this.producto.getNombre());
 			editarProducto.getTxfValorAlquiler().setText(this.producto.getValorAlquilerDia().toString());
@@ -133,31 +138,27 @@ public class ControlEditarProducto implements ActionListener {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Producto cargarDatosProducto() {
 
 		this.producto.setNombre(this.editarProducto.getTxfNombre().getText());
 		this.producto.setValorAlquilerDia(Float.parseFloat(this.editarProducto.getTxfValorAlquiler().getText()));
 		this.producto.setValorVenta(Float.parseFloat(this.editarProducto.getTxfValorVenta().getText()));
+		this.producto.setEstadoProducto(this.producto.getEstadoProducto()
+				.getEstadoByNombre(editarProducto.getcBoxEstado().getSelectedItem().toString()));
+		this.producto
+				.setEstadoDisponibilidad(this.producto.getEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre(
+						editarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString()));
+
 		return this.producto;
 	}
 
-	public void cosasConProducto() {
-
-		this.producto.setEstadoDisponibilidad(this.getEstadoDisponibilidad());
-		this.producto.setCategoria(this.getCategoria());
-		this.producto.setEstadoProducto(this.getEstadoProducto());
-		this.producto.setIdentificador("123");
-
-		this.producto = this.producto.consultarProductoId(this.producto.getIdentificador());
-		this.producto.setNombre("Infinity War");
-
-		List<Producto> productos = this.producto.listaProductosNombreId("12", "");
-		System.out.println("Producto: " + productos.size());
-		for (Producto producto : productos) {
-			System.out.println("Productos: " + producto.getNombre());
-		}
-	}
-
+	/**
+	 * 
+	 */
 	public void ejecutarMenuProductos() {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
@@ -173,6 +174,9 @@ public class ControlEditarProducto implements ActionListener {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void ValidarReintentos() {
 		if (this.reintentos > 3) {
 			ejecutarMenuProductos();
@@ -182,18 +186,43 @@ public class ControlEditarProducto implements ActionListener {
 		}
 	}
 
+	/*
+	 * 
+	 */
+	public void cargarListaEstadoProducto() {
+
+		ListaEstadoProducto listaEstadoProducto = new ListaEstadoProducto();
+		List<ListaEstadoProducto> listaEstadoProductos = listaEstadoProducto.getListaEstadoProducto();
+		for (ListaEstadoProducto listaEstadoProducto2 : listaEstadoProductos) {
+			editarProducto.getcBoxEstado().addItem(listaEstadoProducto2.getNombre());
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void cargarListaCategoria() {
+		Categoria categoria = new Categoria();
+		List<Categoria> listaCategoria = categoria.getlistaCategoria();
+
+		for (Categoria categoria2 : listaCategoria) {
+			editarProducto.getcBoxCategoria().addItem(categoria2.getNombre());
+		}
+	}
+
+	/**
+	 * 
+	 */
 	public void cargarListaEstadoDiponibilidad() {
 		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
-		
-		JComboBox<String> estadoDisponiblidadCombo = new JComboBox<String>();
-		
-		List<ListaEstadoDisponibilidad>   listasEstadoDisponibilidad = listaEstadoDisponibilidad.getlistaEstadoDisponibilidad();
-		
-		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
-			estadoDisponiblidadCombo.addItem(estadoDisponibilidad.getNombre());
-		}
-		editarProducto.setcBoxEstadoDisponibilidad(estadoDisponiblidadCombo);		
 
+		List<ListaEstadoDisponibilidad> listasEstadoDisponibilidad = listaEstadoDisponibilidad
+				.getlistaEstadoDisponibilidad();
+
+		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
+
+			editarProducto.getcBoxEstadoDisponibilidad().addItem(estadoDisponibilidad.getNombre());
+		}
 	}
 
 }
