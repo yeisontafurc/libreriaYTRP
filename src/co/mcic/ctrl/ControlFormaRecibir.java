@@ -26,16 +26,32 @@ public class ControlFormaRecibir implements ActionListener {
 		switch(e.getActionCommand()){
 			case "RECIBIR":
 				System.out.println("recibir");
-				this.producto.setValorAlquilerDia(new Float(recibir.getTxtValorAlquiler().getText()));
-				this.producto.setValorVenta(new Float(recibir.getTxtValorVenta().getText()));
+				int countError = 0;
+				try{
+					Float valorAlquiler = new Float(recibir.getTxtValorAlquiler().getText());
+					this.producto.setValorAlquilerDia(valorAlquiler);
+				}catch (NumberFormatException nfe) {
+					JOptionPane.showOptionDialog(null, "Valor alquiler inválido " + nfe.getMessage(), "Verificar valores", JOptionPane.DEFAULT_OPTION,
+					        JOptionPane.ERROR_MESSAGE, null, null, null);
+					countError++;
+				}
+				try{
+					Float valorVenta = new Float(recibir.getTxtValorVenta().getText());
+					this.producto.setValorVenta(valorVenta);	
+				}catch (NumberFormatException nfe) {
+					JOptionPane.showOptionDialog(null, "Valor venta inválido " + nfe.getMessage(), "Verificar valores", JOptionPane.DEFAULT_OPTION,
+					        JOptionPane.ERROR_MESSAGE, null, null, null);
+					countError++;
+				}
 				this.producto.setEstadoProducto(this.producto.getEstadoProducto().getEstadoByNombre(recibir.getComboEstadoProducto().getSelectedItem().toString()));
-				if(this.producto.actualizarProducto(producto)){
+				if(this.producto.actualizarProducto(producto) && countError == 0){
 					JOptionPane.showOptionDialog(null, "Producto actualizado", "Producto actualizado", JOptionPane.DEFAULT_OPTION,
 					        JOptionPane.INFORMATION_MESSAGE, null, null, null);
 					this.recibir.setVisible(false);
 					this.recibirAlquilado.getTxtProducto().setText(null);
 					this.recibirAlquilado.setVisible(true);
 				}
+
 				
 				break;
 			case "VOLVER":
@@ -64,6 +80,7 @@ public class ControlFormaRecibir implements ActionListener {
 				recibir.getComboEstadoProducto().addItem(listaEstadoProducto2.getNombre());
 			}
 		}
+		recibir.getComboEstadoProducto().setSelectedItem(this.producto.getEstadoProducto().getNombre());
 		recibir.setSize(new Dimension(700,413));
 		recibir.setVisible(true);
 	}

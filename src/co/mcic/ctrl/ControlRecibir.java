@@ -37,10 +37,10 @@ public class ControlRecibir implements ActionListener {
 				int res = JOptionPane.showOptionDialog(null, "Producto no encontrado", "Error en producto", JOptionPane.DEFAULT_OPTION,
 				        JOptionPane.INFORMATION_MESSAGE, null, null, null);
 				System.out.println(res);
-				this.alquiler.setVisible(true);
+				break;
+			}else{
 				this.recibirAlquilado.setVisible(false);
 				this.recibirAlquilado.dispose();
-			}else{
 				FormaRecibir recibir = new FormaRecibir();
 				ControlFormaRecibir controlFormaRecibir = new ControlFormaRecibir(recibir);
 				recibir.setControl(controlFormaRecibir);
