@@ -30,7 +30,7 @@ public class MenuCliente extends JFrame{
 	private void initialize() {	
 		getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("PRODUCTOS");
+		JLabel lblNewLabel = new JLabel("CLIENTES");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel.setBounds(259, 43, 269, 35);
 		getContentPane().add(lblNewLabel);
