@@ -16,7 +16,8 @@ import co.mcic.util.Persistencia;
 
 @Entity
 @NamedQueries({	
-	@NamedQuery(name = "ListaEstadoProductoALL", query = "select u from ListaEstadoProducto u ")	
+	@NamedQuery(name = "ListaEstadoProductoALL", query = "select u from ListaEstadoProducto u "),
+	@NamedQuery(name = "ListaEstadoProductoByName", query = "select lep from ListaEstadoProducto lep where lep.nombre =:nombre"),
 	})
 public class ListaEstadoProducto implements Serializable {
 
@@ -62,5 +63,15 @@ public class ListaEstadoProducto implements Serializable {
 		return estado;
 	}
    
+	public ListaEstadoProducto getEstadoByNombre(String nombre){
+		EntityManager em = Persistencia.getEntityManager();
+		TypedQuery<ListaEstadoProducto> typeQuery = em.createNamedQuery("ListaEstadoProductoByName", ListaEstadoProducto.class);
+		typeQuery.setParameter("nombre", nombre);
+		List<ListaEstadoProducto> estadoProducto = typeQuery.getResultList();
+		if(null != estadoProducto){
+			return estadoProducto.get(0);
+		}
+		return null;
+	}
 }
 
