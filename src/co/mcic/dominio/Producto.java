@@ -205,7 +205,7 @@ public class Producto implements Serializable {
 
 		try {
 			em.getTransaction().begin();
-			producto.idProducto = getMaxId();
+			producto.idProducto = getMaxId()+1;
 			em.persist(producto);
 			em.getTransaction().commit();
 		} catch (Exception ex) {

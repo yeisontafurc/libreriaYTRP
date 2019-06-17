@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import co.mcic.vista.ConsultarCliente;
 import co.mcic.vista.ConsultarProductoId;
 import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuPrincipal;
@@ -25,11 +26,11 @@ public class ControlMenuClientes implements ActionListener {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "CONSULTAR":
-			JOptionPane.showMessageDialog(null, "Funcionalidad en construcción");
+			mostrarConsultaClientes();
+			
 			break;
 		case "REGISTRAR":
-			ejecutarRegistrarCliente();
-			this.menuCliente.setVisible(false);
+			mostrarRegistrarCliente();			
 			break;
 		case "AFILIAR":
 			
@@ -55,17 +56,27 @@ public class ControlMenuClientes implements ActionListener {
 		controlMenuPrincipal.mostrarMenuPrincipal();
 		this.menuCliente.setVisible(false);
 	}
+	
+	
+	public void mostrarConsultaClientes() {
+		ConsultarCliente consultarCliente = new ConsultarCliente();
+		ControlConsultarCliente controlMenuPrincipal = new ControlConsultarCliente(consultarCliente);
+		consultarCliente.setControl(controlMenuPrincipal);
+		controlMenuPrincipal.mostrarConsultarCliente();
+		this.menuCliente.setVisible(false);
+	}
 
 	public void mostrarMenuCliente() {
 		this.menuCliente.setVisible(true);
 		this.menuCliente.setSize(new Dimension(702, 486));
 	}
 
-	public void ejecutarRegistrarCliente() {
+	public void mostrarRegistrarCliente() {
 		RegistrarCliente registrarCliente = new RegistrarCliente();
 		ControlRegistrarCliente controlRegistrarCliente = new ControlRegistrarCliente(registrarCliente);
 		registrarCliente.setControl(controlRegistrarCliente);
 		controlRegistrarCliente.mostrarRegistrarCliente();
+		this.menuCliente.setVisible(false);
 	}
 
 }
