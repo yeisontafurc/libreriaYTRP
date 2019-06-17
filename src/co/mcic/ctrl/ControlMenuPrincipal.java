@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuProducto;
 import co.mcic.vista.MenuVentaAlquiler;
@@ -42,7 +43,11 @@ public class ControlMenuPrincipal implements ActionListener{
 			menuPrincipal.setVisible(false);
 			break;
 		case "CLIENTES":
-			System.out.println("Clientes");
+			MenuCliente menuCliente = new MenuCliente();
+			ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+			menuCliente.setControl(controlMenuClientes);
+			controlMenuClientes.mostrarMenuCliente();
+			menuPrincipal.setVisible(false);
 			break;
 		case "SALIR":
 			menuPrincipal.setVisible(false);
