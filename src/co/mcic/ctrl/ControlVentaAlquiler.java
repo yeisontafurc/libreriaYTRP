@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import co.mcic.vista.MenuPrincipal;
-import co.mcic.vista.MenuProducto;
 import co.mcic.vista.MenuVentaAlquiler;
 import co.mcic.vista.RecibirAlquilado;
 

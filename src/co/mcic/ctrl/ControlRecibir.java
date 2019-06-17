@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Producto;
+import co.mcic.vista.FormaRecibir;
 import co.mcic.vista.MenuVentaAlquiler;
 import co.mcic.vista.RecibirAlquilado;
 
@@ -17,6 +18,9 @@ public class ControlRecibir implements ActionListener {
 	private String identificador;
 	private Producto producto;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public ControlRecibir(RecibirAlquilado recibirAlquilado) {
 		this.recibirAlquilado = recibirAlquilado;
 	}
@@ -30,7 +34,19 @@ public class ControlRecibir implements ActionListener {
 			this.producto = new Producto();
 			this.producto = this.producto.consultarProductoId(identificador);
 			if (null == this.producto || !this.producto.getEstadoDisponibilidad().getNombre().equals("Alquilado")) {
-				JOptionPane.showMessageDialog(alquiler, "Producto no alquilado");
+				int res = JOptionPane.showOptionDialog(null, "Producto no encontrado", "Error en producto", JOptionPane.DEFAULT_OPTION,
+				        JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				System.out.println(res);
+				break;
+			}else{
+				this.recibirAlquilado.setVisible(false);
+				this.recibirAlquilado.dispose();
+				FormaRecibir recibir = new FormaRecibir();
+				ControlFormaRecibir controlFormaRecibir = new ControlFormaRecibir(recibir);
+				recibir.setControl(controlFormaRecibir);
+				controlFormaRecibir.setRecibirAlquilado(this.recibirAlquilado);
+				controlFormaRecibir.setProducto(this.producto);
+				controlFormaRecibir.mostrarFormaRecibir();
 			}
 			break;
 		case "VOLVER":

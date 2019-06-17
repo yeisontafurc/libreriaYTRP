@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import co.mcic.ctrl.ControlMenuClientes;
-import co.mcic.ctrl.ControlMenuProducto;
 
 public class MenuCliente extends JFrame{
 
