@@ -30,6 +30,7 @@ public class ControlMenuPrincipal implements ActionListener{
 			MenuProducto menuProducto = new MenuProducto();
 			ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
 			menuProducto.setControl(controlMenuProducto);
+			controlMenuProducto.setMenuPrincipal(this.menuPrincipal);
 			controlMenuProducto.mostrarMenuProducto();
 			menuPrincipal.setVisible(false);
 			break;
@@ -46,6 +47,7 @@ public class ControlMenuPrincipal implements ActionListener{
 			MenuCliente menuCliente = new MenuCliente();
 			ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
 			menuCliente.setControl(controlMenuClientes);
+			controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
 			controlMenuClientes.mostrarMenuCliente();
 			menuPrincipal.setVisible(false);
 			break;

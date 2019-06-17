@@ -14,6 +14,7 @@ import co.mcic.vista.RegistrarProducto;
 public class ControlMenuProducto implements ActionListener {
 
 	private MenuProducto menuProducto;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlMenuProducto(MenuProducto menuProducto) {
 		this.menuProducto = menuProducto;
@@ -49,10 +50,7 @@ public class ControlMenuProducto implements ActionListener {
 	}
 
 	public void mostrarMenuPrincipal() {
-		MenuPrincipal mp = new MenuPrincipal();
-		ControlMenuPrincipal controlMenuPrincipal = new ControlMenuPrincipal(mp);
-		mp.setControl(controlMenuPrincipal);
-		controlMenuPrincipal.mostrarMenuPrincipal();
+		this.menuPrincipal.setVisible(true);
 		this.menuProducto.setVisible(false);
 	}
 
@@ -66,6 +64,10 @@ public class ControlMenuProducto implements ActionListener {
 		ControlRegistrarProducto controlRegistrarProducto = new ControlRegistrarProducto(registrarProducto);
 		registrarProducto.setControl(controlRegistrarProducto);
 		controlRegistrarProducto.mostrarRegistrarProducto();
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
 	}
 
 }
