@@ -225,6 +225,26 @@ public class Persona implements Serializable {
 		}
 		return persona;
 	}
+	
+	public Persona consultaCliente(BigInteger documento, ListaTipoDocumento tipoDocumento) {
+
+		EntityManager em = Persistencia.getEntityManager();
+		try {
+			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaByTipoId", Persona.class);
+			typeQuery.setParameter("documento", documento);
+			typeQuery.setParameter("tipoDocumento", tipoDocumento);
+			List<Persona> personaList = typeQuery.getResultList();
+			if(null != personaList){
+				return personaList.get(0);
+			}
+
+		} catch (Exception ex) {
+
+		} finally {
+			em.close();
+		}
+		return null;
+	}
 
 	/**
 	 * 
