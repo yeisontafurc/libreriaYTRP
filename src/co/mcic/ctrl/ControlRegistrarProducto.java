@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Categoria;
@@ -18,25 +17,28 @@ import co.mcic.vista.RegistrarProducto;
 public class ControlRegistrarProducto implements ActionListener {
 
 	private int reintentos = 1;
-	private Producto producto;
+	private Producto producto = new Producto();
 	private RegistrarProducto registrarProducto;
 	private Categoria categoria;
-	private ListaEstadoProducto estadoProducto;	
+	private ListaEstadoProducto estadoProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
 	public ControlRegistrarProducto(RegistrarProducto registrarProducto) {
 		this.setRegistrarProducto(registrarProducto);
 	}
-	
+
 	public void mostrarRegistrarProducto() {
-		if(null != this.registrarProducto){
-		this.registrarProducto.setVisible(true);
-		this.registrarProducto.setSize(new Dimension(702, 486));
+		if (null != this.registrarProducto) {
+			cargarListaEstadoProducto();
+			cargarListaCategoria();
+			cargarListaEstadoDiponibilidad();
+			this.registrarProducto.setVisible(true);
+			this.registrarProducto.setSize(new Dimension(702, 486));
 		}
 	}
 
 	public void RegistarProducto(Producto producto) {
-		this.producto = producto;		
+		this.producto = producto;
 	}
 
 	public int getReintentos() {
@@ -70,7 +72,6 @@ public class ControlRegistrarProducto implements ActionListener {
 	public void setEstadoDisponibilidad(ListaEstadoDisponibilidad estadoDisponibilidad) {
 		this.estadoDisponibilidad = estadoDisponibilidad;
 	}
-	
 
 	public RegistrarProducto getRegistrarProducto() {
 		return registrarProducto;
@@ -90,7 +91,7 @@ public class ControlRegistrarProducto implements ActionListener {
 			break;
 		case "GUARDAR":
 			cargarDatosProducto();
-			// Primero se debe validar los requeridos			
+			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
 
 				// validar los formatos
@@ -149,37 +150,69 @@ public class ControlRegistrarProducto implements ActionListener {
 			this.reintentos++;
 		}
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Producto cargarDatosProducto() {
-		this.producto = new Producto();
 		this.producto.setIdentificador(this.registrarProducto.getTxfIdentificador().getText());
 		this.producto.setNombre(this.registrarProducto.getTxfNombre().getText());
 		this.producto.setValorAlquilerDia(Float.parseFloat(this.registrarProducto.getTxfValorAlquiler().getText()));
 		this.producto.setValorVenta(Float.parseFloat(this.registrarProducto.getTxfValorVenta().getText()));
-		///Arreglar todo esto 
-		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
-		ListaEstadoProducto listaEstadoProducto = new ListaEstadoProducto();
-		Categoria categoria = new Categoria();
-		
-		this.producto.setEstadoDisponibilidad(listaEstadoDisponibilidad.getlistaEstadoDisponibilidad().get(0));
-		this.producto.setEstadoProducto(listaEstadoProducto.getListaEstadoProducto().get(0));
-		this.producto.setCategoria(categoria.getlistaCategoria().get(0));
-		
+
+		this.producto.setEstadoProducto(this.producto.getEstadoProducto()
+				.getEstadoByNombre(registrarProducto.getcBoxEstado().getSelectedItem().toString()));
+		this.producto
+				.setEstadoDisponibilidad(this.producto.getEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre(
+						registrarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString()));
+		this.producto.setCategoria(this.producto.getCategoria()
+				.getCategoriaByNombre(registrarProducto.getcBoxCategoria().getSelectedItem().toString()));
+
 		return this.producto;
 	}
 
+	/*
+	 * 
+	 */
+	public void cargarListaEstadoProducto() {
+
+		ListaEstadoProducto listaEstadoProducto = new ListaEstadoProducto();
+		List<ListaEstadoProducto> listaEstadoProductos = listaEstadoProducto.getListaEstadoProducto();
+		this.producto.setEstadoProducto(listaEstadoProductos.get(0));
+
+		for (ListaEstadoProducto listaEstadoProducto2 : listaEstadoProductos) {
+			registrarProducto.getcBoxEstado().addItem(listaEstadoProducto2.getNombre());
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void cargarListaCategoria() {
+		Categoria categoria = new Categoria();
+		List<Categoria> listaCategoria = categoria.getlistaCategoria();
+		this.producto.setCategoria(listaCategoria.get(0));
+
+		for (Categoria categoria2 : listaCategoria) {
+			registrarProducto.getcBoxCategoria().addItem(categoria2.getNombre());
+		}
+	}
+
+	/**
+	 * 
+	 */
 	public void cargarListaEstadoDiponibilidad() {
 		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
-		
-		JComboBox<String> estadoDisponiblidadCombo = new JComboBox<String>();
-		
-		List<ListaEstadoDisponibilidad>   listasEstadoDisponibilidad = listaEstadoDisponibilidad.getlistaEstadoDisponibilidad();
-		
-		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
-			estadoDisponiblidadCombo.addItem(estadoDisponibilidad.getNombre());
-		}
-		//editarProducto.setcBoxEstadoDisponibilidad(estadoDisponiblidadCombo);		
 
+		List<ListaEstadoDisponibilidad> listasEstadoDisponibilidad = listaEstadoDisponibilidad
+				.getlistaEstadoDisponibilidad();
+		this.producto.setEstadoDisponibilidad(listasEstadoDisponibilidad.get(0));
+
+		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
+
+			registrarProducto.getcBoxEstadoDisponibilidad().addItem(estadoDisponibilidad.getNombre());
+		}
 	}
 
 }

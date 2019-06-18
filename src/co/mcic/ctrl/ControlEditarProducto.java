@@ -41,6 +41,8 @@ public class ControlEditarProducto implements ActionListener {
 
 			editarProducto.getcBoxEstadoDisponibilidad()
 					.setSelectedItem(this.producto.getEstadoDisponibilidad().getNombre());
+			editarProducto.getcBoxCategoria().setSelectedItem(this.producto.getCategoria().getNombre());
+			editarProducto.getcBoxEstado().setSelectedItem(this.producto.getEstadoProducto().getNombre());
 
 			editarProducto.getTxfIdentificador().setText(this.producto.getIdentificador());
 			editarProducto.getTxfNombre().setText(this.producto.getNombre());
@@ -152,6 +154,8 @@ public class ControlEditarProducto implements ActionListener {
 		this.producto
 				.setEstadoDisponibilidad(this.producto.getEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre(
 						editarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString()));
+		this.producto.setCategoria(this.producto.getCategoria()
+				.getCategoriaByNombre(editarProducto.getcBoxCategoria().getSelectedItem().toString()));
 
 		return this.producto;
 	}

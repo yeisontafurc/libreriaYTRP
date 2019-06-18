@@ -16,7 +16,8 @@ import co.mcic.util.Persistencia;
 
 @Entity
 @NamedQueries({	
-	@NamedQuery(name = "ListaCategoriaALL", query = "select u from Categoria u ")	
+	@NamedQuery(name = "ListaCategoriaALL", query = "select ca from Categoria ca "),
+	@NamedQuery(name = "CategoriaByNombre",query="select ca from Categoria ca where ca.nombre =:nombre")	
 	})
 public class Categoria implements Serializable {
 
@@ -59,6 +60,16 @@ public class Categoria implements Serializable {
 			em.close();
 		}
 		return listaCategoria;
+	}
+	
+	public Categoria getCategoriaByNombre(String nombre){
+		EntityManager em = Persistencia.getEntityManager();
+		Categoria categoria = new Categoria();
+		TypedQuery<Categoria> typedQuery = em.createNamedQuery("CategoriaByNombre",Categoria.class);
+		typedQuery.setParameter("nombre", nombre);
+		categoria = typedQuery.getSingleResult();
+		
+		return categoria;
 	}
    
 }
