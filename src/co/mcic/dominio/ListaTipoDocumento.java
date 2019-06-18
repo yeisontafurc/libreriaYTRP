@@ -9,9 +9,8 @@ import javax.persistence.*;
 import co.mcic.util.Persistencia;
 
 @Entity
-@NamedQueries({	
-	@NamedQuery(name = "ListaTipoDocumentoALL", query = "select u from ListaTipoDocumento u ")	
-	})
+@NamedQueries({ @NamedQuery(name = "ListaTipoDocumentoALL", query = "select u from ListaTipoDocumento u "),
+		@NamedQuery(name = "ListaTipoDocumentoByNombre", query = "select u from ListaTipoDocumento u where u.nombre =:nombre") })
 public class ListaTipoDocumento implements Serializable {
 
 	@Id
@@ -47,18 +46,36 @@ public class ListaTipoDocumento implements Serializable {
 	public List<ListaTipoDocumento> getListaTipoDocumento() {
 
 		EntityManager em = Persistencia.getEntityManager();
-		List<ListaTipoDocumento> listaCategoria = new ArrayList<>();
+		List<ListaTipoDocumento> listatipoDocumento = new ArrayList<>();
 		try {
 			TypedQuery<ListaTipoDocumento> typeQuery = em.createNamedQuery("ListaTipoDocumentoALL",
 					ListaTipoDocumento.class);
-			listaCategoria = typeQuery.getResultList();
+			listatipoDocumento = typeQuery.getResultList();
 
 		} catch (Exception ex) {
 
 		} finally {
 			em.close();
 		}
-		return listaCategoria;
+		return listatipoDocumento;
+	}
+
+	public ListaTipoDocumento getListaTipoDocumentoByNombre(String nombre) {
+
+		EntityManager em = Persistencia.getEntityManager();
+		ListaTipoDocumento tipoDocumento = new ListaTipoDocumento();
+		try {
+			TypedQuery<ListaTipoDocumento> typeQuery = em.createNamedQuery("ListaTipoDocumentoByNombre",
+					ListaTipoDocumento.class);
+			typeQuery.setParameter("nombre", nombre);
+			tipoDocumento = typeQuery.getSingleResult();
+
+		} catch (Exception ex) {
+
+		} finally {
+			em.close();
+		}
+		return tipoDocumento;
 	}
 
 }

@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoPersona;
-import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.ListaTipoDocumento;
 import co.mcic.dominio.ListaTipoPersona;
 import co.mcic.dominio.Persona;
@@ -22,9 +20,9 @@ import co.mcic.vista.RegistrarCliente;
 public class ControlRegistrarCliente implements ActionListener {
 
 	private int reintentos = 1;
-	private Persona persona;
+	private Persona persona = new Persona();
 	private RegistrarCliente registrarCliente;
-	private Categoria categoria;	
+	private Categoria categoria;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
 
 	public ControlRegistrarCliente(RegistrarCliente registrarCliente) {
@@ -33,6 +31,8 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	public void mostrarRegistrarCliente() {
 		if (null != this.registrarCliente) {
+			cargarListaEstadoDiponibilidad();
+			cargarListaTipoDocumento();
 			this.registrarCliente.setVisible(true);
 			this.registrarCliente.setSize(new Dimension(702, 486));
 		}
@@ -83,7 +83,7 @@ public class ControlRegistrarCliente implements ActionListener {
 			registrarCliente.setVisible(false);
 			break;
 		case "GUARDAR":
-			cargarDatosProducto();
+			cargarDatosPersona();
 			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
 
@@ -147,9 +147,7 @@ public class ControlRegistrarCliente implements ActionListener {
 	 * 
 	 * @return
 	 */
-	public Persona cargarDatosProducto() {
-
-		this.persona = new Persona();		
+	public Persona cargarDatosPersona() {
 		this.persona.setApellidos(this.registrarCliente.getTxfApellidos().getText());
 		this.persona.setCelular(new BigInteger(this.registrarCliente.getTxfCelular().getText()));
 		this.persona.setDireccion(this.registrarCliente.getTxfDireccion().getText());
@@ -173,17 +171,27 @@ public class ControlRegistrarCliente implements ActionListener {
 	/**
 	 */
 	public void cargarListaEstadoDiponibilidad() {
-		ListaEstadoDisponibilidad listaEstadoDisponibilidad = new ListaEstadoDisponibilidad();
+		ListaEstadoPersona listaEstado = new ListaEstadoPersona();
 
-		JComboBox<String> estadoDisponiblidadCombo = new JComboBox<String>();
+		List<ListaEstadoPersona> listasEstados = listaEstado.getListaEstadoPersona();
 
-		List<ListaEstadoDisponibilidad> listasEstadoDisponibilidad = listaEstadoDisponibilidad
-				.getlistaEstadoDisponibilidad();
+		this.persona.setEstadoPersona(listasEstados.get(0));
 
-		for (ListaEstadoDisponibilidad estadoDisponibilidad : listasEstadoDisponibilidad) {
-			estadoDisponiblidadCombo.addItem(estadoDisponibilidad.getNombre());
+		for (ListaEstadoPersona estado : listasEstados) {
+			this.registrarCliente.getcBoxEstado().addItem(estado.getNombre());
 		}
 
+	}
+
+	public void cargarListaTipoDocumento() {
+		ListaTipoDocumento listaTipoDocumento = new ListaTipoDocumento();
+		List<ListaTipoDocumento> listaTipoDocumentos = listaTipoDocumento.getListaTipoDocumento();
+		this.persona.setTipoDocumento(listaTipoDocumentos.get(0));
+		for (ListaTipoDocumento tipoDocumento : listaTipoDocumentos) {
+			if (null != tipoDocumento && null != tipoDocumento.getNombre()) {
+				this.registrarCliente.getcBoxTipoDocumento().addItem(tipoDocumento.getNombre());
+			}
+		}
 	}
 
 }

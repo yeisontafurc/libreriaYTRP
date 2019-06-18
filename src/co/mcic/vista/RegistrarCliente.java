@@ -67,13 +67,13 @@ public class RegistrarCliente extends JFrame{
 		lblEstado.setBounds(373, 211, 93, 14);
 		getContentPane().add(lblEstado);
 		
-		JLabel lblDisponibilidad = new JLabel("Disponibilidad");
+		JLabel lblDisponibilidad = new JLabel("Estado");
 		lblDisponibilidad.setBounds(374, 243, 81, 14);
 		getContentPane().add(lblDisponibilidad);		
 		
-		cBoxEstado = new JComboBox<String>();		
-		cBoxEstado.setBounds(158, 130, 197, 20);		
-		getContentPane().add(cBoxEstado);
+		cBoxTipoDocumento = new JComboBox<String>();		
+		cBoxTipoDocumento.setBounds(158, 130, 197, 20);		
+		getContentPane().add(cBoxTipoDocumento);
 		
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setActionCommand("GUARDAR");

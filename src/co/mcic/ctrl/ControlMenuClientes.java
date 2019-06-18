@@ -4,14 +4,11 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
 import co.mcic.vista.ConsultarCliente;
-import co.mcic.vista.ConsultarProductoId;
+import co.mcic.vista.ConsultarClienteId;
 import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.RegistrarCliente;
-import co.mcic.vista.RegistrarProducto;
 
 public class ControlMenuClientes implements ActionListener {
 
@@ -37,7 +34,7 @@ public class ControlMenuClientes implements ActionListener {
 			
 			break;
 		case "EDITAR":			
-			
+			mostrarConsultaClientesId();
 			break;
 		case "VOLVER":
 			mostrarMenuPrincipal();
@@ -55,11 +52,19 @@ public class ControlMenuClientes implements ActionListener {
 	}
 	
 	
+	public void mostrarConsultaClientesId() {
+		ConsultarClienteId consultarCliente = new ConsultarClienteId();
+		ControlConsultarClienteId controlConsultarClienteId = new ControlConsultarClienteId(consultarCliente);
+		consultarCliente.setControl(controlConsultarClienteId);
+		controlConsultarClienteId.mostrarConsultarClienteId();
+		this.menuCliente.setVisible(false);
+	}
+	
 	public void mostrarConsultaClientes() {
 		ConsultarCliente consultarCliente = new ConsultarCliente();
-		ControlConsultarCliente controlMenuPrincipal = new ControlConsultarCliente(consultarCliente);
-		consultarCliente.setControl(controlMenuPrincipal);
-		controlMenuPrincipal.mostrarConsultarCliente();
+		ControlConsultarCliente controlConsultarCliente = new ControlConsultarCliente(consultarCliente);
+		consultarCliente.setControl(controlConsultarCliente);
+		controlConsultarCliente.mostrarConsultarCliente();
 		this.menuCliente.setVisible(false);
 	}
 
