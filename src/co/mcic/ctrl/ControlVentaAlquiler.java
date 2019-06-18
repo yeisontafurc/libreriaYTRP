@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuVentaAlquiler;
 import co.mcic.vista.RecibirAlquilado;
+import co.mcic.vista.VentaUbicaCliente;
 
 public class ControlVentaAlquiler implements ActionListener {
 
@@ -31,6 +32,13 @@ public class ControlVentaAlquiler implements ActionListener {
 			break;
 		case "VENTA":
 			System.out.println("VENTA");
+			VentaUbicaCliente ventaUbicaCliente = new VentaUbicaCliente();
+			ControlVentaCliente controlVentaCliente = new ControlVentaCliente(ventaUbicaCliente);
+			ventaUbicaCliente.setControl(controlVentaCliente);
+			controlVentaCliente.setVolver(this.mva);
+			this.mva.setVisible(false);
+			this.mva.dispose();
+			controlVentaCliente.mostrarVentaCliente();
 			break;
 		case "VOLVER":
 			System.out.println("VOLVER");

@@ -23,7 +23,9 @@ import co.mcic.util.Persistencia;
 		@NamedQuery(name = "PersonaALL", query = "select u from Persona u "),
 		@NamedQuery(name = "PersonaByNombre", query = "select u from Persona u where u.nombres =:nombres"),
 		@NamedQuery(name = "PersonaNombreId", query = "select u from Persona u where u.nombres =:nombres and u.documento =:documento"),
-		@NamedQuery(name = "PersonaMaxidPersona", query = "select count(u.idPersona) from Persona u ") })
+		@NamedQuery(name = "PersonaMaxidPersona", query = "select count(u.idPersona) from Persona u "),
+		@NamedQuery(name = "PersonaByTipoId", query = "select u from Persona u where u.documento =:documento and u.tipoDocumento =:tipoDocumento")
+		})
 public class Persona implements Serializable {
 
 	@Id
@@ -223,6 +225,26 @@ public class Persona implements Serializable {
 			em.close();
 		}
 		return persona;
+	}
+	
+	public Persona consultaCliente(BigInteger documento, ListaTipoDocumento tipoDocumento) {
+
+		EntityManager em = Persistencia.getEntityManager();
+		try {
+			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaByTipoId", Persona.class);
+			typeQuery.setParameter("documento", documento);
+			typeQuery.setParameter("tipoDocumento", tipoDocumento);
+			List<Persona> personaList = typeQuery.getResultList();
+			if(null != personaList){
+				return personaList.get(0);
+			}
+
+		} catch (Exception ex) {
+
+		} finally {
+			em.close();
+		}
+		return null;
 	}
 
 	/**
