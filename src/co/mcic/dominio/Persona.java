@@ -230,7 +230,7 @@ public class Persona implements Serializable {
 
 		EntityManager em = Persistencia.getEntityManager();
 		try {
-			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaByTipoId", Persona.class);
+			TypedQuery<Persona> typeQuery = em.createNamedQuery("PersonaTipoDocumentoDocumento", Persona.class);
 			typeQuery.setParameter("documento", documento);
 			typeQuery.setParameter("tipoDocumento", tipoDocumento);
 			List<Persona> personaList = typeQuery.getResultList();
