@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import co.mcic.dominio.ListaTipoDocumento;
 import co.mcic.dominio.Persona;
 import co.mcic.vista.ConsultarClienteId;
+import co.mcic.vista.EditarCliente;
 
 public class ControlConsultarClienteId implements ActionListener {
 	private Persona persona = new Persona();
@@ -41,8 +42,7 @@ public class ControlConsultarClienteId implements ActionListener {
 					new BigInteger(consultarClienteId.getTxtIdentificador().getText()));
 
 			if (null != this.persona && null != this.persona.getNombres() && !this.persona.getNombres().isEmpty()) {
-				ejecutarEditarPersona(this.persona);
-				JOptionPane.showMessageDialog(null, "Cliente si encontrado");
+				ejecutarEditarPersona(this.persona);				
 				consultarClienteId.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(null, "Cliente no encontrado");
@@ -77,6 +77,11 @@ public class ControlConsultarClienteId implements ActionListener {
 	}
 
 	public void ejecutarEditarPersona(Persona persona) {
+
+		EditarCliente editarCliente = new EditarCliente();
+		ControlEditarCliente controlEditarrCliente = new ControlEditarCliente(editarCliente);
+		editarCliente.setControl(controlEditarrCliente);
+		controlEditarrCliente.mostrarRegistrarCliente();		
 
 	}
 

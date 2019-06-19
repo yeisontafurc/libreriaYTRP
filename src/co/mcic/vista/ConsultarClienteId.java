@@ -31,7 +31,7 @@ public class ConsultarClienteId extends JFrame {
 		getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Ingrese tipo y número de documento del cliente");
-		lblNewLabel_1.setBounds(120, 117, 247, 14);
+		lblNewLabel_1.setBounds(120, 117, 516, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblIdentificador = new JLabel("Identificador");
