@@ -81,7 +81,7 @@ public class ControlConsultarClienteId implements ActionListener {
 		EditarCliente editarCliente = new EditarCliente();
 		ControlEditarCliente controlEditarrCliente = new ControlEditarCliente(editarCliente);
 		editarCliente.setControl(controlEditarrCliente);
-		controlEditarrCliente.mostrarRegistrarCliente();		
+		controlEditarrCliente.mostrarRegistrarCliente(this.persona);		
 
 	}
 

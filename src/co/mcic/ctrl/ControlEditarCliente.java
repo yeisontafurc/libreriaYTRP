@@ -30,10 +30,21 @@ public class ControlEditarCliente implements ActionListener {
 		this.setEditarCliente(editarCliente);
 	}
 
-	public void mostrarRegistrarCliente() {
+	public void mostrarRegistrarCliente(Persona persona) {
 		if (null != this.editarCliente) {
 			cargarListaEstadoDiponibilidad();
 			cargarListaTipoDocumento();
+
+			this.persona = persona;
+			this.editarCliente.getTxfNombres().setText(this.persona.getNombres());
+			this.editarCliente.getTxfIdentificacion().setText(this.persona.getDocumento().toString());
+			this.editarCliente.getTxfApellidos().setText(this.persona.getApellidos());
+			this.editarCliente.getTxfCelular().setText(this.persona.getCelular().toString());
+			this.editarCliente.getTxfTelefono().setText(this.persona.getTelefono().toString());
+			this.editarCliente.getTxfDireccion().setText(this.persona.getDireccion());
+			this.editarCliente.getcBoxTipoDocumento().setSelectedItem(this.persona.getTipoDocumento().getNombre());
+			this.editarCliente.getcBoxEstado().setSelectedItem(this.persona.getEstadoPersona().getNombre());
+
 			this.editarCliente.setVisible(true);
 			this.editarCliente.setSize(new Dimension(702, 486));
 		}
@@ -67,8 +78,6 @@ public class ControlEditarCliente implements ActionListener {
 		this.estadoDisponibilidad = estadoDisponibilidad;
 	}
 
-	
-
 	public EditarCliente getEditarCliente() {
 		return editarCliente;
 	}
@@ -96,7 +105,7 @@ public class ControlEditarCliente implements ActionListener {
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
-						boolean res = this.persona.crearCliente(persona);
+						boolean res = this.persona.actualizarCliente(this.persona);
 						if (res) {
 							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
 							ejecutarMenuClientes();
@@ -158,15 +167,14 @@ public class ControlEditarCliente implements ActionListener {
 		this.persona.setNombres(this.editarCliente.getTxfNombres().getText());
 		this.persona.setTelefono(new BigInteger(this.editarCliente.getTxfTelefono().getText()));
 
-		// Todo
+		this.persona.setEstadoPersona(new ListaEstadoPersona()
+				.getListaEstadoPersonaByNombre(this.editarCliente.getcBoxEstado().getSelectedItem().toString()));
 
-		ListaTipoDocumento listaTipoDocumento = new ListaTipoDocumento();
-		ListaTipoPersona listaTipoPersona = new ListaTipoPersona();
-		ListaEstadoPersona listaEstadoPersona = new ListaEstadoPersona();
-
-		this.persona.setTipoDocumento(listaTipoDocumento.getListaTipoDocumento().get(0));
-		this.persona.setTipoPersona(listaTipoPersona.getListaTipoPersona().get(0));
-		this.persona.setEstadoPersona(listaEstadoPersona.getListaEstadoPersona().get(0));
+		this.persona.setTipoDocumento(new ListaTipoDocumento()
+				.getListaTipoDocumentoByNombre(this.editarCliente.getcBoxTipoDocumento().getSelectedItem().toString()));
+		// Dado que la funcionalidad es solo para Vendedores solo se va a
+		// permitir registrar personas tipo externo
+		this.persona.setTipoPersona(new ListaTipoPersona().getListaTipoPersonaByNombre("Externo"));
 
 		return this.persona;
 	}
@@ -175,7 +183,6 @@ public class ControlEditarCliente implements ActionListener {
 	 */
 	public void cargarListaEstadoDiponibilidad() {
 		ListaEstadoPersona listaEstado = new ListaEstadoPersona();
-
 		List<ListaEstadoPersona> listasEstados = listaEstado.getListaEstadoPersona();
 
 		this.persona.setEstadoPersona(listasEstados.get(0));
