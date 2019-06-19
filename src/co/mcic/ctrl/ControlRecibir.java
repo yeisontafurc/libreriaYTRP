@@ -34,9 +34,8 @@ public class ControlRecibir implements ActionListener {
 			this.producto = new Producto();
 			this.producto = this.producto.consultarProductoId(identificador);
 			if (null == this.producto || !this.producto.getEstadoDisponibilidad().getNombre().equals("Alquilado")) {
-				int res = JOptionPane.showOptionDialog(null, "Producto no encontrado", "Error en producto", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.showOptionDialog(null, "Producto no encontrado", "Error en producto", JOptionPane.DEFAULT_OPTION,
 				        JOptionPane.INFORMATION_MESSAGE, null, null, null);
-				System.out.println(res);
 				break;
 			}else{
 				this.recibirAlquilado.setVisible(false);

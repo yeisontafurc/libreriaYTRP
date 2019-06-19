@@ -1,12 +1,24 @@
 package co.mcic.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.TypedQuery;
+
+import co.mcic.util.Persistencia;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "ListaTipoTransaccionById", query = "select u from ListaTipoTransaccion u where u.idTipoTx =:idTipoTx"),
+	@NamedQuery(name = "ListaTipoTransaccionALL", query = "select u from ListaTipoTransaccion u ")
+	 })
 public class ListaTipoTransaccion implements Serializable {
 
 	   
@@ -32,6 +44,14 @@ public class ListaTipoTransaccion implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public List<ListaTipoTransaccion> getListaTipoTransaccion(){
+		EntityManager em = Persistencia.getEntityManager();
+		List<ListaTipoTransaccion> tipoTx = new ArrayList<>();
+		TypedQuery<ListaTipoTransaccion> typeQuery = em.createNamedQuery("ListaTipoTransaccionALL",ListaTipoTransaccion.class);
+		tipoTx = typeQuery.getResultList();
+		return tipoTx;
 	}
    
 }

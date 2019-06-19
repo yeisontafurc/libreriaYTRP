@@ -15,7 +15,7 @@ public class BuscarProductoVenta extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField txtCliente;
-	private JTextField textField;
+	private JTextField txtId;
 	private JButton btnBuscar, btnVolver;
 	public BuscarProductoVenta() {
 		getContentPane().setLayout(null);
@@ -45,10 +45,10 @@ public class BuscarProductoVenta extends JFrame {
 		lblProducto.setBounds(98, 174, 69, 25);
 		getContentPane().add(lblProducto);
 		
-		textField = new JTextField();
-		textField.setBounds(259, 176, 180, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtId = new JTextField();
+		txtId.setBounds(259, 176, 180, 20);
+		getContentPane().add(txtId);
+		txtId.setColumns(10);
 		
 		this.btnBuscar = new JButton("Buscar");
 		this.btnBuscar.setActionCommand("BUSCAR");
@@ -59,6 +59,38 @@ public class BuscarProductoVenta extends JFrame {
 		this.btnVolver.setActionCommand("VOLVER");
 		this.btnVolver.setBounds(259, 228, 89, 23);
 		getContentPane().add(this.btnVolver);
+	}
+
+	public JTextField getTxtCliente() {
+		return txtCliente;
+	}
+
+	public void setTxtCliente(JTextField txtCliente) {
+		this.txtCliente = txtCliente;
+	}
+
+	public JTextField getTxtId() {
+		return txtId;
+	}
+
+	public void setTxtId(JTextField textField) {
+		this.txtId = textField;
+	}
+
+	public JButton getBtnBuscar() {
+		return btnBuscar;
+	}
+
+	public void setBtnBuscar(JButton btnBuscar) {
+		this.btnBuscar = btnBuscar;
+	}
+
+	public JButton getBtnVolver() {
+		return btnVolver;
+	}
+
+	public void setBtnVolver(JButton btnVolver) {
+		this.btnVolver = btnVolver;
 	}
 
 	public void setControl(ControlBuscarProducto consultarBuscarProducto) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="LibreriaYTRP">
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>		
 		<class>co.mcic.dominio.Afiliacion</class>
 		<class>co.mcic.dominio.Categoria</class>
 		<class>co.mcic.dominio.Factura</class>
@@ -25,6 +25,7 @@
 		<class>co.mcic.dominio.Transaccion</class>
 		<class>co.mcic.dominio.Usuario</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
 <!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
 <!-- 			<property name="hibernate.show_sql" value="true" /> -->

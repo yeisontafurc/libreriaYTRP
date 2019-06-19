@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import co.mcic.dominio.Usuario;
 import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuVentaAlquiler;
 import co.mcic.vista.RecibirAlquilado;
@@ -13,6 +14,11 @@ public class ControlVentaAlquiler implements ActionListener {
 
 	private MenuVentaAlquiler mva;
 	private MenuPrincipal menuPrincipal;
+	private Usuario usuario;
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
 	public ControlVentaAlquiler(MenuVentaAlquiler mva) {
 		this.mva = mva;
 	}
@@ -36,6 +42,7 @@ public class ControlVentaAlquiler implements ActionListener {
 			ControlVentaCliente controlVentaCliente = new ControlVentaCliente(ventaUbicaCliente);
 			ventaUbicaCliente.setControl(controlVentaCliente);
 			controlVentaCliente.setVolver(this.mva);
+			controlVentaCliente.setUsuario(usuario);
 			this.mva.setVisible(false);
 			this.mva.dispose();
 			controlVentaCliente.mostrarVentaCliente();
@@ -59,6 +66,10 @@ public class ControlVentaAlquiler implements ActionListener {
 
 	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
 		this.menuPrincipal = menuPrincipal;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

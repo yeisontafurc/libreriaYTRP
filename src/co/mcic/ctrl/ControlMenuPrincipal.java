@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import co.mcic.dominio.Usuario;
 import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuProducto;
@@ -12,6 +13,7 @@ import co.mcic.vista.MenuVentaAlquiler;
 public class ControlMenuPrincipal implements ActionListener{
 
 	private MenuPrincipal menuPrincipal;
+	private Usuario usuario;
 	
 	public ControlMenuPrincipal(MenuPrincipal mp) {
 		this.menuPrincipal = mp;
@@ -40,6 +42,7 @@ public class ControlMenuPrincipal implements ActionListener{
 			ControlVentaAlquiler ventaAlquiler = new ControlVentaAlquiler(mva);
 			mva.setControl(ventaAlquiler);
 			ventaAlquiler.setMenuPrincipal(this.menuPrincipal);
+			ventaAlquiler.setUsuario(usuario);
 			ventaAlquiler.mostrarVentaAlquiler();
 			menuPrincipal.setVisible(false);
 			break;
@@ -59,6 +62,15 @@ public class ControlMenuPrincipal implements ActionListener{
 			System.out.println("El msj en realidad fue:" + e.getActionCommand());
 			break;
 		}
+	}
+
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }
