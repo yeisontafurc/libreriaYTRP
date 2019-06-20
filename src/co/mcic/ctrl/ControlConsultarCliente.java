@@ -7,17 +7,17 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTable;
-
 import co.mcic.dominio.Persona;
 import co.mcic.vista.ConsultarCliente;
 import co.mcic.vista.MenuCliente;
+import co.mcic.vista.MenuPrincipal;
 
 public class ControlConsultarCliente implements ActionListener {
 
-	ConsultarCliente consultarCliente;
-	List<Persona> listaPersonas = new ArrayList<Persona>();
-	Persona persona = new Persona();
+	private ConsultarCliente consultarCliente;
+	private List<Persona> listaPersonas = new ArrayList<Persona>();
+	private Persona persona = new Persona();
+	private MenuPrincipal menuPrincipal;
 
 	public ControlConsultarCliente(ConsultarCliente consultarCliente) {
 		this.consultarCliente = consultarCliente;
@@ -52,8 +52,13 @@ public class ControlConsultarCliente implements ActionListener {
 	public void ejecutarMenuClientes() {
 		MenuCliente menuCliente = new MenuCliente();
 		ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+		controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
 		menuCliente.setControl(controlMenuClientes);
 		controlMenuClientes.mostrarMenuCliente();
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
 	}
 
 	/**
@@ -62,7 +67,8 @@ public class ControlConsultarCliente implements ActionListener {
 	public void buscarClientes() {
 
 		BigInteger identificacion = new BigInteger("0");
-		if (null != consultarCliente.getTxfIdentificacion().getText() && !consultarCliente.getTxfIdentificacion().getText().isEmpty()) {
+		if (null != consultarCliente.getTxfIdentificacion().getText()
+				&& !consultarCliente.getTxfIdentificacion().getText().isEmpty()) {
 			identificacion = new BigInteger(consultarCliente.getTxfIdentificacion().getText());
 		}
 		listaPersonas = this.persona.listaClientes(identificacion, consultarCliente.getTxfNombres().getText());
@@ -72,11 +78,9 @@ public class ControlConsultarCliente implements ActionListener {
 		}
 		mostrarTabla();
 	}
-	
-	public void mostrarTabla(){
-		
-        
+
+	public void mostrarTabla() {
+
 	}
-	
 
 }

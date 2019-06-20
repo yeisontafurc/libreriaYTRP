@@ -15,6 +15,7 @@ import co.mcic.dominio.ListaTipoDocumento;
 import co.mcic.dominio.ListaTipoPersona;
 import co.mcic.dominio.Persona;
 import co.mcic.vista.MenuCliente;
+import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.RegistrarCliente;
 
 public class ControlRegistrarCliente implements ActionListener {
@@ -24,6 +25,7 @@ public class ControlRegistrarCliente implements ActionListener {
 	private RegistrarCliente registrarCliente;
 	private Categoria categoria;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlRegistrarCliente(RegistrarCliente registrarCliente) {
 		this.setRegistrarCliente(registrarCliente);
@@ -119,9 +121,14 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	}
 
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+	}
+
 	public void ejecutarMenuClientes() {
 		MenuCliente menuCliente = new MenuCliente();
 		ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+		controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
 		menuCliente.setControl(controlMenuClientes);
 		controlMenuClientes.mostrarMenuCliente();
 	}

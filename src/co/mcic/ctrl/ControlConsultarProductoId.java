@@ -16,23 +16,22 @@ public class ControlConsultarProductoId implements ActionListener {
 
 	private int reintentos = 1;
 	ConsultarProductoId consultarProductoId;
-	private Producto producto;	
+	private Producto producto;
 	private String identificador;
 	private MenuPrincipal menuPrincipal;
-	
-	
+
 	public ControlConsultarProductoId(ConsultarProductoId consultarProductoId) {
 		this.setConsultarProductoId(consultarProductoId);
 		this.producto = new Producto();
 	}
-	
+
 	public void mostrarConsultarProductoId() {
-		if(null != this.consultarProductoId){
-		this.consultarProductoId.setVisible(true);
-		this.consultarProductoId.setSize(new Dimension(702, 486));
+		if (null != this.consultarProductoId) {
+			this.consultarProductoId.setVisible(true);
+			this.consultarProductoId.setSize(new Dimension(702, 486));
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -43,8 +42,8 @@ public class ControlConsultarProductoId implements ActionListener {
 			if (null != this.producto && !this.producto.getNombre().isEmpty()) {
 				ejecutarEditarProducto(this.producto);
 				consultarProductoId.setVisible(false);
-			}else{
-				JOptionPane.showMessageDialog(null, "Producto no encontrado");				
+			} else {
+				JOptionPane.showMessageDialog(null, "Producto no encontrado");
 				this.producto = new Producto();
 				ValidarReintentos();
 			}
@@ -91,7 +90,7 @@ public class ControlConsultarProductoId implements ActionListener {
 	public void setIdentificador(String identificador) {
 		this.identificador = identificador;
 	}
-	
+
 	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
 		this.menuPrincipal = menuPrincipal;
 	}
@@ -107,8 +106,9 @@ public class ControlConsultarProductoId implements ActionListener {
 	public void ejecutarEditarProducto(Producto producto) {
 		EditarProducto editarProducto = new EditarProducto();
 		ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
-		editarProducto.setControl(controlEditarProducto);		
-		controlEditarProducto.mostrarEditarProducto(producto);		
+		editarProducto.setControl(controlEditarProducto);
+		controlEditarProducto.setMenuPrincipal(this.menuPrincipal);
+		controlEditarProducto.mostrarEditarProducto(producto);
 	}
 
 	public boolean ValidarRequeridos() {

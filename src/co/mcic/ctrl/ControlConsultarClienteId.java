@@ -12,11 +12,14 @@ import co.mcic.dominio.ListaTipoDocumento;
 import co.mcic.dominio.Persona;
 import co.mcic.vista.ConsultarClienteId;
 import co.mcic.vista.EditarCliente;
+import co.mcic.vista.MenuCliente;
+import co.mcic.vista.MenuPrincipal;
 
 public class ControlConsultarClienteId implements ActionListener {
 	private Persona persona = new Persona();
 	private ControlConsultarClienteId controConsultarClienteId;
 	private ConsultarClienteId consultarClienteId;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlConsultarClienteId(ConsultarClienteId consultarClienteId) {
 		this.consultarClienteId = consultarClienteId;
@@ -42,7 +45,7 @@ public class ControlConsultarClienteId implements ActionListener {
 					new BigInteger(consultarClienteId.getTxtIdentificador().getText()));
 
 			if (null != this.persona && null != this.persona.getNombres() && !this.persona.getNombres().isEmpty()) {
-				ejecutarEditarPersona(this.persona);				
+				ejecutarEditarPersona(this.persona);
 				consultarClienteId.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(null, "Cliente no encontrado");
@@ -81,12 +84,17 @@ public class ControlConsultarClienteId implements ActionListener {
 		EditarCliente editarCliente = new EditarCliente();
 		ControlEditarCliente controlEditarrCliente = new ControlEditarCliente(editarCliente);
 		editarCliente.setControl(controlEditarrCliente);
-		controlEditarrCliente.mostrarRegistrarCliente(this.persona);		
+		controlEditarrCliente.setMenuPrincipal(this.menuPrincipal);
+		controlEditarrCliente.mostrarRegistrarCliente(this.persona);
 
 	}
 
 	public void ejecutarMenuClientes() {
-
+		MenuCliente menuCliente = new MenuCliente();
+		ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+		controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
+		menuCliente.setControl(controlMenuClientes);
+		controlMenuClientes.mostrarMenuCliente();
 	}
 
 	public void cargarListaTipoDocumento() {
@@ -98,6 +106,10 @@ public class ControlConsultarClienteId implements ActionListener {
 				this.consultarClienteId.getcBoxTipoDocumento().addItem(tipoDocumento.getNombre());
 			}
 		}
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
 	}
 
 }

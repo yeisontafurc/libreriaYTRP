@@ -17,6 +17,7 @@ import co.mcic.dominio.ListaTipoPersona;
 import co.mcic.dominio.Persona;
 import co.mcic.vista.EditarCliente;
 import co.mcic.vista.MenuCliente;
+import co.mcic.vista.MenuPrincipal;
 
 public class ControlEditarCliente implements ActionListener {
 
@@ -25,6 +26,7 @@ public class ControlEditarCliente implements ActionListener {
 	private EditarCliente editarCliente;
 	private Categoria categoria;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlEditarCliente(EditarCliente editarCliente) {
 		this.setEditarCliente(editarCliente);
@@ -135,6 +137,7 @@ public class ControlEditarCliente implements ActionListener {
 		MenuCliente menuCliente = new MenuCliente();
 		ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
 		menuCliente.setControl(controlMenuClientes);
+		controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
 		controlMenuClientes.mostrarMenuCliente();
 	}
 
@@ -202,6 +205,10 @@ public class ControlEditarCliente implements ActionListener {
 				this.editarCliente.getcBoxTipoDocumento().addItem(tipoDocumento.getNombre());
 			}
 		}
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
 	}
 
 }

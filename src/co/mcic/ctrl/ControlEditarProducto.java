@@ -12,6 +12,7 @@ import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
 import co.mcic.vista.EditarProducto;
+import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuProducto;
 
 public class ControlEditarProducto implements ActionListener {
@@ -22,6 +23,7 @@ public class ControlEditarProducto implements ActionListener {
 	private ListaEstadoProducto estadoProducto;
 	private EditarProducto editarProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlEditarProducto(EditarProducto editarProducto) {
 		this.setEditarProducto(editarProducto);
@@ -157,6 +159,10 @@ public class ControlEditarProducto implements ActionListener {
 
 		return this.producto;
 	}
+	
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+	}
 
 	/**
 	 * 
@@ -165,6 +171,7 @@ public class ControlEditarProducto implements ActionListener {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
 		menuProducto.setControl(controlMenuProducto);
+		controlMenuProducto.setMenuPrincipal(this.menuPrincipal);
 		controlMenuProducto.mostrarMenuProducto();
 	}
 

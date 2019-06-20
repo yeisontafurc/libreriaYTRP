@@ -12,7 +12,7 @@ import co.mcic.vista.RegistrarCliente;
 
 public class ControlMenuClientes implements ActionListener {
 
-	private MenuCliente menuCliente; 
+	private MenuCliente menuCliente;
 	private MenuPrincipal menuPrincipal;
 
 	public ControlMenuClientes(MenuCliente menuCliente) {
@@ -25,15 +25,15 @@ public class ControlMenuClientes implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "CONSULTAR":
 			mostrarConsultaClientes();
-			
+
 			break;
 		case "REGISTRAR":
-			mostrarRegistrarCliente();			
+			mostrarRegistrarCliente();
 			break;
 		case "AFILIAR":
-			
+
 			break;
-		case "EDITAR":			
+		case "EDITAR":
 			mostrarConsultaClientesId();
 			break;
 		case "VOLVER":
@@ -50,20 +50,21 @@ public class ControlMenuClientes implements ActionListener {
 		this.menuPrincipal.setVisible(true);
 		this.menuCliente.setVisible(false);
 	}
-	
-	
+
 	public void mostrarConsultaClientesId() {
 		ConsultarClienteId consultarCliente = new ConsultarClienteId();
 		ControlConsultarClienteId controlConsultarClienteId = new ControlConsultarClienteId(consultarCliente);
 		consultarCliente.setControl(controlConsultarClienteId);
+		controlConsultarClienteId.setMenuPrincipal(this.menuPrincipal);
 		controlConsultarClienteId.mostrarConsultarClienteId();
 		this.menuCliente.setVisible(false);
 	}
-	
+
 	public void mostrarConsultaClientes() {
 		ConsultarCliente consultarCliente = new ConsultarCliente();
 		ControlConsultarCliente controlConsultarCliente = new ControlConsultarCliente(consultarCliente);
 		consultarCliente.setControl(controlConsultarCliente);
+		controlConsultarCliente.setMenuPrincipal(this.menuPrincipal);
 		controlConsultarCliente.mostrarConsultarCliente();
 		this.menuCliente.setVisible(false);
 	}
@@ -77,13 +78,13 @@ public class ControlMenuClientes implements ActionListener {
 		RegistrarCliente registrarCliente = new RegistrarCliente();
 		ControlRegistrarCliente controlRegistrarCliente = new ControlRegistrarCliente(registrarCliente);
 		registrarCliente.setControl(controlRegistrarCliente);
+		controlRegistrarCliente.setMenuPrincipal(this.menuPrincipal);
 		controlRegistrarCliente.mostrarRegistrarCliente();
 		this.menuCliente.setVisible(false);
 	}
-	
+
 	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
 		this.menuPrincipal = menuPrincipal;
 	}
 
 }
-
