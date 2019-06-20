@@ -16,6 +16,7 @@ import co.mcic.dominio.Transaccion;
 import co.mcic.dominio.Usuario;
 import co.mcic.vista.BuscarProductoVenta;
 import co.mcic.vista.FacturaVentaAlquiler;
+import co.mcic.vista.RegistrarPago;
 
 public class ControlFacturaVA implements ActionListener {
 
@@ -46,7 +47,15 @@ public class ControlFacturaVA implements ActionListener {
 			facturaVentaAlquiler.dispose();
 			break;
 		case "PAGAR":
-			
+			RegistrarPago registrarPago = new RegistrarPago();
+			ControlRegistrarPago controlRegistrarPago = new ControlRegistrarPago(registrarPago);
+			registrarPago.setControl(controlRegistrarPago);
+			controlRegistrarPago.setTransacciones(transacciones);
+			controlRegistrarPago.setCliente(cliente);
+			controlRegistrarPago.setUsuario(usuario);
+			controlRegistrarPago.mostrarRegistrarPago();
+			facturaVentaAlquiler.setVisible(false);
+			facturaVentaAlquiler.dispose();
 			break;
 		case "VOLVER":
 			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de volver?, se perderán todos los productos de la transacción", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
@@ -73,8 +82,6 @@ public class ControlFacturaVA implements ActionListener {
 				model.addRow(new Object[]{ transaccion.getProducto().getIdentificador(), transaccion.getProducto().getNombre(), tipoTx, "", transaccion.getProducto().getValorVenta() });
 			}
 		}
-		
-		
 	}
 
 	public Producto getProducto() {

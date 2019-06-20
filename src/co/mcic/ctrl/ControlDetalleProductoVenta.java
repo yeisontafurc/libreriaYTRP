@@ -68,16 +68,38 @@ public class ControlDetalleProductoVenta implements ActionListener {
 				}
 				break;
 			case "ALQUILAR":
-				SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 100, 1);
+				SpinnerNumberModel sModel = new SpinnerNumberModel(1, 1, 100, 1);
 				JSpinner spinner = new JSpinner(sModel);
-				int option = JOptionPane.showOptionDialog(null, spinner, "Enter valid number", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				int option = JOptionPane.showOptionDialog(null, spinner, "Número de días a alquilar", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (option == JOptionPane.CANCEL_OPTION)
 				{
 				   System.out.println("cancel");
 				} else if (option == JOptionPane.OK_OPTION)
 				{
 					System.out.println("ok " +spinner.getValue().toString());
-					//TODO FacturaView
+					Transaccion transaccion = new Transaccion();
+					transaccion.setProducto(producto);
+					for (ListaTipoTransaccion tipoTransaccion : listaTipoTransaccion) {
+						if(tipoTransaccion.getNombre().equals("Alquiler")){
+							transaccion.setTipoTransaccion(tipoTransaccion);
+						}
+					}
+					transaccion.setDiasAlquiler(Integer.parseInt(spinner.getValue().toString()));
+					if(null == transacciones){
+						transacciones = new ArrayList<Transaccion>();
+					}
+					transacciones.add(transaccion);
+					FacturaVentaAlquiler facturaVentaAlquiler = new FacturaVentaAlquiler(transacciones.size());
+					ControlFacturaVA controlFacturaVA = new ControlFacturaVA(facturaVentaAlquiler);
+					facturaVentaAlquiler.setControl(controlFacturaVA);
+					controlFacturaVA.setProducto(producto);
+					controlFacturaVA.setCliente(this.cliente);
+					controlFacturaVA.setTransacciones(this.transacciones);
+					controlFacturaVA.setVolver(buscarProductoVenta);
+					controlFacturaVA.setUsuario(usuario);
+					detalleProductoVenta.setVisible(false);
+					detalleProductoVenta.dispose();
+					controlFacturaVA.mostrarFacturaVentaAlquiler();
 				}
 				break;
 			case "VOLVER":
