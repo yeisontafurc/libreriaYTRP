@@ -31,10 +31,10 @@ public class ControlMenuClientes implements ActionListener {
 			mostrarRegistrarCliente();
 			break;
 		case "AFILIAR":
-
+			mostrarConsultaClientesId("AFILIAR");
 			break;
 		case "EDITAR":
-			mostrarConsultaClientesId();
+			mostrarConsultaClientesId("EDITAR");
 			break;
 		case "VOLVER":
 			mostrarMenuPrincipal();
@@ -51,10 +51,11 @@ public class ControlMenuClientes implements ActionListener {
 		this.menuCliente.setVisible(false);
 	}
 
-	public void mostrarConsultaClientesId() {
+	public void mostrarConsultaClientesId(String action) {
 		ConsultarClienteId consultarCliente = new ConsultarClienteId();
 		ControlConsultarClienteId controlConsultarClienteId = new ControlConsultarClienteId(consultarCliente);
 		consultarCliente.setControl(controlConsultarClienteId);
+		controlConsultarClienteId.setAction(action);
 		controlConsultarClienteId.setMenuPrincipal(this.menuPrincipal);
 		controlConsultarClienteId.mostrarConsultarClienteId();
 		this.menuCliente.setVisible(false);

@@ -7,6 +7,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 import co.mcic.dominio.Persona;
 import co.mcic.vista.ConsultarCliente;
 import co.mcic.vista.MenuCliente;
@@ -26,7 +29,7 @@ public class ControlConsultarCliente implements ActionListener {
 	public void mostrarConsultarCliente() {
 		if (null != this.consultarCliente) {
 			this.consultarCliente.setVisible(true);
-			this.consultarCliente.setSize(new Dimension(702, 486));
+			this.consultarCliente.setSize(new Dimension(1002, 520));
 		}
 	}
 
@@ -73,13 +76,28 @@ public class ControlConsultarCliente implements ActionListener {
 		}
 		listaPersonas = this.persona.listaClientes(identificacion, consultarCliente.getTxfNombres().getText());
 
-		for (Persona persona : listaPersonas) {
-			System.out.println(persona.getNombres());
+		if (listaPersonas.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No se encontraron clientes");
+		} else {
+			mostrarTabla(listaPersonas);
 		}
-		mostrarTabla();
 	}
 
-	public void mostrarTabla() {
+	public void mostrarTabla(List<Persona> listaPersonas) {
+
+		DefaultTableModel model = (DefaultTableModel) this.consultarCliente.getTable().getModel();
+		model.setRowCount(0);
+
+		for (Persona persona : listaPersonas) {
+			model.addRow(new Object[] { persona.getTipoDocumento().getNombre(), persona.getDocumento(),
+					persona.getNombres(), persona.getApellidos(), persona.getDireccion(), persona.getTelefono(),
+					persona.getCelular(), persona.getEstadoPersona().getNombre(),
+					null != persona.getAfiliacion() && null != persona.getAfiliacion().getTipoAfiliacion()
+							? persona.getAfiliacion().getTipoAfiliacion() : null,
+					persona.getAfiliacion() != null && null != persona.getAfiliacion().getFechaFin()
+							? persona.getAfiliacion().getFechaFin() : null });
+
+		}
 
 	}
 

@@ -97,12 +97,11 @@ public class ControlEditarCliente implements ActionListener {
 			editarCliente.setVisible(false);
 			break;
 		case "GUARDAR":
-			cargarDatosPersona();
 			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
-
 				// validar los formatos
 				if (ValidarFormatos()) {
+					cargarDatosPersona();
 
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
