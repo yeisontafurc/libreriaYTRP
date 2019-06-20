@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Categoria;
@@ -103,13 +102,12 @@ public class ControlEditarProducto implements ActionListener {
 			editarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
-			// Primero se debe validar los requeridos
-			cargarDatosProducto();
+
 			if (ValidarRequeridos()) {
 
 				// validar los formatos
 				if (ValidarFormatos()) {
-
+					cargarDatosProducto();
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
@@ -125,7 +123,7 @@ public class ControlEditarProducto implements ActionListener {
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
+					JOptionPane.showMessageDialog(null, "Campos de valor tienen formato invalido");
 					ValidarReintentos();
 				}
 			} else {
@@ -150,12 +148,12 @@ public class ControlEditarProducto implements ActionListener {
 		this.producto.setValorAlquilerDia(Float.parseFloat(this.editarProducto.getTxfValorAlquiler().getText()));
 		this.producto.setValorVenta(Float.parseFloat(this.editarProducto.getTxfValorVenta().getText()));
 		this.producto.setEstadoProducto(this.producto.getEstadoProducto()
-				.getEstadoByNombre(editarProducto.getcBoxEstado().getSelectedItem().toString()));
+				.getEstadoByNombre(this.editarProducto.getcBoxEstado().getSelectedItem().toString()));
 		this.producto
 				.setEstadoDisponibilidad(this.producto.getEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre(
-						editarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString()));
+						this.editarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString()));
 		this.producto.setCategoria(this.producto.getCategoria()
-				.getCategoriaByNombre(editarProducto.getcBoxCategoria().getSelectedItem().toString()));
+				.getCategoriaByNombre(this.editarProducto.getcBoxCategoria().getSelectedItem().toString()));
 
 		return this.producto;
 	}
@@ -171,10 +169,28 @@ public class ControlEditarProducto implements ActionListener {
 	}
 
 	public boolean ValidarRequeridos() {
-		return true;
+		boolean requerido = true;
+
+		if (this.editarProducto.getTxfNombre().getText().isEmpty()
+				|| this.editarProducto.getTxfValorAlquiler().getText().isEmpty()
+				|| this.editarProducto.getTxfValorVenta().getText().isEmpty()
+				|| this.editarProducto.getcBoxEstado().getSelectedItem().toString().isEmpty()
+				|| this.editarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString().isEmpty()
+				|| this.editarProducto.getcBoxCategoria().getSelectedItem().toString().isEmpty()) {
+			requerido = false;
+		}
+		return requerido;
 	}
 
 	public boolean ValidarFormatos() {
+
+		try {
+			this.producto.setValorAlquilerDia(Float.parseFloat(this.editarProducto.getTxfValorAlquiler().getText()));
+			this.producto.setValorVenta(Float.parseFloat(this.editarProducto.getTxfValorVenta().getText()));
+		} catch (Exception e) {
+			return false;
+		}
+
 		return true;
 	}
 

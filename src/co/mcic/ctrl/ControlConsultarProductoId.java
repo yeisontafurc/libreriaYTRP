@@ -9,14 +9,17 @@ import javax.swing.JOptionPane;
 import co.mcic.dominio.Producto;
 import co.mcic.vista.ConsultarProductoId;
 import co.mcic.vista.EditarProducto;
+import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuProducto;
 
 public class ControlConsultarProductoId implements ActionListener {
 
+	private int reintentos = 1;
 	ConsultarProductoId consultarProductoId;
-	private Producto producto;
-	private int reintentos;
+	private Producto producto;	
 	private String identificador;
+	private MenuPrincipal menuPrincipal;
+	
 	
 	public ControlConsultarProductoId(ConsultarProductoId consultarProductoId) {
 		this.setConsultarProductoId(consultarProductoId);
@@ -41,8 +44,9 @@ public class ControlConsultarProductoId implements ActionListener {
 				ejecutarEditarProducto(this.producto);
 				consultarProductoId.setVisible(false);
 			}else{
-				JOptionPane.showMessageDialog(null, "Producto no encontrado");
+				JOptionPane.showMessageDialog(null, "Producto no encontrado");				
 				this.producto = new Producto();
+				ValidarReintentos();
 			}
 			break;
 
@@ -86,19 +90,24 @@ public class ControlConsultarProductoId implements ActionListener {
 
 	public void setIdentificador(String identificador) {
 		this.identificador = identificador;
-	}	
+	}
+	
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+	}
 
 	public void ejecutarMenuProductos() {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
 		menuProducto.setControl(controlMenuProducto);
+		controlMenuProducto.setMenuPrincipal(this.menuPrincipal);
 		controlMenuProducto.mostrarMenuProducto();
 	}
 
 	public void ejecutarEditarProducto(Producto producto) {
 		EditarProducto editarProducto = new EditarProducto();
 		ControlEditarProducto controlEditarProducto = new ControlEditarProducto(editarProducto);
-		editarProducto.setControl(controlEditarProducto);
+		editarProducto.setControl(controlEditarProducto);		
 		controlEditarProducto.mostrarEditarProducto(producto);		
 	}
 
@@ -118,5 +127,4 @@ public class ControlConsultarProductoId implements ActionListener {
 			this.reintentos++;
 		}
 	}
-
 }

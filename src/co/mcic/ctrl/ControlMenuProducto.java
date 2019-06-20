@@ -36,6 +36,7 @@ public class ControlMenuProducto implements ActionListener {
 			ControlConsultarProductoId controlConsultarProductoId = new ControlConsultarProductoId(consultarProductoId);
 			controlConsultarProductoId.mostrarConsultarProductoId();
 			consultarProductoId.setControl(controlConsultarProductoId);
+			controlConsultarProductoId.setMenuPrincipal(this.menuPrincipal);
 			controlConsultarProductoId.mostrarConsultarProductoId();
 			this.menuProducto.setVisible(false);
 			break;
@@ -63,6 +64,7 @@ public class ControlMenuProducto implements ActionListener {
 		RegistrarProducto registrarProducto = new RegistrarProducto();
 		ControlRegistrarProducto controlRegistrarProducto = new ControlRegistrarProducto(registrarProducto);
 		registrarProducto.setControl(controlRegistrarProducto);
+		controlRegistrarProducto.setMenuPrincipal(this.menuPrincipal);
 		controlRegistrarProducto.mostrarRegistrarProducto();
 	}
 

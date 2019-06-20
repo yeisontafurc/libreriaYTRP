@@ -11,6 +11,7 @@ import co.mcic.dominio.Categoria;
 import co.mcic.dominio.ListaEstadoDisponibilidad;
 import co.mcic.dominio.ListaEstadoProducto;
 import co.mcic.dominio.Producto;
+import co.mcic.vista.MenuPrincipal;
 import co.mcic.vista.MenuProducto;
 import co.mcic.vista.RegistrarProducto;
 
@@ -22,6 +23,7 @@ public class ControlRegistrarProducto implements ActionListener {
 	private Categoria categoria;
 	private ListaEstadoProducto estadoProducto;
 	private ListaEstadoDisponibilidad estadoDisponibilidad;
+	private MenuPrincipal menuPrincipal;
 
 	public ControlRegistrarProducto(RegistrarProducto registrarProducto) {
 		this.setRegistrarProducto(registrarProducto);
@@ -90,13 +92,11 @@ public class ControlRegistrarProducto implements ActionListener {
 			registrarProducto.setVisible(false);
 			break;
 		case "GUARDAR":
-			cargarDatosProducto();
 			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
-
 				// validar los formatos
 				if (ValidarFormatos()) {
-
+					cargarDatosProducto();
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
 					if (resp == 0) {
@@ -112,7 +112,7 @@ public class ControlRegistrarProducto implements ActionListener {
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
+					JOptionPane.showMessageDialog(null, "Campos de valor tienen formato invalido");
 					ValidarReintentos();
 				}
 			} else {
@@ -130,15 +130,38 @@ public class ControlRegistrarProducto implements ActionListener {
 	public void ejecutarMenuProductos() {
 		MenuProducto menuProducto = new MenuProducto();
 		ControlMenuProducto controlMenuProducto = new ControlMenuProducto(menuProducto);
+		controlMenuProducto.setMenuPrincipal(this.menuPrincipal);
 		menuProducto.setControl(controlMenuProducto);
 		controlMenuProducto.mostrarMenuProducto();
 	}
 
 	public boolean ValidarRequeridos() {
-		return true;
+		boolean requerido = true;
+
+		if (this.registrarProducto.getTxfNombre().getText().isEmpty()
+				|| this.registrarProducto.getTxfValorAlquiler().getText().isEmpty()
+				|| this.registrarProducto.getTxfValorVenta().getText().isEmpty()
+				|| this.registrarProducto.getcBoxEstado().getSelectedItem().toString().isEmpty()
+				|| this.registrarProducto.getcBoxEstadoDisponibilidad().getSelectedItem().toString().isEmpty()
+				|| this.registrarProducto.getcBoxCategoria().getSelectedItem().toString().isEmpty()) {
+			requerido = false;
+		}
+		return requerido;
+	}
+
+	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+
 	}
 
 	public boolean ValidarFormatos() {
+		try {
+			this.producto.setValorAlquilerDia(Float.parseFloat(this.registrarProducto.getTxfValorAlquiler().getText()));
+			this.producto.setValorVenta(Float.parseFloat(this.registrarProducto.getTxfValorVenta().getText()));
+		} catch (Exception e) {
+			return false;
+		}
+
 		return true;
 	}
 
