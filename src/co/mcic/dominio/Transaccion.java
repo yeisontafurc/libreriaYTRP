@@ -1,13 +1,19 @@
 package co.mcic.dominio;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import co.mcic.util.Persistencia;
 
 
 @Entity
@@ -15,6 +21,7 @@ public class Transaccion implements Serializable {
 
 	   
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idTransaccion;
 	@JoinColumn(nullable=true)
 	private Producto producto;
@@ -75,6 +82,30 @@ public class Transaccion implements Serializable {
 
 	public void setDiasAlquiler(Integer diasAlquiler) {
 		this.diasAlquiler = diasAlquiler;
+	}
+	
+	public Factura getFactura() {
+		return factura;
+	}
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+	public void crearTx(){
+		EntityManager em = Persistencia.getEntityManager();
+		Producto prod = new Producto();
+		prod.setCategoria(new Categoria().getlistaCategoria().get(0));
+		prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getlistaEstadoDisponibilidad().get(0));
+		prod.setEstadoProducto(new ListaEstadoProducto().getListaEstadoProducto().get(0));
+		prod.setIdentificador("PROD2");
+		prod.setNombre("Libro 2");
+		prod.setValorAlquilerDia(new Float(2000d));
+		prod.setValorVenta(new Float(20000d));
+		em.getTransaction().begin();
+		em.persist(prod);
+		em.getTransaction().commit();
+		System.out.println("just dance no time for romaaanceee");
+		em.close();
+		
 	}
    
 }
