@@ -33,7 +33,7 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	public void mostrarRegistrarCliente() {
 		if (null != this.registrarCliente) {
-			cargarListaEstadoDiponibilidad();
+			cargarListaEstadoPersona();
 			cargarListaTipoDocumento();
 			this.registrarCliente.setVisible(true);
 			this.registrarCliente.setSize(new Dimension(702, 486));
@@ -197,7 +197,7 @@ public class ControlRegistrarCliente implements ActionListener {
 
 	/**
 	 */
-	public void cargarListaEstadoDiponibilidad() {
+	public void cargarListaEstadoPersona() {
 		ListaEstadoPersona listaEstado = new ListaEstadoPersona();
 
 		List<ListaEstadoPersona> listasEstados = listaEstado.getListaEstadoPersona();
