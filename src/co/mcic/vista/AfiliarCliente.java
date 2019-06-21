@@ -19,7 +19,6 @@ public class AfiliarCliente extends JFrame {
 	private JButton btnGuardar;
 	private JButton btnVolver;
 	private JTextField txtInicioAfiliacion;
-	private JTextField txtFinAfiliacion;
 	private JComboBox<String> cBoxTipoAfiliacion;
 
 	public AfiliarCliente() {
@@ -35,58 +34,43 @@ public class AfiliarCliente extends JFrame {
 		getContentPane().add(lblTipoDocumento);
 
 		JLabel lblIdentificador = new JLabel("Identificador");
-		lblIdentificador.setBounds(418, 133, 93, 14);
+		lblIdentificador.setBounds(434, 133, 93, 14);
 		getContentPane().add(lblIdentificador);
 
 		txfTipoDocumento = new JTextField();
 		txfTipoDocumento.setEditable(false);
-		txfTipoDocumento.setBounds(205, 130, 176, 20);
+		txfTipoDocumento.setBounds(243, 130, 176, 20);
 		getContentPane().add(txfTipoDocumento);
 
 		txfIdentificacion = new JTextField();
 		txfIdentificacion.setEditable(false);
-		txfIdentificacion.setBounds(500, 130, 197, 20);
+		txfIdentificacion.setBounds(537, 130, 182, 20);
 		getContentPane().add(txfIdentificacion);
-
-		// UtilDateModel model = new UtilDateModel();
-		// JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		// JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
-		//
-		// getContentPane().add(datePicker);
 
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setActionCommand("GUARDAR");
-		btnGuardar.setBounds(427, 351, 89, 23);
+		btnGuardar.setBounds(427, 299, 89, 23);
 		getContentPane().add(btnGuardar);
 
 		btnVolver = new JButton("Volver");
 		btnVolver.setActionCommand("VOLVER");
-		btnVolver.setBounds(309, 351, 89, 23);
+		btnVolver.setBounds(309, 299, 89, 23);
 		getContentPane().add(btnVolver);
 
-		JLabel lblFechaInicioAfiliacin = new JLabel("Inicio Afiliaci\u00F3n");
-		lblFechaInicioAfiliacin.setBounds(67, 176, 115, 14);
+		JLabel lblFechaInicioAfiliacin = new JLabel("Inicio Afiliaci\u00F3n (DD/MM/YYYY)");
+		lblFechaInicioAfiliacin.setBounds(67, 176, 166, 14);
 		getContentPane().add(lblFechaInicioAfiliacin);
 
 		txtInicioAfiliacion = new JTextField();
-		txtInicioAfiliacion.setBounds(205, 173, 176, 20);
+		txtInicioAfiliacion.setBounds(243, 173, 176, 20);
 		getContentPane().add(txtInicioAfiliacion);
 
-		JLabel lblFinAfiliacin = new JLabel("Fin Afiliaci\u00F3n");
-		lblFinAfiliacin.setBounds(418, 176, 78, 14);
-		getContentPane().add(lblFinAfiliacin);
-
-		txtFinAfiliacion = new JTextField();
-		txtFinAfiliacion.setEditable(false);
-		txtFinAfiliacion.setBounds(500, 173, 197, 20);
-		getContentPane().add(txtFinAfiliacion);
-
 		JLabel lblTipoAfiliacin = new JLabel("Tipo Afiliaci\u00F3n");
-		lblTipoAfiliacin.setBounds(67, 227, 115, 14);
+		lblTipoAfiliacin.setBounds(433, 176, 115, 14);
 		getContentPane().add(lblTipoAfiliacin);
 
 		cBoxTipoAfiliacion = new JComboBox<String>();
-		cBoxTipoAfiliacion.setBounds(205, 224, 176, 20);
+		cBoxTipoAfiliacion.setBounds(543, 170, 176, 20);
 		getContentPane().add(cBoxTipoAfiliacion);
 
 	}
@@ -119,16 +103,6 @@ public class AfiliarCliente extends JFrame {
 
 	public void setTxtInicioAfiliacion(JTextField txtInicioAfiliacion) {
 		this.txtInicioAfiliacion = txtInicioAfiliacion;
-	}
-
-
-	public JTextField getTxtFinAfiliacion() {
-		return txtFinAfiliacion;
-	}
-
-
-	public void setTxtFinAfiliacion(JTextField txtFinAfiliacion) {
-		this.txtFinAfiliacion = txtFinAfiliacion;
 	}
 
 

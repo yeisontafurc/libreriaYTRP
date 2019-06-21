@@ -141,10 +141,29 @@ public class ControlEditarCliente implements ActionListener {
 	}
 
 	public boolean ValidarRequeridos() {
+
+		if (this.editarCliente.getTxfApellidos().getText().isEmpty()
+				|| this.editarCliente.getTxfCelular().getText().isEmpty()
+				|| this.editarCliente.getTxfDireccion().getText().isEmpty()
+				|| this.editarCliente.getTxfIdentificacion().getText().isEmpty()
+				|| this.editarCliente.getTxfNombres().getText().isEmpty()
+				|| this.editarCliente.getTxfTelefono().getText().isEmpty()) {
+			return false;
+		}
+
 		return true;
 	}
 
 	public boolean ValidarFormatos() {
+
+		try {
+			new BigInteger(this.editarCliente.getTxfCelular().getText());
+			new BigInteger(this.editarCliente.getTxfIdentificacion().getText());
+			new BigInteger(this.editarCliente.getTxfTelefono().getText());
+		} catch (Exception e) {
+			return false;
+		}
+
 		return true;
 	}
 

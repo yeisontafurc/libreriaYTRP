@@ -3,10 +3,16 @@ package co.mcic.ctrl;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import co.mcic.dominio.Afiliacion;
 import co.mcic.dominio.ListaTipoAfiliacion;
 import co.mcic.dominio.Persona;
 import co.mcic.vista.AfiliarCliente;
@@ -26,10 +32,13 @@ public class ControlAfiliarCliente implements ActionListener {
 
 	public void mostrarAfiliarCliente(Persona persona) {
 		this.persona = persona;
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		if (null != this.afiliarCliente) {
 			cargarListaTipoAfiliacion();
-
+			this.afiliarCliente.getTxfIdentificacion().setText(this.persona.getDocumento().toString());
+			this.afiliarCliente.getTxfTipoDocumento().setText(this.persona.getTipoDocumento().getNombre());
+			this.afiliarCliente.getTxtInicioAfiliacion().setText(dateFormat.format(new Date())); 
 			this.afiliarCliente.setVisible(true);
 			this.afiliarCliente.setSize(new Dimension(782, 486));
 		}
@@ -89,6 +98,29 @@ public class ControlAfiliarCliente implements ActionListener {
 
 	public void cargarDatosAfiliacion() {
 
+		try {
+			Afiliacion afiliacion = new Afiliacion();
+			ListaTipoAfiliacion listaTipoAfiliacion = new ListaTipoAfiliacion();
+
+			afiliacion.setFechaInicio(
+					new SimpleDateFormat("dd/MM/yyyy").parse(this.afiliarCliente.getTxtInicioAfiliacion().getText()));
+
+			listaTipoAfiliacion = listaTipoAfiliacion.getListaTipoAfiliacionByNombre(
+					this.afiliarCliente.getcBoxTipoAfiliacion().getSelectedItem().toString());
+			afiliacion.setTipoAfiliacion(listaTipoAfiliacion);
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(afiliacion.getFechaInicio());
+			cal.add(Calendar.DATE, listaTipoAfiliacion.getMeses() * 30);
+			
+			afiliacion.setFechaFin(cal.getTime());
+			afiliacion.setIdAfiliacion(afiliacion.getMaxId());
+			this.persona.setAfiliacion(afiliacion);
+
+		} catch (ParseException e) {
+
+		}
+
 	}
 
 	public void cargarListaTipoAfiliacion() {
@@ -102,10 +134,20 @@ public class ControlAfiliarCliente implements ActionListener {
 	}
 
 	public boolean ValidarRequeridos() {
+		if (this.afiliarCliente.getTxtInicioAfiliacion().getText().isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 
 	public boolean ValidarFormatos() {
+
+		try {
+			new SimpleDateFormat("dd/MM/yyyy").parse(this.afiliarCliente.getTxtInicioAfiliacion().getText());
+		} catch (ParseException e) {
+			return false;
+		}
+
 		return true;
 	}
 

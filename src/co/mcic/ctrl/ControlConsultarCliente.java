@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,15 +89,17 @@ public class ControlConsultarCliente implements ActionListener {
 
 		DefaultTableModel model = (DefaultTableModel) this.consultarCliente.getTable().getModel();
 		model.setRowCount(0);
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		for (Persona persona : listaPersonas) {
+
 			model.addRow(new Object[] { persona.getTipoDocumento().getNombre(), persona.getDocumento(),
 					persona.getNombres(), persona.getApellidos(), persona.getDireccion(), persona.getTelefono(),
 					persona.getCelular(), persona.getEstadoPersona().getNombre(),
 					null != persona.getAfiliacion() && null != persona.getAfiliacion().getTipoAfiliacion()
-							? persona.getAfiliacion().getTipoAfiliacion() : null,
+							? persona.getAfiliacion().getTipoAfiliacion().getNombre() : null,
 					persona.getAfiliacion() != null && null != persona.getAfiliacion().getFechaFin()
-							? persona.getAfiliacion().getFechaFin() : null });
+							? dateFormat.format(persona.getAfiliacion().getFechaFin()) : null });
 
 		}
 

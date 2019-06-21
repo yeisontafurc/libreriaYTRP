@@ -85,12 +85,14 @@ public class ControlRegistrarCliente implements ActionListener {
 			registrarCliente.setVisible(false);
 			break;
 		case "GUARDAR":
-			cargarDatosPersona();
+
 			// Primero se debe validar los requeridos
 			if (ValidarRequeridos()) {
 
 				// validar los formatos
 				if (ValidarFormatos()) {
+
+					cargarDatosPersona();
 
 					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
 							JOptionPane.YES_NO_OPTION);
@@ -134,10 +136,29 @@ public class ControlRegistrarCliente implements ActionListener {
 	}
 
 	public boolean ValidarRequeridos() {
+
+		if (this.registrarCliente.getTxfApellidos().getText().isEmpty()
+				|| this.registrarCliente.getTxfCelular().getText().isEmpty()
+				|| this.registrarCliente.getTxfDireccion().getText().isEmpty()
+				|| this.registrarCliente.getTxfIdentificacion().getText().isEmpty()
+				|| this.registrarCliente.getTxfNombres().getText().isEmpty()
+				|| this.registrarCliente.getTxfTelefono().getText().isEmpty()) {
+			return false;
+		}
+
 		return true;
 	}
 
 	public boolean ValidarFormatos() {
+
+		try {
+			new BigInteger(this.registrarCliente.getTxfCelular().getText());
+			new BigInteger(this.registrarCliente.getTxfIdentificacion().getText());
+			new BigInteger(this.registrarCliente.getTxfTelefono().getText());
+		} catch (Exception e) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -162,15 +183,14 @@ public class ControlRegistrarCliente implements ActionListener {
 		this.persona.setNombres(this.registrarCliente.getTxfNombres().getText());
 		this.persona.setTelefono(new BigInteger(this.registrarCliente.getTxfTelefono().getText()));
 
-		// Todo
+		this.persona.setEstadoPersona(new ListaEstadoPersona()
+				.getListaEstadoPersonaByNombre(this.registrarCliente.getcBoxEstado().getSelectedItem().toString()));
 
-		ListaTipoDocumento listaTipoDocumento = new ListaTipoDocumento();
-		ListaTipoPersona listaTipoPersona = new ListaTipoPersona();
-		ListaEstadoPersona listaEstadoPersona = new ListaEstadoPersona();
-
-		this.persona.setTipoDocumento(listaTipoDocumento.getListaTipoDocumento().get(0));
-		this.persona.setTipoPersona(listaTipoPersona.getListaTipoPersona().get(0));
-		this.persona.setEstadoPersona(listaEstadoPersona.getListaEstadoPersona().get(0));
+		this.persona.setTipoDocumento(new ListaTipoDocumento().getListaTipoDocumentoByNombre(
+				this.registrarCliente.getcBoxTipoDocumento().getSelectedItem().toString()));
+		// Dado que la funcionalidad es solo para Vendedores solo se va a
+		// permitir registrar personas tipo externo
+		this.persona.setTipoPersona(new ListaTipoPersona().getListaTipoPersonaByNombre("Externo"));
 
 		return this.persona;
 	}
