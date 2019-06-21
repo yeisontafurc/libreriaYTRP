@@ -130,10 +130,10 @@ public class Factura implements Serializable {
 	public void calcularValorTotal() {
 		if (null != this.getPorcentajeDescuento()) {
 			if (this.getPorcentajeDescuento() > 0) {
-				BigDecimal aux = this.getValorNeto()
-						.subtract((this.getValorNeto().multiply(new BigDecimal(this.getPorcentajeDescuento()).divide(new BigDecimal(100)))));
-				System.out.println("VN: "+this.getValorNeto().toString());
-				System.out.println("PD: "+this.getPorcentajeDescuento().toString());
+				BigDecimal aux = this.getValorNeto().subtract((this.getValorNeto()
+						.multiply(new BigDecimal(this.getPorcentajeDescuento()).divide(new BigDecimal(100)))));
+				System.out.println("VN: " + this.getValorNeto().toString());
+				System.out.println("PD: " + this.getPorcentajeDescuento().toString());
 				System.out.println("VT:" + aux.toString());
 				this.getPago().setValorPago(aux);
 			}
@@ -156,6 +156,7 @@ public class Factura implements Serializable {
 			fac.setPorcentajeDescuento(porcentajeDescuento);
 			fac.setValorNeto(valorNeto);
 			em.persist(fac);
+			cliente.actualizarCliente(cliente);
 			em.getTransaction().commit();
 			em.getTransaction().begin();
 			System.out.println("idFac: " + fac.getIdFactura());
@@ -186,9 +187,11 @@ public class Factura implements Serializable {
 						prod.setEstadoDisponibilidad(
 								new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Alquilado"));
 					}
-					em.getTransaction().begin();
-					em.merge(prod);
-					em.getTransaction().commit();
+					if (null != prod) {
+						em.getTransaction().begin();
+						em.merge(prod);
+						em.getTransaction().commit();
+					}
 				}
 				return true;
 			} catch (Exception ex) {
