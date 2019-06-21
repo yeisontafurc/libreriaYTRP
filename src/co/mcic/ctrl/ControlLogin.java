@@ -44,9 +44,10 @@ public class ControlLogin implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Login!" + login.getTextField().getText() + " pwd: " + login.getPasswordField().getText());
-		this.usuario.setNombreUsuario(login.getTextField().getText());
-		this.usuario.setClave(login.getPasswordField().getText());
+		String nombreUsuario = login.getTextField().getText();
+		this.usuario.setNombreUsuario(nombreUsuario);
+		String clave = login.getPasswordField().getText();
+		this.usuario.setClave(clave);
 		boolean usuarioValido = this.usuario.validarCredenciales();
 		if (usuarioValido) {
 			validarAccesos();
