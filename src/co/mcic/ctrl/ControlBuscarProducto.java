@@ -33,7 +33,6 @@ public class ControlBuscarProducto implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "BUSCAR":
-			System.out.println("BUSCAR");
 			String idProducto = this.buscarProductoVenta.getTxtId().getText();
 			if (idProducto.isEmpty() || idProducto.equals("")) {
 				JOptionPane.showMessageDialog(null, "Identificador de producto inválido");
