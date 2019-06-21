@@ -8,11 +8,16 @@ import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Factura;
 import co.mcic.dominio.ListaTipoPago;
 import co.mcic.dominio.Pago;
 import co.mcic.dominio.Persona;
+import co.mcic.dominio.TarjetaCredito;
+import co.mcic.dominio.TarjetaDinersClub;
+import co.mcic.dominio.TarjetaMastercard;
+import co.mcic.dominio.TarjetaVisa;
 import co.mcic.dominio.Transaccion;
 import co.mcic.dominio.Usuario;
 import co.mcic.vista.RegistrarPago;
@@ -24,32 +29,34 @@ public class ControlRegistrarPago implements ActionListener {
 	private Persona cliente;
 	private Usuario usuario;
 	private Factura factura;
+	private List<ListaTipoPago> tiposPago;
+
 	public ControlRegistrarPago(RegistrarPago registrarPago) {
 		this.registrarPago = registrarPago;
 		this.registrarPago.getCmbTipoPago().addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				JComboBox<String> cb = (JComboBox<String>) e.getSource();
-			    Object item = e.getItem();
-			    System.out.println(item.toString());
-			    if (e.getStateChange() == ItemEvent.SELECTED) {
-			      	System.out.println("Selected "+ cb.getSelectedItem().toString());
-			    } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-			    	System.out.println("No selected: " + cb.getSelectedItem().toString());
-			    }
-			    if(item.toString().equals("Tarjeta de Crédito")){
-			    	System.out.println("Item igual a tc");
-		      		registrarPago.getTxtDigitosTarjeta().setEnabled(true);
-		      		registrarPago.getCmbTC().setEnabled(true);
-		      		registrarPago.getTxtDigitosTarjeta().enable();
-		      		registrarPago.getCmbTC().enable();
-		      	}else{
-		      		registrarPago.getTxtDigitosTarjeta().setEnabled(false);
-		      		registrarPago.getCmbTC().setEnabled(false);
-		      		registrarPago.getTxtDigitosTarjeta().disable();
-		      		registrarPago.getCmbTC().disable();
-		      	}
+				Object item = e.getItem();
+				System.out.println(item.toString());
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					System.out.println("Selected " + cb.getSelectedItem().toString());
+				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+					System.out.println("No selected: " + cb.getSelectedItem().toString());
+				}
+				if (item.toString().equals("Tarjeta de Crédito")) {
+					System.out.println("Item igual a tc");
+					registrarPago.getTxtDigitosTarjeta().setEnabled(true);
+					registrarPago.getCmbTC().setEnabled(true);
+					registrarPago.getTxtDigitosTarjeta().enable();
+					registrarPago.getCmbTC().enable();
+				} else {
+					registrarPago.getTxtDigitosTarjeta().setEnabled(false);
+					registrarPago.getCmbTC().setEnabled(false);
+					registrarPago.getTxtDigitosTarjeta().disable();
+					registrarPago.getCmbTC().disable();
+				}
 			}
 		});
 	}
@@ -58,6 +65,43 @@ public class ControlRegistrarPago implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "FINALIZAR":
+			// Registrar tipopago
+			for (ListaTipoPago tipoPago : tiposPago) {
+				if (this.registrarPago.getCmbTipoPago().getSelectedItem().toString().equals(tipoPago.getNombre())) {
+					this.factura.getPago().setTipoPago(tipoPago);
+				}
+			}
+			// Si se paga con TC:
+			if (this.factura.getPago().getTipoPago().getNombre().equals("Tarjeta de Crédito")) {
+				try {
+					Long tc = new Long(this.registrarPago.getTxtDigitosTarjeta().getText());
+					TarjetaCredito credito = null;
+					if (this.registrarPago.getCmbTC().getSelectedItem().equals("DinersClub")) {
+						credito = new TarjetaDinersClub();
+						credito.setNumeroTarjeta(tc);
+					} else if (this.registrarPago.getCmbTC().getSelectedItem().equals("Mastercard")) {
+						credito = new TarjetaMastercard();
+						credito.setNumeroTarjeta(tc);
+					} else if (this.registrarPago.getCmbTC().getSelectedItem().equals("Visa")) {
+						credito = new TarjetaVisa();
+						credito.setNumeroTarjeta(tc);
+					}else{
+						JOptionPane.showMessageDialog(null, "Tarjeta de crédito no reconocida");
+					}
+					if(null != credito){
+						boolean validez = credito.validarTarjeta();
+						if(!validez){
+							JOptionPane.showMessageDialog(null, "Tarjeta de crédito inválida");
+						}else{
+							this.factura.finalizarFactura();
+						}
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+				}
+			}else{
+				this.factura.finalizarFactura();
+			}
 			break;
 		case "CANCELAR":
 			break;
@@ -67,34 +111,33 @@ public class ControlRegistrarPago implements ActionListener {
 	}
 
 	public void mostrarRegistrarPago() {
-		List<ListaTipoPago> tiposPago = new ListaTipoPago().getListaTipoPago();
+		this.tiposPago = new ListaTipoPago().getListaTipoPago();
 		for (ListaTipoPago tipoPago : tiposPago) {
 			this.registrarPago.getCmbTipoPago().addItem(tipoPago.getNombre());
 		}
-		
+
 		this.registrarPago.getCmbTC().addItem("DinersClub");
-		this.registrarPago.getCmbTC().addItem("Mastercard"); 
+		this.registrarPago.getCmbTC().addItem("Mastercard");
 		this.registrarPago.getCmbTC().addItem("Visa");
-		
+
 		this.factura = new Factura();
 		for (Transaccion transaccion : transacciones) {
 			this.factura.adicionarTransaccion(transaccion);
 		}
 		this.factura.calcularValorNeto();
-		
-		if(null != cliente.getAfiliacion()){
+
+		if (null != cliente.getAfiliacion()) {
 			Integer porcentajeDescuento = cliente.getAfiliacion().getTipoAfiliacion().getPorcentaje();
 			this.factura.setPorcentajeDescuento(porcentajeDescuento);
 		}
 		Pago pago = new Pago();
 		this.factura.setPago(pago);
 		this.factura.calcularValorTotal();
+		this.factura.setVendedor(usuario.getPersona());
+		this.factura.setCliente(cliente);
+
 		this.registrarPago.getTxtValorVenta().setText(this.factura.getPago().getValorPago().toString());
-		
-		this.factura.finalizarFactura();
-		
-		
-		this.registrarPago.setSize(new Dimension(620,350));
+		this.registrarPago.setSize(new Dimension(620, 350));
 		this.registrarPago.setVisible(true);
 		this.registrarPago.getTxtDigitosTarjeta().setEnabled(false);
 		this.registrarPago.getCmbTC().setEditable(false);
@@ -124,5 +167,4 @@ public class ControlRegistrarPago implements ActionListener {
 		return usuario;
 	}
 
-	
 }

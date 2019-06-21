@@ -90,22 +90,5 @@ public class Transaccion implements Serializable {
 	public void setFactura(Factura factura) {
 		this.factura = factura;
 	}
-	public void crearTx(){
-		EntityManager em = Persistencia.getEntityManager();
-		Producto prod = new Producto();
-		prod.setCategoria(new Categoria().getlistaCategoria().get(0));
-		prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getlistaEstadoDisponibilidad().get(0));
-		prod.setEstadoProducto(new ListaEstadoProducto().getListaEstadoProducto().get(0));
-		prod.setIdentificador("PROD2");
-		prod.setNombre("Libro 2");
-		prod.setValorAlquilerDia(new Float(2000d));
-		prod.setValorVenta(new Float(20000d));
-		em.getTransaction().begin();
-		em.persist(prod);
-		em.getTransaction().commit();
-		System.out.println("just dance no time for romaaanceee");
-		em.close();
-		
-	}
    
 }

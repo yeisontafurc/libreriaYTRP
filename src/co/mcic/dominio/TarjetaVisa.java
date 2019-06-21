@@ -15,6 +15,20 @@ public class TarjetaVisa extends TarjetaCredito implements Serializable {
 
 	public TarjetaVisa() {
 		super();
+		this.setLongitud(13);
+		this.setPrefijo("4");
+	}
+
+	@Override
+	public boolean validarTarjeta() {
+		String numTarjeta = this.getNumeroTarjeta().toString();
+		if(numTarjeta.length() != this.getLongitud()){
+			return false;
+		}
+		if(numTarjeta.startsWith(this.getPrefijo())){
+			return true;
+		}
+		return false;
 	}
    
 }

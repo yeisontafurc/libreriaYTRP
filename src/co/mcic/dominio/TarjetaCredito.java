@@ -59,5 +59,6 @@ public abstract class TarjetaCredito implements Serializable {
 	public void setNumeroTarjeta(Long numeroTarjeta) {
 		this.numeroTarjeta = numeroTarjeta;
 	}
+	public abstract boolean validarTarjeta();
    
 }

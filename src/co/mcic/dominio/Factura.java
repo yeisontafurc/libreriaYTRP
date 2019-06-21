@@ -5,25 +5,33 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.eclipse.persistence.jpa.config.Cascade;
+
+import co.mcic.util.Persistencia;
 
 @Entity
 public class Factura implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idFactura;
 	@JoinColumn(nullable = false)
 	private Persona cliente;
 	@JoinColumn(nullable = false)
 	private Persona vendedor;
-	@OneToMany(mappedBy = "factura")
+	@OneToMany(mappedBy = "factura", cascade = { CascadeType.PERSIST })
 	private List<Transaccion> transacciones;
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(nullable = false)
 	private Pago pago;
 	@JoinColumn(nullable = false)
@@ -106,13 +114,13 @@ public class Factura implements Serializable {
 		Float valorAcum = (float) 0;
 		if (null != transacciones) {
 			for (Transaccion transaccion : transacciones) {
-				if(transaccion.getTipoTransaccion().getNombre().equals("Venta")){
+				if (transaccion.getTipoTransaccion().getNombre().equals("Venta")) {
 					valorTemp = transaccion.getProducto().getValorVenta();
-					 
-				}else if(transaccion.getTipoTransaccion().getNombre().equals("Alquiler")){
+
+				} else if (transaccion.getTipoTransaccion().getNombre().equals("Alquiler")) {
 					valorTemp = transaccion.getProducto().getValorAlquilerDia() * transaccion.getDiasAlquiler();
-				}else if(transaccion.getTipoTransaccion().getNombre().equals("Afiliación")){
-					valorTemp = (float)transaccion.getTipoAfiliacion().getValor();
+				} else if (transaccion.getTipoTransaccion().getNombre().equals("Afiliación")) {
+					valorTemp = (float) transaccion.getTipoAfiliacion().getValor();
 				}
 				transaccion.setValorTransaccion(valorTemp);
 				valorAcum = valorAcum + valorTemp;
@@ -122,18 +130,59 @@ public class Factura implements Serializable {
 	}
 
 	public void calcularValorTotal() {
-		if(null != this.getPorcentajeDescuento()){
-			if(this.getPorcentajeDescuento() > 0){
-				BigDecimal aux = this.getValorNeto().subtract((this.getValorNeto().multiply(new BigDecimal(this.getPorcentajeDescuento()/100))));
+		if (null != this.getPorcentajeDescuento()) {
+			if (this.getPorcentajeDescuento() > 0) {
+				BigDecimal aux = this.getValorNeto()
+						.subtract((this.getValorNeto().multiply(new BigDecimal(this.getPorcentajeDescuento() / 100))));
 				this.getPago().setValorPago(aux);
 			}
-		}else{
+		} else {
 			this.getPago().setValorPago(this.getValorNeto());
 		}
 	}
 
 	public void finalizarFactura() {
-		// TODO Auto-generated method stub
+		boolean flagError = false;
+		try {
+			EntityManager em = Persistencia.getEntityManager();
+			em.getTransaction().begin();
+			Factura fac = new Factura();
+			fac.setTransacciones(null);
+			fac.setCliente(cliente);
+			fac.setPago(pago);
+			fac.setVendedor(vendedor);
+			fac.setPorcentajeDescuento(porcentajeDescuento);
+			fac.setValorNeto(valorNeto);
+			em.persist(fac);
+			em.getTransaction().commit();
+			em.getTransaction().begin();
+			System.out.println("idFac: " + fac.getIdFactura());
+			for (Transaccion transaccion : this.transacciones) {
+				transaccion.setFactura(fac);
+				em.persist(transaccion);
+				em.getTransaction().commit();
+			}
+		} catch (Exception e) {
+			flagError = true;
+		}
+
+		System.out.println("IDCLIENTE: " + this.getCliente().getIdPersona());
+		System.out.println("PAGO (tipopago): " + this.getPago().getTipoPago());
+		System.out.println("VENDEDOR: " + this.getVendedor().getNombres());
+		System.out.println("PD: " + this.getPorcentajeDescuento());
+		System.out.println("VN: " + this.getValorNeto());
+		if (!flagError) {
+			for (Transaccion transaccion : transacciones) {
+				Producto prod = transaccion.getProducto();
+				ListaTipoTransaccion tipoTransaccion = transaccion.getTipoTransaccion();
+				if(tipoTransaccion.getNombre().equals("Venta")){
+					prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Vendido"));
+				}else if(tipoTransaccion.getNombre().equals("Alquiler")){
+					prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Alquiler"));
+				}
+				
+			}
+		}
 
 	}
 
