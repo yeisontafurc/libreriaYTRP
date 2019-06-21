@@ -25,7 +25,6 @@ public class ControlFormaRecibir implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
 			case "RECIBIR":
-				System.out.println("recibir");
 				int countError = 0;
 				try{
 					Float valorAlquiler = new Float(recibir.getTxtValorAlquiler().getText());

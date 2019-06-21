@@ -27,7 +27,6 @@ public class ControlVentaAlquiler implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "RECIBIR":
-			System.out.println("productos");
 			RecibirAlquilado recibirAlquilado = new RecibirAlquilado();
 			ControlRecibir controlRecibir = new ControlRecibir(recibirAlquilado);
 			recibirAlquilado.setControl(controlRecibir);
@@ -37,7 +36,6 @@ public class ControlVentaAlquiler implements ActionListener {
 			controlRecibir.mostrarRecibir();
 			break;
 		case "VENTA":
-			System.out.println("VENTA");
 			VentaUbicaCliente ventaUbicaCliente = new VentaUbicaCliente();
 			ControlVentaCliente controlVentaCliente = new ControlVentaCliente(ventaUbicaCliente);
 			ventaUbicaCliente.setControl(controlVentaCliente);
@@ -54,7 +52,6 @@ public class ControlVentaAlquiler implements ActionListener {
 			this.menuPrincipal.setVisible(true);
 			break;
 		default:
-			System.out.println("El msj en realidad fue:" + e.getActionCommand());
 			break;
 		}
 	}

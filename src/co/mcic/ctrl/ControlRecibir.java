@@ -55,7 +55,7 @@ public class ControlRecibir implements ActionListener {
 			System.out.println("Volver");
 			break;
 		default:
-			System.out.println("La acción fue: " + e.getActionCommand());
+			break;
 		}
 
 	}
