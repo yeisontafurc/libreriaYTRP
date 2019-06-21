@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.eclipse.persistence.jpa.config.Cascade;
+//import org.eclipse.persistence.jpa.config.Cascade;
 
 import co.mcic.util.Persistencia;
 

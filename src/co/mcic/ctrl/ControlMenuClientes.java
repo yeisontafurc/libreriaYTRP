@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import co.mcic.dominio.Usuario;
 import co.mcic.vista.ConsultarCliente;
 import co.mcic.vista.ConsultarClienteId;
 import co.mcic.vista.MenuCliente;
@@ -14,6 +15,7 @@ public class ControlMenuClientes implements ActionListener {
 
 	private MenuCliente menuCliente;
 	private MenuPrincipal menuPrincipal;
+	private Usuario usuario;
 
 	public ControlMenuClientes(MenuCliente menuCliente) {
 		this.menuCliente = menuCliente;
@@ -56,6 +58,7 @@ public class ControlMenuClientes implements ActionListener {
 		ControlConsultarClienteId controlConsultarClienteId = new ControlConsultarClienteId(consultarCliente);
 		consultarCliente.setControl(controlConsultarClienteId);
 		controlConsultarClienteId.setAction(action);
+		controlConsultarClienteId.setUsuario(usuario);
 		controlConsultarClienteId.setMenuPrincipal(this.menuPrincipal);
 		controlConsultarClienteId.mostrarConsultarClienteId();
 		this.menuCliente.setVisible(false);
@@ -87,5 +90,15 @@ public class ControlMenuClientes implements ActionListener {
 	public void setMenuPrincipal(MenuPrincipal menuPrincipal) {
 		this.menuPrincipal = menuPrincipal;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 
 }

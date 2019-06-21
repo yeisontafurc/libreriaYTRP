@@ -51,6 +51,7 @@ public class ControlMenuPrincipal implements ActionListener{
 			ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
 			menuCliente.setControl(controlMenuClientes);
 			controlMenuClientes.setMenuPrincipal(this.menuPrincipal);
+			controlMenuClientes.setUsuario(usuario);
 			controlMenuClientes.mostrarMenuCliente();
 			menuPrincipal.setVisible(false);
 			break;

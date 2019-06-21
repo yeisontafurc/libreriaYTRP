@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +15,14 @@ import javax.swing.JOptionPane;
 
 import co.mcic.dominio.Afiliacion;
 import co.mcic.dominio.ListaTipoAfiliacion;
+import co.mcic.dominio.ListaTipoTransaccion;
 import co.mcic.dominio.Persona;
+import co.mcic.dominio.Transaccion;
+import co.mcic.dominio.Usuario;
 import co.mcic.vista.AfiliarCliente;
 import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuPrincipal;
+import co.mcic.vista.RegistrarPago;
 
 public class ControlAfiliarCliente implements ActionListener {
 
@@ -25,6 +30,8 @@ public class ControlAfiliarCliente implements ActionListener {
 	private Persona persona = new Persona();
 	private AfiliarCliente afiliarCliente;
 	private MenuPrincipal menuPrincipal;
+	private Usuario usuario;
+	private List<Transaccion> transacciones = new ArrayList<>();
 
 	public ControlAfiliarCliente(AfiliarCliente afiliarCliente) {
 		this.afiliarCliente = afiliarCliente;
@@ -38,7 +45,7 @@ public class ControlAfiliarCliente implements ActionListener {
 			cargarListaTipoAfiliacion();
 			this.afiliarCliente.getTxfIdentificacion().setText(this.persona.getDocumento().toString());
 			this.afiliarCliente.getTxfTipoDocumento().setText(this.persona.getTipoDocumento().getNombre());
-			this.afiliarCliente.getTxtInicioAfiliacion().setText(dateFormat.format(new Date())); 
+			this.afiliarCliente.getTxtInicioAfiliacion().setText(dateFormat.format(new Date()));
 			this.afiliarCliente.setVisible(true);
 			this.afiliarCliente.setSize(new Dimension(782, 486));
 		}
@@ -66,20 +73,20 @@ public class ControlAfiliarCliente implements ActionListener {
 				// validar los formatos
 				if (ValidarFormatos()) {
 					cargarDatosAfiliacion();
+					registrarPago();
 
-					int resp = JOptionPane.showConfirmDialog(null, "¿Desea ejecutar la operacion?", null,
-							JOptionPane.YES_NO_OPTION);
-					if (resp == 0) {
-						boolean res = this.persona.actualizarCliente(this.persona);
-						if (res) {
-							JOptionPane.showMessageDialog(null, "Operación ejecutada exitosamente");
-							ejecutarMenuClientes();
-							afiliarCliente.setVisible(false);
-						} else {
-							JOptionPane.showMessageDialog(null, "Error al ejecutar la operación");
-							ValidarReintentos();
-						}
-					}
+					/*
+					 * int resp = JOptionPane.showConfirmDialog(null,
+					 * "¿Desea ejecutar la operacion?", null,
+					 * JOptionPane.YES_NO_OPTION); if (resp == 0) { boolean res
+					 * = this.persona.actualizarCliente(this.persona); if (res)
+					 * { JOptionPane.showMessageDialog(null,
+					 * "Operación ejecutada exitosamente");
+					 * ejecutarMenuClientes(); afiliarCliente.setVisible(false);
+					 * } else { JOptionPane.showMessageDialog(null,
+					 * "Error al ejecutar la operación"); ValidarReintentos(); }
+					 * }
+					 */
 				} else {
 					JOptionPane.showMessageDialog(null, "Campos con formato invalido");
 					ValidarReintentos();
@@ -108,11 +115,11 @@ public class ControlAfiliarCliente implements ActionListener {
 			listaTipoAfiliacion = listaTipoAfiliacion.getListaTipoAfiliacionByNombre(
 					this.afiliarCliente.getcBoxTipoAfiliacion().getSelectedItem().toString());
 			afiliacion.setTipoAfiliacion(listaTipoAfiliacion);
-			
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(afiliacion.getFechaInicio());
 			cal.add(Calendar.DATE, listaTipoAfiliacion.getMeses() * 30);
-			
+
 			afiliacion.setFechaFin(cal.getTime());
 			afiliacion.setIdAfiliacion(afiliacion.getMaxId());
 			this.persona.setAfiliacion(afiliacion);
@@ -131,6 +138,16 @@ public class ControlAfiliarCliente implements ActionListener {
 		for (ListaTipoAfiliacion listaTipoAfiliacion2 : listasTipoAfiliacion) {
 			this.afiliarCliente.getcBoxTipoAfiliacion().addItem(listaTipoAfiliacion2.getNombre());
 		}
+	}
+	
+	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public boolean ValidarRequeridos() {
@@ -166,6 +183,23 @@ public class ControlAfiliarCliente implements ActionListener {
 		} else {
 			this.reintentos++;
 		}
+	}
+
+	public void registrarPago() {
+		ListaTipoTransaccion listaTipoTransaccion = new ListaTipoTransaccion();
+		Transaccion transaccion = new Transaccion();
+		transaccion.setTipoAfiliacion(this.persona.getAfiliacion().getTipoAfiliacion());
+		transaccion.setTipoTransaccion(listaTipoTransaccion.getListaTipoTransaccionByNombre("Afiliación"));
+		transacciones.add(transaccion);
+
+		RegistrarPago registrarPago = new RegistrarPago();
+		ControlRegistrarPago controlRegistrarPago = new ControlRegistrarPago(registrarPago);
+		registrarPago.setControl(controlRegistrarPago);
+		controlRegistrarPago.setTransacciones(transacciones);
+		controlRegistrarPago.setCliente(this.persona);
+		controlRegistrarPago.setUsuario(usuario);
+		controlRegistrarPago.mostrarRegistrarPago();
+		afiliarCliente.setVisible(false);
 	}
 
 }

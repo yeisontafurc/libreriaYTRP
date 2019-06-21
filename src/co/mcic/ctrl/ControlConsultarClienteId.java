@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import co.mcic.dominio.ListaTipoDocumento;
 import co.mcic.dominio.Persona;
+import co.mcic.dominio.Usuario;
 import co.mcic.vista.AfiliarCliente;
 import co.mcic.vista.ConsultarClienteId;
 import co.mcic.vista.EditarCliente;
@@ -21,6 +22,7 @@ public class ControlConsultarClienteId implements ActionListener {
 	private ControlConsultarClienteId controConsultarClienteId;
 	private ConsultarClienteId consultarClienteId;
 	private MenuPrincipal menuPrincipal;
+	private Usuario usuario;
 	private String action;
 	private int reintentos = 1;
 
@@ -109,6 +111,14 @@ public class ControlConsultarClienteId implements ActionListener {
 		this.consultarClienteId = consultarClienteId;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public String getAction() {
 		return action;
 	}
@@ -130,10 +140,11 @@ public class ControlConsultarClienteId implements ActionListener {
 	public void ejecutarAfiliarPersona(Persona persona) {
 
 		AfiliarCliente afiliarCliente = new AfiliarCliente();
-		ControlAfiliarCliente controlEditarCliente = new ControlAfiliarCliente(afiliarCliente);
-		afiliarCliente.setControl(controlEditarCliente);
-		controlEditarCliente.setMenuPrincipal(this.menuPrincipal);
-		controlEditarCliente.mostrarAfiliarCliente(this.persona);
+		ControlAfiliarCliente controlAfiliarCliente = new ControlAfiliarCliente(afiliarCliente);
+		afiliarCliente.setControl(controlAfiliarCliente);
+		controlAfiliarCliente.setUsuario(usuario);
+		controlAfiliarCliente.setMenuPrincipal(this.menuPrincipal);
+		controlAfiliarCliente.mostrarAfiliarCliente(this.persona);
 
 	}
 
