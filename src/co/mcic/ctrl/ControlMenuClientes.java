@@ -98,6 +98,14 @@ public class ControlMenuClientes implements ActionListener {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public MenuCliente getMenuCliente() {
+		return menuCliente;
+	}
+
+	public void setMenuCliente(MenuCliente menuCliente) {
+		this.menuCliente = menuCliente;
+	}
 	
 	
 

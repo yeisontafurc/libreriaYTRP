@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import co.mcic.dominio.ListaPermiso;
 import co.mcic.dominio.Usuario;
@@ -16,7 +17,7 @@ public class ControlLogin implements ActionListener {
 
 	private Login login;
 	private Usuario usuario;
-
+	private MenuPrincipal mp;
 	public ControlLogin(Login login) {
 		this.setLogin(login);
 		this.usuario = new Usuario();
@@ -50,6 +51,8 @@ public class ControlLogin implements ActionListener {
 		if (usuarioValido) {
 			validarAccesos();
 			login.setVisible(false);
+		}else{
+			JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
 		}
 
 	}
@@ -62,8 +65,14 @@ public class ControlLogin implements ActionListener {
 		this.usuario = usuario;
 	}
 
+	public MenuPrincipal getMp() {
+		return mp;
+	}
+	public void setMp(MenuPrincipal mp) {
+		this.mp = mp;
+	}
 	public void validarAccesos(){
-		MenuPrincipal mp = new MenuPrincipal();
+		this.mp = new MenuPrincipal();
 		List<ListaPermiso> listaPermisos = this.usuario.getRol().getPermisos();
 
 		if (null != listaPermisos) {

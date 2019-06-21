@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -63,6 +64,7 @@ public class ControlRegistrarPago implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		boolean flagFactura = false;
 		switch (e.getActionCommand()) {
 		case "FINALIZAR":
 			// Registrar tipopago
@@ -93,17 +95,39 @@ public class ControlRegistrarPago implements ActionListener {
 						if(!validez){
 							JOptionPane.showMessageDialog(null, "Tarjeta de crédito inválida");
 						}else{
-							this.factura.finalizarFactura();
+							this.factura.getPago().setTarjetaCredito(credito);
+							flagFactura = this.factura.finalizarFactura();
 						}
 					}
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
 				}
 			}else{
-				this.factura.finalizarFactura();
+				flagFactura = this.factura.finalizarFactura();
 			}
+			
+			if(flagFactura){
+				JOptionPane.showMessageDialog(null, "Pago exitoso");
+			}else{
+				JOptionPane.showMessageDialog(null, "No pudo realizarse el pago");
+			}
+			ControlLogin controlLogin = new ControlLogin();
+			controlLogin.setUsuario(usuario);
+			controlLogin.validarAccesos();
+			registrarPago.setVisible(false);
+			registrarPago.dispose();
+			
 			break;
 		case "CANCELAR":
+			int res = JOptionPane.showConfirmDialog(null, "¿Está seguro de volver?, se perderán todos los productos de la transacción", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+			if(res == JOptionPane.OK_OPTION){
+				this.transacciones = new ArrayList<Transaccion>();
+				ControlLogin controlLogin_ = new ControlLogin();
+				controlLogin_.setUsuario(usuario);
+				controlLogin_.validarAccesos();
+				registrarPago.setVisible(false);
+				registrarPago.dispose();
+			}
 			break;
 		default:
 			break;

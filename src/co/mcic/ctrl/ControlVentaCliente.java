@@ -13,7 +13,9 @@ import co.mcic.dominio.Persona;
 import co.mcic.dominio.Transaccion;
 import co.mcic.dominio.Usuario;
 import co.mcic.vista.BuscarProductoVenta;
+import co.mcic.vista.MenuCliente;
 import co.mcic.vista.MenuVentaAlquiler;
+import co.mcic.vista.RegistrarCliente;
 import co.mcic.vista.VentaUbicaCliente;
 
 public class ControlVentaCliente implements ActionListener {
@@ -113,7 +115,26 @@ public class ControlVentaCliente implements ActionListener {
 						             choices,
 						             defaultChoice);
 						if(res == 1){
-							//TODO
+							ControlLogin controlLogin_ = new ControlLogin();
+							controlLogin_.setUsuario(usuario);
+							controlLogin_.validarAccesos();
+							controlLogin_.getMp().setVisible(false);
+							MenuCliente menuCliente = new MenuCliente();
+							ControlMenuClientes controlMenuClientes = new ControlMenuClientes(menuCliente);
+							menuCliente.setControl(controlMenuClientes);
+							controlMenuClientes.setMenuPrincipal(controlLogin_.getMp());
+							controlMenuClientes.mostrarMenuCliente();
+							controlMenuClientes.getMenuCliente().setVisible(false);
+							
+							RegistrarCliente registrarCliente = new RegistrarCliente();
+							ControlRegistrarCliente controlRegistrarCliente = new ControlRegistrarCliente(registrarCliente);
+							registrarCliente.setControl(controlRegistrarCliente);
+							controlRegistrarCliente.setMenuPrincipal(controlLogin_.getMp());
+							controlRegistrarCliente.mostrarRegistrarCliente();
+							
+							ventaUbicaCliente.setVisible(false);
+							ventaUbicaCliente.dispose();
+							
 						}else{
 							this.ventaUbicaCliente.setVisible(false);
 							this.ventaUbicaCliente.dispose();

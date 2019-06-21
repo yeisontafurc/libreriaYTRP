@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class RegistrarPago extends JFrame {
 	
-	private JButton btnFinalizar;
+	private JButton btnFinalizar, btnCancelar;
 	private static final long serialVersionUID = 1L;
 	private JTextField txtDigitosTarjeta;
 	private JTextField txtValorVenta;
@@ -70,6 +70,7 @@ public class RegistrarPago extends JFrame {
 		getContentPane().add(lblValorVenta);
 		
 		txtValorVenta = new JTextField();
+		txtValorVenta.setEditable(false);
 		txtValorVenta.setBounds(302, 210, 178, 20);
 		getContentPane().add(txtValorVenta);
 		txtValorVenta.setColumns(10);
@@ -79,7 +80,8 @@ public class RegistrarPago extends JFrame {
 		this.btnFinalizar.setBounds(391, 255, 89, 23);
 		getContentPane().add(this.btnFinalizar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		this.btnCancelar = new JButton("Cancelar");
+		this.btnCancelar.setActionCommand("CANCELAR");
 		btnCancelar.setBounds(291, 255, 89, 23);
 		getContentPane().add(btnCancelar);
 	}
@@ -116,6 +118,7 @@ public class RegistrarPago extends JFrame {
 
 	public void setControl(ControlRegistrarPago controlRegistrarPago) {
 		this.btnFinalizar.addActionListener(controlRegistrarPago);
+		this.btnCancelar.addActionListener(controlRegistrarPago);
 		this.cmbTipoPago.addActionListener(controlRegistrarPago);
 	}
 }

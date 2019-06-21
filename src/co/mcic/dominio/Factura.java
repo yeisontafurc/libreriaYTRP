@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-//import org.eclipse.persistence.jpa.config.Cascade;
-
 import co.mcic.util.Persistencia;
 
 @Entity
@@ -133,7 +131,10 @@ public class Factura implements Serializable {
 		if (null != this.getPorcentajeDescuento()) {
 			if (this.getPorcentajeDescuento() > 0) {
 				BigDecimal aux = this.getValorNeto()
-						.subtract((this.getValorNeto().multiply(new BigDecimal(this.getPorcentajeDescuento() / 100))));
+						.subtract((this.getValorNeto().multiply(new BigDecimal(this.getPorcentajeDescuento()).divide(new BigDecimal(100)))));
+				System.out.println("VN: "+this.getValorNeto().toString());
+				System.out.println("PD: "+this.getPorcentajeDescuento().toString());
+				System.out.println("VT:" + aux.toString());
 				this.getPago().setValorPago(aux);
 			}
 		} else {
@@ -141,10 +142,11 @@ public class Factura implements Serializable {
 		}
 	}
 
-	public void finalizarFactura() {
+	public boolean finalizarFactura() {
 		boolean flagError = false;
+		EntityManager em = Persistencia.getEntityManager();
 		try {
-			EntityManager em = Persistencia.getEntityManager();
+
 			em.getTransaction().begin();
 			Factura fac = new Factura();
 			fac.setTransacciones(null);
@@ -164,6 +166,7 @@ public class Factura implements Serializable {
 			}
 		} catch (Exception e) {
 			flagError = true;
+			return !flagError;
 		}
 
 		System.out.println("IDCLIENTE: " + this.getCliente().getIdPersona());
@@ -172,17 +175,27 @@ public class Factura implements Serializable {
 		System.out.println("PD: " + this.getPorcentajeDescuento());
 		System.out.println("VN: " + this.getValorNeto());
 		if (!flagError) {
-			for (Transaccion transaccion : transacciones) {
-				Producto prod = transaccion.getProducto();
-				ListaTipoTransaccion tipoTransaccion = transaccion.getTipoTransaccion();
-				if(tipoTransaccion.getNombre().equals("Venta")){
-					prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Vendido"));
-				}else if(tipoTransaccion.getNombre().equals("Alquiler")){
-					prod.setEstadoDisponibilidad(new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Alquiler"));
+			try {
+				for (Transaccion transaccion : transacciones) {
+					Producto prod = transaccion.getProducto();
+					ListaTipoTransaccion tipoTransaccion = transaccion.getTipoTransaccion();
+					if (tipoTransaccion.getNombre().equals("Venta")) {
+						prod.setEstadoDisponibilidad(
+								new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Vendido"));
+					} else if (tipoTransaccion.getNombre().equals("Alquiler")) {
+						prod.setEstadoDisponibilidad(
+								new ListaEstadoDisponibilidad().getListaEstadoDisponibilidadByNombre("Alquilado"));
+					}
+					em.getTransaction().begin();
+					em.merge(prod);
+					em.getTransaction().commit();
 				}
-				
+				return true;
+			} catch (Exception ex) {
+				return false;
 			}
 		}
+		return flagError;
 
 	}
 
