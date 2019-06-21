@@ -34,7 +34,7 @@ public class ControlVentaCliente implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "BUSCAR":
-				buscarProducto();
+				buscarCliente();
 			break;
 		case "VOLVER":
 			this.ventaUbicaCliente.setVisible(false);
@@ -72,9 +72,8 @@ public class ControlVentaCliente implements ActionListener {
 	}
 
 
-	public void buscarProducto(){
+	public void buscarCliente(){
 		//Ubicar Cliente
-		System.out.println("BUSCAR");
 		//Creación de objeto "Persona" para acceder a la búsqueda de personaS
 		Persona cliente = new Persona();
 		//Obtención del tipo de documento seleccionado en la vista
